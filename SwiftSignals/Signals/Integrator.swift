@@ -7,18 +7,16 @@
 //
 
 /// Integrator signal. The output of this signal is the running sum of it's input.
-class Integrator<T: Arithmetic>: Signal<T>
+class Integrator<T: Arithmetic>: Filter<T>
 {
     override init() {
         prevSample  = T()
-        input       = Signal<T>()
     }
     
     override func generateSample(timestamp: Int) {
-        sample = input[timestamp] + prevSample
+        sample = input![timestamp] + prevSample
         prevSample = sample!
     }
     
     var prevSample: T
-    var input: Signal<T>
 }

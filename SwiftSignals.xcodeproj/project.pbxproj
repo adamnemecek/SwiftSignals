@@ -12,6 +12,7 @@
 		FA8EAFAF1C20303C00BB69D9 /* Integrator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8EAFAB1C20303C00BB69D9 /* Integrator.swift */; };
 		FA8EAFB01C20303C00BB69D9 /* Signal.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8EAFAC1C20303C00BB69D9 /* Signal.swift */; };
 		FA8EAFB11C20303C00BB69D9 /* Value.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA8EAFAD1C20303C00BB69D9 /* Value.swift */; };
+		FAF07C111C2036A30008B8B4 /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF07C101C2036A30008B8B4 /* Filter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -33,6 +34,7 @@
 		FA8EAFAB1C20303C00BB69D9 /* Integrator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Integrator.swift; sourceTree = "<group>"; };
 		FA8EAFAC1C20303C00BB69D9 /* Signal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Signal.swift; sourceTree = "<group>"; };
 		FA8EAFAD1C20303C00BB69D9 /* Value.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Value.swift; sourceTree = "<group>"; };
+		FAF07C101C2036A30008B8B4 /* Filter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Filter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,6 +80,7 @@
 				FA8EAFAB1C20303C00BB69D9 /* Integrator.swift */,
 				FA8EAFAC1C20303C00BB69D9 /* Signal.swift */,
 				FA8EAFAD1C20303C00BB69D9 /* Value.swift */,
+				FAF07C101C2036A30008B8B4 /* Filter.swift */,
 			);
 			path = Signals;
 			sourceTree = "<group>";
@@ -140,6 +143,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FA8EAFAE1C20303C00BB69D9 /* Artithmetic.swift in Sources */,
+				FAF07C111C2036A30008B8B4 /* Filter.swift in Sources */,
 				FA8EAFB01C20303C00BB69D9 /* Signal.swift in Sources */,
 				FA8EAFB11C20303C00BB69D9 /* Value.swift in Sources */,
 				FA8EAFA31C202FE700BB69D9 /* main.swift in Sources */,
@@ -263,6 +267,7 @@
 				FA8EAFA81C202FE700BB69D9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

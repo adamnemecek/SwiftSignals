@@ -12,6 +12,6 @@ var value   = Value<Float>(value: 30)
 var sum     = value + -Value<Float>(value: 50)
 
 var integrator = Integrator<Float>()
-integrator.input = sum
+(sum + value) >> integrator
 
 print(integrator[0])
