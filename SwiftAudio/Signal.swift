@@ -13,12 +13,20 @@ protocol SignalBase
 {
     typealias Value
     func generateSample(timestamp: Int) -> Void
-    var sample: Value?{set get}
+    var sample: Value{set get}
 }
 
 /// Signal baseclass. Subclasses of this can take a type T that conforms to the Arithmetic protocol
 class Signal<T: Arithmetic>: SignalBase
 {
+    var sample = T()
+    var time: Int?
+    
+    init()
+    {
+        sample = T()
+    }
+    
     typealias Value = T
     func generateSample(timestamp: Int) -> Void
     {
@@ -33,11 +41,8 @@ class Signal<T: Arithmetic>: SignalBase
             generateSample(timestamp)
         }
         
-        return sample!
+        return sample
     }
-    
-    var sample: T?
-    var time: Int?
 }
 
 func <<<T>(inout lhs: Signal<T>, rhs: T)

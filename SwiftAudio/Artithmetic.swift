@@ -106,7 +106,7 @@ class Sum<T: Arithmetic>: Signal<T> {
         sample = T()
         for signal in inputs
         {
-            sample! = sample! + signal[timestamp]
+            sample = sample + signal[timestamp]
         }
     }
 }
@@ -126,7 +126,7 @@ class Negator<T: Arithmetic>: Signal<T> {
     
     override func generateSample(timestamp: Int) {
         sample = input![timestamp]
-        sample?.negate()
+        sample.negate()
     }
     
     var input: Signal<T>?
@@ -176,13 +176,13 @@ func *<T: Arithmetic>(var lhs: T, rhs: T) -> T {
 }
 
 postfix func ++<T: Arithmetic>(inout oldValue: DC<T>) {
-    oldValue.value?.increment()
+    oldValue.value.increment()
 }
 
 postfix func --<T: Arithmetic>(inout oldValue: DC<T>) {
-    oldValue.value?.decrement()
+    oldValue.value.decrement()
 }
 
 prefix func -<T: Arithmetic>(inout oldValue: DC<T>) {
-    oldValue.value?.negate()
+    oldValue.value.negate()
 }

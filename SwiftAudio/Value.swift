@@ -9,6 +9,8 @@
 /// DC signal. Is a constant DCd signal (DC) of type T
 class DC<T: Arithmetic>: Signal<T>
 {
+    var value = T()
+    
     init(value: T)
     {
         self.value = value
@@ -23,8 +25,6 @@ class DC<T: Arithmetic>: Signal<T>
     {
         sample = value
     }
-    
-    var value: T?
 }
 
 func <<<T>(inout lhs: DC<T>, rhs: T)

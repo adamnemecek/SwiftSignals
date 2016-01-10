@@ -21,11 +21,11 @@ class Phasor: Signal<Float32>
     override func generateSample(timestamp: Int) {
         
         phinc = 1.0 / 44100.0 * frequency![timestamp]
-        sample = sample! + phinc
+        sample = sample + phinc
         
-        while sample! > 1.0
+        while sample > 1.0
         {
-            sample! = sample! - 1.0
+            sample = sample * -1.0
         }
     }
 }
