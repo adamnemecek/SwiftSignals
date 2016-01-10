@@ -15,7 +15,7 @@ class Integrator<T: Arithmetic>: Filter<T>
     
     override func generateSample(timestamp: Int) {
         sample = input![timestamp] + prevSample
-        prevSample = sample!
+        prevSample = input![timestamp]
     }
     
     var prevSample: T

@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		FA121EA11C3FB5D600D79374 /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA121EA01C3FB5D600D79374 /* Utility.swift */; };
-		FA121EAC1C4008B900D79374 /* Integrator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA121EA61C4008B900D79374 /* Integrator.swift */; };
 		FA121EB11C40090400D79374 /* Sine.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA121EB01C40090400D79374 /* Sine.swift */; };
 		FA121EB31C406FC600D79374 /* AudioBuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA121EB21C406FC600D79374 /* AudioBuffer.swift */; };
 		FA121EB51C407D8F00D79374 /* Midi.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA121EB41C407D8F00D79374 /* Midi.swift */; };
@@ -20,6 +19,7 @@
 		FA121EC31C42AC5A00D79374 /* Artithmetic.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA121EC01C42AC5A00D79374 /* Artithmetic.swift */; };
 		FA121EC41C42AC5A00D79374 /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA121EC11C42AC5A00D79374 /* Filter.swift */; };
 		FA121EC51C42AC5A00D79374 /* Signal.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA121EC21C42AC5A00D79374 /* Signal.swift */; };
+		FA121EC71C42B0CA00D79374 /* Integrator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA121EC61C42B0CA00D79374 /* Integrator.swift */; };
 		FA1911F41C3E979700E511D4 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1911F31C3E979700E511D4 /* main.swift */; };
 		FA1911FB1C3E97A600E511D4 /* AudioStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1911FA1C3E97A600E511D4 /* AudioStream.swift */; };
 /* End PBXBuildFile section */
@@ -38,7 +38,6 @@
 
 /* Begin PBXFileReference section */
 		FA121EA01C3FB5D600D79374 /* Utility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
-		FA121EA61C4008B900D79374 /* Integrator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Integrator.swift; path = ../../SwiftSignals/SwiftSignals/Signals/Integrator.swift; sourceTree = "<group>"; };
 		FA121EB01C40090400D79374 /* Sine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sine.swift; sourceTree = "<group>"; };
 		FA121EB21C406FC600D79374 /* AudioBuffer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioBuffer.swift; sourceTree = "<group>"; };
 		FA121EB41C407D8F00D79374 /* Midi.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Midi.swift; sourceTree = "<group>"; };
@@ -50,6 +49,7 @@
 		FA121EC01C42AC5A00D79374 /* Artithmetic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Artithmetic.swift; sourceTree = "<group>"; };
 		FA121EC11C42AC5A00D79374 /* Filter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Filter.swift; sourceTree = "<group>"; };
 		FA121EC21C42AC5A00D79374 /* Signal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Signal.swift; sourceTree = "<group>"; };
+		FA121EC61C42B0CA00D79374 /* Integrator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Integrator.swift; sourceTree = "<group>"; };
 		FA1911F01C3E979700E511D4 /* SwiftAudio */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = SwiftAudio; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA1911F31C3E979700E511D4 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		FA1911FA1C3E97A600E511D4 /* AudioStream.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioStream.swift; sourceTree = "<group>"; };
@@ -85,6 +85,7 @@
 		FA1911F21C3E979700E511D4 /* SwiftAudio */ = {
 			isa = PBXGroup;
 			children = (
+				FA121EC61C42B0CA00D79374 /* Integrator.swift */,
 				FA121EC01C42AC5A00D79374 /* Artithmetic.swift */,
 				FA121EC11C42AC5A00D79374 /* Filter.swift */,
 				FA121EC21C42AC5A00D79374 /* Signal.swift */,
@@ -92,7 +93,6 @@
 				FA1911FA1C3E97A600E511D4 /* AudioStream.swift */,
 				FA121EB61C4163DE00D79374 /* Host.swift */,
 				FA121EB81C41657D00D79374 /* Instrument.swift */,
-				FA121EA61C4008B900D79374 /* Integrator.swift */,
 				FA1911F31C3E979700E511D4 /* main.swift */,
 				FA121EB41C407D8F00D79374 /* Midi.swift */,
 				FA121EBC1C41979800D79374 /* Phasor.swift */,
@@ -163,6 +163,7 @@
 			files = (
 				FA1911FB1C3E97A600E511D4 /* AudioStream.swift in Sources */,
 				FA121EC51C42AC5A00D79374 /* Signal.swift in Sources */,
+				FA121EC71C42B0CA00D79374 /* Integrator.swift in Sources */,
 				FA121EB51C407D8F00D79374 /* Midi.swift in Sources */,
 				FA121EBF1C42ABD100D79374 /* Value.swift in Sources */,
 				FA121EB11C40090400D79374 /* Sine.swift in Sources */,
@@ -171,7 +172,6 @@
 				FA121EB91C41657D00D79374 /* Instrument.swift in Sources */,
 				FA121EC41C42AC5A00D79374 /* Filter.swift in Sources */,
 				FA121EB71C4163DE00D79374 /* Host.swift in Sources */,
-				FA121EAC1C4008B900D79374 /* Integrator.swift in Sources */,
 				FA121EB31C406FC600D79374 /* AudioBuffer.swift in Sources */,
 				FA1911F41C3E979700E511D4 /* main.swift in Sources */,
 				FA121EBB1C4193E500D79374 /* WaveTable.swift in Sources */,
