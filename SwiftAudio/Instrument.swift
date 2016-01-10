@@ -6,28 +6,30 @@
 //  Copyright © 2016 Danny van Swieten. All rights reserved.
 //
 
-class Voice<T: Arithmetic>: Signal<T>{
+protocol Voice {
     
-    func play() -> Void{
-        
-    }
+    func play() -> Void
     
-    func stop() -> Void{
-        
-    }
+    func stop() -> Void
     
-    var uid: UInt32 = 0
+    var uid: UInt32{set get}
 }
 
-class WaveTableVoice: Voice<Float32>
+class WaveTableVoice: Signal<Float32>, Voice, EnvelopeListener
 {
     var wave: WaveTable?
-    
+    let envelope = Envelope()
     var phasor          = Phasor()
-    var shouldPlay      = false
+    var isFree          = false
+    var uid             = UInt32()
     
     override init() {
+        super.init()
+        envelope.addPoint(0.707, timeInSamples: 50)
+        envelope.addPoint(0.5, timeInSamples: 50, hold: true)
+        envelope.addPoint(0.0, timeInSamples: 22000, hold: true)
         
+        envelope.listeners.append(self)
     }
     
     func setWaveTable(inout wavetable: WaveTable) {
@@ -35,19 +37,20 @@ class WaveTableVoice: Voice<Float32>
     }
     
     override func generateSample(timestamp: Int) {
-        if shouldPlay {
-        sample = wave![phasor[timestamp]]
-        } else {
-            sample = 0.0
-        }
+        sample = wave![phasor[timestamp]] * envelope[timestamp]
     }
     
-    override func play() -> Void {
-        shouldPlay = true
+    func play() -> Void {
+        isFree = false
+        envelope.triggerFirstSegment()
     }
     
-    override func stop() -> Void {
-        shouldPlay = false
+    func stop() -> Void {
+        envelope.triggerLastSegment()
+    }
+    
+    func envelopeFinished() {
+        isFree = true
     }
 }
 
@@ -64,7 +67,7 @@ class WaveTableSynth: Signal<Float32>, MidiProcessor
     {
         for voice in voices
         {
-            if !voice.shouldPlay
+            if voice.isFree
             {
                 return voice
             }
@@ -107,8 +110,12 @@ class WaveTableSynth: Signal<Float32>, MidiProcessor
         var sum: Float32 = 0.0
         for voice in voices
         {
-            sum += voice[timestamp]
+            if !voice.isFree
+            {
+                sum += voice[timestamp]
+            }
         }
+        
         sample = sum
     }
 }
