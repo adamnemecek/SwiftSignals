@@ -32,9 +32,15 @@ class Signal<T: Arithmetic>: SignalBase
             time = timestamp
             generateSample(timestamp)
         }
+        
         return sample!
     }
     
     var sample: T?
     var time: Int?
+}
+
+func <<<T>(inout lhs: Signal<T>, rhs: T)
+{
+    lhs = DC<T>(value: rhs)
 }

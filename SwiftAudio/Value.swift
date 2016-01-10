@@ -1,13 +1,13 @@
 //
-//  Value.swift
+//  DC.swift
 //  Signals
 //
 //  Created by Danny van Swieten on 12/14/15.
 //  Copyright © 2015 Danny van Swieten. All rights reserved.
 //
 
-/// Value signal. Is a constant valued signal (DC) of type T
-class Value<T: Arithmetic>: Signal<T>
+/// DC signal. Is a constant DCd signal (DC) of type T
+class DC<T: Arithmetic>: Signal<T>
 {
     init(value: T)
     {
@@ -25,4 +25,14 @@ class Value<T: Arithmetic>: Signal<T>
     }
     
     var value: T?
+}
+
+func <<<T>(inout lhs: DC<T>, rhs: T)
+{
+    lhs.value = rhs
+}
+
+func <<<T>(inout lhs: DC<T>, rhs: DC<T>)
+{
+    lhs.value = rhs.value
 }

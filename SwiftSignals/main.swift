@@ -6,12 +6,6 @@
 //  Copyright © 2015 Danny van Swieten. All rights reserved.
 //
 
-import Foundation
+var neuron = Neuron(size: 512)
 
-var value   = Value<Float>(value: 30)
-var sum     = value + -Value<Float>(value: 50)
-
-var integrator = Integrator<Float>()
-(sum + value) >> integrator
-
-print(integrator[0])
+print(neuron[0])

@@ -84,7 +84,7 @@ extension Float: Arithmetic {
 }
 
 /// A summing signal. The output of this signal is the sum of it's two inputs.
-class Sum<T:Arithmetic>: Signal<T> {
+class Add<T:Arithmetic>: Signal<T> {
     
     override func generateSample(timestamp: Int) -> Void {
         sample = lhs![timestamp] + rhs![timestamp]
@@ -92,6 +92,33 @@ class Sum<T:Arithmetic>: Signal<T> {
     
     var lhs: Signal<T>?
     var rhs: Signal<T>?
+}
+
+class Sum<T: Arithmetic>: Signal<T> {
+    
+    var inputs = [Signal<T>]()
+    
+    init(signals: Signal<T>...) {
+        
+    }
+    
+    override func generateSample(timestamp: Int) {
+        sample = T()
+        for signal in inputs
+        {
+            sample! = sample! + signal[timestamp]
+        }
+    }
+}
+
+class Gain<T: Arithmetic>: Signal<T> {
+    
+    var lhs: Signal<T>?
+    var rhs: Signal<T>?
+    
+    override func generateSample(timestamp: Int) -> Void {
+            sample = lhs![timestamp] * rhs![timestamp]
+    }
 }
 
 /// A negating signal. The output of this signal is the negated version of it's input.
@@ -107,9 +134,9 @@ class Negator<T: Arithmetic>: Signal<T> {
 
 // Signal Arithmetic
 /// This construct a Sum object by taking two signals and returning one. This ensures it is chainable.
-func +<T>(lhs: Signal<T>, rhs: Signal<T>) -> Sum<T> {
+func +<T>(lhs: Signal<T>, rhs: Signal<T>) -> Add<T> {
     
-    let sum = Sum<T>()
+    let sum = Add<T>()
     sum.lhs = lhs
     sum.rhs = rhs
     return sum
@@ -123,6 +150,13 @@ prefix func -<T: Arithmetic>(signal: Signal<T>) -> Signal<T> {
     return negatedSignal
 }
 
+func *<T>(lhs: Signal<T>, rhs: Signal<T>) -> Gain<T> {
+    
+    let product = Gain<T>()
+    product.lhs = lhs
+    product.rhs = rhs
+    return product
+}
 
 // Arithmetic operator overloading for Arithmetic Type
 func +<T: Arithmetic>(var lhs: T, rhs: T) -> T {
@@ -141,14 +175,14 @@ func *<T: Arithmetic>(var lhs: T, rhs: T) -> T {
     return lhs.mult(rhs)
 }
 
-postfix func ++<T: Arithmetic>(inout oldValue: Value<T>) {
+postfix func ++<T: Arithmetic>(inout oldValue: DC<T>) {
     oldValue.value?.increment()
 }
 
-postfix func --<T: Arithmetic>(inout oldValue: Value<T>) {
+postfix func --<T: Arithmetic>(inout oldValue: DC<T>) {
     oldValue.value?.decrement()
 }
 
-prefix func -<T: Arithmetic>(inout oldValue: Value<T>) {
+prefix func -<T: Arithmetic>(inout oldValue: DC<T>) {
     oldValue.value?.negate()
 }

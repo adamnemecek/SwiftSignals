@@ -11,7 +11,8 @@ class Filter<T: Arithmetic>: Signal<T>
     var input: Signal<T>?
 }
 
-infix operator >> {}
-func >><T: Arithmetic>(lhs: Signal<T>, rhs: Filter<T>) {
-    rhs.input = lhs
-}
+//infix operator >> {associativity left}
+//func >><T: Arithmetic>(lhs: Signal<T>, rhs: Filter<T>) -> Filter<T> {
+//    rhs.input = lhs
+//    return rhs
+//}
