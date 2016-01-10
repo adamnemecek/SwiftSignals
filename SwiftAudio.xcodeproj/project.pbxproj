@@ -85,17 +85,17 @@
 		FA1911F21C3E979700E511D4 /* SwiftAudio */ = {
 			isa = PBXGroup;
 			children = (
-				FA121EC61C42B0CA00D79374 /* Integrator.swift */,
 				FA121EC01C42AC5A00D79374 /* Artithmetic.swift */,
-				FA121EC11C42AC5A00D79374 /* Filter.swift */,
-				FA121EC21C42AC5A00D79374 /* Signal.swift */,
 				FA121EB21C406FC600D79374 /* AudioBuffer.swift */,
 				FA1911FA1C3E97A600E511D4 /* AudioStream.swift */,
+				FA121EC11C42AC5A00D79374 /* Filter.swift */,
 				FA121EB61C4163DE00D79374 /* Host.swift */,
 				FA121EB81C41657D00D79374 /* Instrument.swift */,
+				FA121EC61C42B0CA00D79374 /* Integrator.swift */,
 				FA1911F31C3E979700E511D4 /* main.swift */,
 				FA121EB41C407D8F00D79374 /* Midi.swift */,
 				FA121EBC1C41979800D79374 /* Phasor.swift */,
+				FA121EC21C42AC5A00D79374 /* Signal.swift */,
 				FA121EB01C40090400D79374 /* Sine.swift */,
 				FA121EA01C3FB5D600D79374 /* Utility.swift */,
 				FA121EBE1C42ABD100D79374 /* Value.swift */,

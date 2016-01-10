@@ -25,7 +25,7 @@ class Phasor: Signal<Float32>
         
         while sample > 1.0
         {
-            sample = sample * -1.0
+            sample = sample - 1.0
         }
     }
 }
