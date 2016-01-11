@@ -54,26 +54,6 @@ class Envelope: Signal<Float32>
         
         currentTime++
         currentValue += phinc
-
-//        if(currentSegment == segments.count - 1 && UInt64(currentTime) >= segments[currentSegment].rampTime)
-//        {
-//            for listener in listeners
-//            {
-//                sample = 0.0
-//                listener.envelopeFinished()
-//            }
-//        }
-//        
-//        if(currentSegment < segments.count - 1 && UInt64(currentTime) >= segments[currentSegment].rampTime)
-//        {
-//            triggerNexSegment()
-//        }
-//        
-//        if(!segments[currentSegment].hold)
-//        {
-//            currentTime++
-//            currentValue += phinc
-//        }
     }
     
     func addPoint(targetValue: Float32, timeInSamples: UInt64, hold: Bool = false) {

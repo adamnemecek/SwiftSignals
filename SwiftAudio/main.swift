@@ -9,6 +9,7 @@
 import Foundation
 
 let stream = AudioStream()
+AudioStream.getDevices()
 let x = WaveTableSynth()
 
 var n = 0
@@ -17,7 +18,9 @@ let client  = MidiClient()
 let midiIn   = MidiInput(client: client, name: "Input 1")
 midiIn.listeners.append(x)
 
-let device  = MidiDevice(name: "KeyLab 49")
+MidiInput.listDevices()
+
+let device  = MidiDevice(name: "MPK mini")
 device.connectToInput(midiIn)
 
 stream.onRender = {numChannels, numFrames, timestamp, buffer in

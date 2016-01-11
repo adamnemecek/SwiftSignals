@@ -106,4 +106,19 @@ class AudioStream: NSObject
         graph.destroy()
         return 0
     }
+    
+    class func getDevices() -> Void {
+        
+        var sizePtr = toPointer(UInt32(sizeof(AudioObjectID)))
+        var propertyAdressPointer = toPointer(AudioObjectPropertyAddress())
+        propertyAdressPointer.memory.mScope = kAudioObjectPropertyScopeGlobal
+        propertyAdressPointer.memory.mSelector = kAudioHardwarePropertyDevices
+        propertyAdressPointer.memory.mElement = kAudioObjectPropertyElementMaster
+        var deviceIds = toPointer(AudioObjectID())
+        
+        AudioObjectGetPropertyDataSize(UInt32(kAudioObjectSystemObject), propertyAdressPointer, 0, nil, sizePtr)
+        
+        var numDevices = sizePtr.memory / UInt32(sizeof(AudioObjectID))
+        print("Number of devices: \(numDevices)")
+    }
 }

@@ -42,7 +42,7 @@ class WaveTable
                 sum += sin(phinc * Double(sample)) * Double(spectrum[channel])
             }
             
-            table.append(Float32(sum))
+            table.append(Float32(sum / Double(spectrum.count)))
         }
     }
 }

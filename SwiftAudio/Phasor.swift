@@ -10,7 +10,8 @@ import Foundation
 
 class Phasor: Signal<Float32>
 {
-    var frequency: Signal<Float>?
+    var frequency:  Signal<Float32>?
+    var phase:      Signal<Float32>?
     var phinc: Float32 = 0.0
     init(frequency: Signal<Float32> = DC(value: 440.0)) {
         super.init()
@@ -21,7 +22,13 @@ class Phasor: Signal<Float32>
     override func generateSample(timestamp: Int) {
         
         phinc = 1.0 / 44100.0 * frequency![timestamp]
-        sample = sample + phinc
+        var offset: Float32 = 0.0
+        if phase != nil
+        {
+            offset = phase![timestamp]
+        }
+        
+        sample = sample + phinc + offset
         
         while sample > 1.0
         {

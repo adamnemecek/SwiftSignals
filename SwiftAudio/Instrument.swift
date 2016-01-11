@@ -60,7 +60,7 @@ class WaveTableSynth: Signal<Float32>, MidiProcessor
     var wave    = WaveTable(size: 2048)
     
     override init() {
-        wave.createSpectrum([1.0, 0.5, 0.33, 0.25])
+        wave.createSpectrum([1.0, 0.5, 0.0, 0.33, 0, 0.36, 0.9, 0.9, 0.1])
     }
     
     func getFreeVoice() -> WaveTableVoice?

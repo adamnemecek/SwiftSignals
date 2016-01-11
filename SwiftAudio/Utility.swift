@@ -17,3 +17,9 @@ func fromVoid<T: AnyObject>(ptr: UnsafeMutablePointer<Void>) -> T
 {
     return Unmanaged<T>.fromOpaque(COpaquePointer(ptr)).takeUnretainedValue()
 }
+
+func toPointer<T>(data: T) -> UnsafeMutablePointer<T> {
+    let ptr = UnsafeMutablePointer<T>.alloc(1)
+    ptr.initialize(data)
+    return ptr
+}
