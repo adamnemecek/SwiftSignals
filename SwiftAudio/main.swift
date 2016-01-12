@@ -8,40 +8,7 @@
 
 import Foundation
 
-let stream = AudioStream()
-AudioStream.getDevices()
-let x = WaveTableSynth()
-
-var n = 0
-
-let client  = MidiClient()
-let midiIn   = MidiInput(client: client, name: "Input 1")
-midiIn.listeners.append(x)
-
-MidiInput.listDevices()
-
-let device  = MidiDevice(name: "MPK mini")
-device.connectToInput(midiIn)
-
-stream.onRender = {numChannels, numFrames, timestamp, buffer in
-    
-    for frame in 0..<numFrames
-    {
-        for channel in 0..<numChannels
-        {
-            buffer[channel][frame] = x[n]
-        }
-        n++
-    }
-}
-
-stream.start()
-
-while(true){
-    sleep(1)
-
-}
-
-stream.stop()
-stream.destroy()
-
+let host = Host.sharedInstance
+let window = Window(title: "Host", xPos: 0, yPos: 0, width: 1200, height: 800)
+var app = Application(window: window)
+app.run()

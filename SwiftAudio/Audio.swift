@@ -35,6 +35,78 @@ func callback(data: UnsafeMutablePointer<Void>,
     return 0
 }
 
+class AudioDevice
+{
+    var id: AudioDeviceID?
+    var name: String?
+    var manufacturer: String?
+    var channelName: String?
+    
+    init(deviceId: AudioDeviceID)
+    {
+        id = deviceId
+    }
+    
+    class func listDevices() -> [AudioDevice]
+    {
+        var audioDevices = [AudioDevice]()
+        
+        let sizePtr = toPointer(UInt32(sizeof(AudioObjectID)))
+        let propertyAdressPointer = toPointer(AudioObjectPropertyAddress())
+        propertyAdressPointer.memory.mScope = kAudioObjectPropertyScopeGlobal
+        propertyAdressPointer.memory.mSelector = kAudioHardwarePropertyDevices
+        propertyAdressPointer.memory.mElement = kAudioObjectPropertyElementMaster
+        
+        AudioObjectGetPropertyDataSize(UInt32(kAudioObjectSystemObject), propertyAdressPointer, 0, nil, sizePtr)
+        
+        let numDevices = sizePtr.memory / UInt32(sizeof(AudioObjectID))
+        let deviceIds = UnsafeMutablePointer<AudioObjectID>.alloc(Int(numDevices))
+        AudioObjectGetPropertyData(UInt32(kAudioObjectSystemObject), propertyAdressPointer, 0, nil, sizePtr, deviceIds)
+        
+        var deviceAddress   = AudioObjectPropertyAddress()
+        let deviceName      = UnsafeMutablePointer<CChar>.alloc(64)
+        let manufacturer    = UnsafeMutablePointer<CChar>.alloc(64)
+        let channelName     = UnsafeMutablePointer<CChar>.alloc(64)
+        
+        for device in 0..<numDevices
+        {
+            deviceAddress.mSelector = UInt32(kAudioDevicePropertyDeviceName)
+            deviceAddress.mScope    = UInt32(kAudioObjectPropertyScopeGlobal)
+            deviceAddress.mElement  = UInt32(kAudioObjectPropertyElementMaster)
+            let deviceAdressPointer = toPointer(AudioObjectPropertyAddress())
+            deviceAdressPointer.initialize(deviceAddress)
+            
+            AudioObjectGetPropertyData(deviceIds[Int(device)], deviceAdressPointer, 0, nil, sizePtr, deviceName)
+            
+            deviceAddress.mSelector = UInt32(kAudioDevicePropertyDeviceManufacturer)
+            deviceAddress.mScope    = UInt32(kAudioObjectPropertyScopeGlobal)
+            deviceAddress.mElement  = UInt32(kAudioObjectPropertyElementMaster)
+            deviceAdressPointer.initialize(deviceAddress)
+            
+            AudioObjectGetPropertyData(deviceIds[Int(device)], deviceAdressPointer, 0, nil, sizePtr, manufacturer)
+            
+            let audioDevice = AudioDevice(deviceId: deviceIds[Int(device)])
+            audioDevice.name            = String.fromCString(deviceName)
+            audioDevice.manufacturer    = String.fromCString(manufacturer)
+            audioDevice.channelName     = String.fromCString(channelName)
+            audioDevices.append(audioDevice)
+        }
+        
+        return audioDevices
+    }
+}
+
+class AudioDeviceSettings
+{
+    var audioInputDevice: AudioDevice?
+    var audioOutputDevice: AudioDevice?
+}
+
+class AudioSettings
+{
+    var sampleRate: Float32 = 44100.0
+}
+
 class AudioStream: NSObject
 {
     var graph           = UnsafeMutablePointer<AUGraph>.alloc(1)
@@ -50,7 +122,8 @@ class AudioStream: NSObject
     
     var onRender: (numChannels: Int, numFrames: Int, timestamp: UInt64, AudioBuffer<Float32>) -> Void = {_,_,_,_ in }
     
-    override init(){
+    override init()
+    {
         
         outputNode = AUNode()
         outputUnit = AudioUnit()
@@ -105,20 +178,5 @@ class AudioStream: NSObject
         cbPtr.destroy()
         graph.destroy()
         return 0
-    }
-    
-    class func getDevices() -> Void {
-        
-        var sizePtr = toPointer(UInt32(sizeof(AudioObjectID)))
-        var propertyAdressPointer = toPointer(AudioObjectPropertyAddress())
-        propertyAdressPointer.memory.mScope = kAudioObjectPropertyScopeGlobal
-        propertyAdressPointer.memory.mSelector = kAudioHardwarePropertyDevices
-        propertyAdressPointer.memory.mElement = kAudioObjectPropertyElementMaster
-        var deviceIds = toPointer(AudioObjectID())
-        
-        AudioObjectGetPropertyDataSize(UInt32(kAudioObjectSystemObject), propertyAdressPointer, 0, nil, sizePtr)
-        
-        var numDevices = sizePtr.memory / UInt32(sizeof(AudioObjectID))
-        print("Number of devices: \(numDevices)")
     }
 }

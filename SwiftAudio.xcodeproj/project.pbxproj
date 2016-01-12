@@ -22,7 +22,10 @@
 		FA121EC71C42B0CA00D79374 /* Integrator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA121EC61C42B0CA00D79374 /* Integrator.swift */; };
 		FA121EC91C42B79100D79374 /* Envelope.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA121EC81C42B79100D79374 /* Envelope.swift */; };
 		FA1911F41C3E979700E511D4 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1911F31C3E979700E511D4 /* main.swift */; };
-		FA1911FB1C3E97A600E511D4 /* AudioStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1911FA1C3E97A600E511D4 /* AudioStream.swift */; };
+		FA1911FB1C3E97A600E511D4 /* Audio.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1911FA1C3E97A600E511D4 /* Audio.swift */; };
+		FA9D4C441C451B4D00370015 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9D4C431C451B4D00370015 /* AppDelegate.swift */; };
+		FA9D4C471C45205C00370015 /* Application.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9D4C461C45205C00370015 /* Application.swift */; };
+		FA9D4C491C45419200370015 /* Window.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9D4C481C45419100370015 /* Window.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -53,8 +56,11 @@
 		FA121EC61C42B0CA00D79374 /* Integrator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Integrator.swift; sourceTree = "<group>"; };
 		FA121EC81C42B79100D79374 /* Envelope.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Envelope.swift; sourceTree = "<group>"; };
 		FA1911F01C3E979700E511D4 /* SwiftAudio */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = SwiftAudio; sourceTree = BUILT_PRODUCTS_DIR; };
-		FA1911F31C3E979700E511D4 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
-		FA1911FA1C3E97A600E511D4 /* AudioStream.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioStream.swift; sourceTree = "<group>"; };
+		FA1911F31C3E979700E511D4 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = main.swift; path = SwiftAudio/main.swift; sourceTree = "<group>"; };
+		FA1911FA1C3E97A600E511D4 /* Audio.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Audio.swift; sourceTree = "<group>"; };
+		FA9D4C431C451B4D00370015 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		FA9D4C461C45205C00370015 /* Application.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Application.swift; sourceTree = "<group>"; };
+		FA9D4C481C45419100370015 /* Window.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Window.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,7 +77,7 @@
 		FA1911E71C3E979700E511D4 = {
 			isa = PBXGroup;
 			children = (
-				FA1911F21C3E979700E511D4 /* SwiftAudio */,
+				FA9D4C421C451B3000370015 /* Signals */,
 				FA1911F11C3E979700E511D4 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -89,12 +95,11 @@
 			children = (
 				FA121EC01C42AC5A00D79374 /* Artithmetic.swift */,
 				FA121EB21C406FC600D79374 /* AudioBuffer.swift */,
-				FA1911FA1C3E97A600E511D4 /* AudioStream.swift */,
+				FA1911FA1C3E97A600E511D4 /* Audio.swift */,
 				FA121EC11C42AC5A00D79374 /* Filter.swift */,
 				FA121EB61C4163DE00D79374 /* Host.swift */,
 				FA121EB81C41657D00D79374 /* Instrument.swift */,
 				FA121EC61C42B0CA00D79374 /* Integrator.swift */,
-				FA1911F31C3E979700E511D4 /* main.swift */,
 				FA121EB41C407D8F00D79374 /* Midi.swift */,
 				FA121EBC1C41979800D79374 /* Phasor.swift */,
 				FA121EC21C42AC5A00D79374 /* Signal.swift */,
@@ -105,6 +110,26 @@
 				FA121EC81C42B79100D79374 /* Envelope.swift */,
 			);
 			path = SwiftAudio;
+			sourceTree = "<group>";
+		};
+		FA9D4C421C451B3000370015 /* Signals */ = {
+			isa = PBXGroup;
+			children = (
+				FA1911F31C3E979700E511D4 /* main.swift */,
+				FA1911F21C3E979700E511D4 /* SwiftAudio */,
+				FA9D4C451C451B5400370015 /* Gui */,
+			);
+			name = Signals;
+			sourceTree = "<group>";
+		};
+		FA9D4C451C451B5400370015 /* Gui */ = {
+			isa = PBXGroup;
+			children = (
+				FA9D4C431C451B4D00370015 /* AppDelegate.swift */,
+				FA9D4C461C45205C00370015 /* Application.swift */,
+				FA9D4C481C45419100370015 /* Window.swift */,
+			);
+			name = Gui;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -164,12 +189,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FA1911FB1C3E97A600E511D4 /* AudioStream.swift in Sources */,
+				FA9D4C471C45205C00370015 /* Application.swift in Sources */,
+				FA1911FB1C3E97A600E511D4 /* Audio.swift in Sources */,
 				FA121EC51C42AC5A00D79374 /* Signal.swift in Sources */,
 				FA121EC71C42B0CA00D79374 /* Integrator.swift in Sources */,
 				FA121EB51C407D8F00D79374 /* Midi.swift in Sources */,
 				FA121EBF1C42ABD100D79374 /* Value.swift in Sources */,
 				FA121EB11C40090400D79374 /* Sine.swift in Sources */,
+				FA9D4C441C451B4D00370015 /* AppDelegate.swift in Sources */,
 				FA121EC31C42AC5A00D79374 /* Artithmetic.swift in Sources */,
 				FA121EC91C42B79100D79374 /* Envelope.swift in Sources */,
 				FA121EBD1C41979800D79374 /* Phasor.swift in Sources */,
@@ -179,6 +206,7 @@
 				FA121EB31C406FC600D79374 /* AudioBuffer.swift in Sources */,
 				FA1911F41C3E979700E511D4 /* main.swift in Sources */,
 				FA121EBB1C4193E500D79374 /* WaveTable.swift in Sources */,
+				FA9D4C491C45419200370015 /* Window.swift in Sources */,
 				FA121EA11C3FB5D600D79374 /* Utility.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
