@@ -8,7 +8,13 @@
 
 import Foundation
 
-let host = Host.sharedInstance
-let window = Window(title: "Host", xPos: 0, yPos: 0, width: 1200, height: 800)
-var app = Application(window: window)
-app.run()
+
+let scene = Scene()
+scene.createObject()
+
+scene.integrationFunction = integrateWithRK4
+
+while(true)
+{
+    scene.update()
+}
