@@ -131,8 +131,8 @@
 			isa = PBXGroup;
 			children = (
 				FAFE43571C524CEC00FF46E8 /* GameObject.swift */,
-				FAFE43581C524CEC00FF46E8 /* Physics */,
 				FAFE435B1C524CEC00FF46E8 /* Transform.swift */,
+				FAFE43581C524CEC00FF46E8 /* Physics */,
 			);
 			path = GameEngine;
 			sourceTree = "<group>";

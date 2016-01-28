@@ -8,23 +8,11 @@
 
 import GLKit
 
-class Transform
+struct Transform
 {
-    var translation = GLKMatrix4()
-    var scaling     = GLKMatrix4()
-    var rotation    = GLKMatrix4()
-    
-    func translate(x: Float, y: Float, z: Float) {
-        GLKMatrix4Translate(translation, x, y, z)
-    }
-    
-    func scale(x: Float, y: Float, z: Float) {
-        GLKMatrix4Scale(rotation, x, y, z)
-    }
-    
-    func rotate(radians: Float, x: Float, y: Float, z: Float) {
-        GLKMatrix4Rotate(rotation, radians, x, y, z)
-    }
+    var translation     = Matrix4x4()
+    var scaling         = Matrix4x4()
+    var rotation        = Matrix4x4()
 }
 
 func *(lhs: GLKMatrix4, rhs: GLKMatrix4) -> GLKMatrix4 {

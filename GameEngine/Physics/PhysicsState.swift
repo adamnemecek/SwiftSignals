@@ -11,25 +11,25 @@ import GLKit
 struct PhysicsState
 {
     /// Current Position
-    var position        = GLKVector3()
+    var position            = Vector3()
     
     /// Current momentum
-    var momentum            = GLKVector3()
+    var momentum            = Vector3()
     
     /// Current angular momentum
-    var angularMomentum     = GLKVector3()
+    var angularMomentum     = Vector3()
     
     /// Current velocity
-    var velocity            = GLKVector3()
+    var velocity            = Vector3()
     
     /// Current angular velocity
-    var angularVelocity     = GLKVector3()
+    var angularVelocity     = Vector3()
     
     /// Current spin
-    var spin                = GLKQuaternion()
+    var spin                = Quaternion()
     
     /// The current orientation
-    var orientation         = GLKQuaternion()
+    var orientation         = Quaternion()
     
     /// Mass, which is assumed to be static
     var mass                = 100.0
@@ -47,7 +47,7 @@ struct PhysicsState
     var inverseInertiaTensor = 0.0
     
     /// Force applied to  this body.
-    var force           = GLKVector3()
+    var force           = Vector3()
     
     /// Body-to-world matrix
     var bodyToWorld     = GLKMatrix4()
@@ -59,18 +59,14 @@ struct PhysicsState
         inverseMass             = 1.0 / mass
         inertiaTensor           = mass * size * size * 1.0/6.0
         inverseInertiaTensor    = 1.0 / inertiaTensor
+        orientation             = Quaternion()
     }
     
     mutating func update() -> Void {
-        velocity        = momentum * Float(inverseMass)
-        angularVelocity = angularMomentum * Float(inverseInertiaTensor)
-        orientation     = GLKQuaternionNormalize(orientation)
-        spin            = 0.5 * GLKQuaternionMake(angularVelocity.x, angularVelocity.y, angularVelocity.z, 0) * orientation
-        var translation = GLKMatrix4()
-        translation     = GLKMatrix4Translate(translation, position.x, position.y, position.z)
-        bodyToWorld     = GLKMatrix4MakeWithQuaternion(orientation) * translation
-        let convertible = UnsafeMutablePointer<Bool>.alloc(1)
-        worldToBody     = GLKMatrix4Invert(bodyToWorld, convertible)
+        velocity        = momentum * Float32(inverseMass)
+        angularVelocity = angularMomentum * Float32(inverseInertiaTensor)
+        orientation.normalize()
+        spin            = Float32(0.5) * Quaternion(a: 0, b: angularVelocity.x, c: angularVelocity.y, d: angularVelocity.z) * orientation
     }
     
     mutating func applyForce(forceVector: GLKVector3) -> Void {
@@ -80,14 +76,18 @@ struct PhysicsState
     mutating func addForce(forceVector: GLKVector3) -> Void {
         force = force + forceVector
     }
+    
+    func rotation() -> GLKMatrix4 {
+        return GLKMatrix4MakeWithQuaternion(orientation)
+    }
 }
 
 struct Derivative
 {
-    var velocity    = GLKVector3()
-    var force       = GLKVector3()
-    var spin        = GLKQuaternion()
-    var torque      = GLKVector3()
+    var velocity    = Vector3()
+    var force       = Vector3()
+    var spin        = Quaternion()
+    var torque      = Vector3()
 }
 
 func evaluate(var state: PhysicsState, t: Double, dt: Double, derivative: Derivative) -> Derivative {
@@ -108,7 +108,7 @@ func evaluate(var state: PhysicsState, t: Double, dt: Double, derivative: Deriva
     /// Update position derivative (velocity)
     output.velocity = state.velocity
     /// Update velocity derivative by calculating acceleration.
-    forces(state, time: t + dt, force: &output.force)
+    forces(state, time: t + dt, force: &output.force, torque: &output.torque)
     /// Return this derivative for RK4 evaluation.
     return output
 }
@@ -121,20 +121,18 @@ func evaluate(state: PhysicsState, t: Double) -> Derivative {
     /// Update velocity derivative by calculating acceleration.
     output.spin     = state.spin
     
-    forces(state, time: t, force: &output.force)
+    forces(state, time: t, force: &output.force, torque: &output.torque)
     /// Return this derivative for RK4 evaluation.
     return output
 }
 
-func forces(state: PhysicsState, time: Double, inout force: GLKVector3) {
+func forces(state: PhysicsState, time: Double, inout force: GLKVector3, inout torque: GLKVector3) {
     
-    force = (GLKVector3(v: (Float(0.0), Float(10.0), Float(0.0))) * Float(state.mass))
+    force   = Vector3(x: 0, y: -10, z: 0) * Float(state.mass)
     
-//    let addForce = GLKVector3(v: (  Float(10 * sin(nextTimeStep * 0.1 + 0.5)),
-//                                    Float(11 * (nextTimeStep * 0.1 + 0.4)),
-//                                    Float(12 * sin(nextTimeStep * 0.1 + 0.9))))
-    
-//    force = force + addForce
+    torque  = Vector3(  x: Float(10 * sin(time * 0.1 + 0.5)),
+                        y: Float(11 * (time * 0.1 + 0.4)),
+                        z: Float(12 * sin(time * 0.1 + 0.9)))
 }
 
 func integrateWithRK4(inout state: PhysicsState, t: Double, dt: Double) -> Void {
@@ -168,13 +166,6 @@ func integrateWithRK4(inout state: PhysicsState, t: Double, dt: Double) -> Void 
     state.angularMomentum = state.angularMomentum + Float(dt) * torque
     
     state.update()
-}
-
-func eulerIntegration(inout state: PhysicsState, t: Double, dt: Double) -> Void {
-    state.applyForce(scene.gravity)
-    let acceleration = (state.force * Float(state.inverseMass)) * Float(dt)
-    state.velocity = (state.velocity + acceleration)
-    state.position = (state.position + state.velocity)
 }
 
 func +(lhs: GLKVector3, rhs: GLKVector3) -> GLKVector3 {

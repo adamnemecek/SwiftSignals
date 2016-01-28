@@ -7,8 +7,7 @@
 //
 
 import Cocoa
-import Metal
-import QuartzCore
+import MetalKit
 
 class MetalContext: GpuGraphicsContext
 {
@@ -25,6 +24,8 @@ class MetalContext: GpuGraphicsContext
     
     var pipelineStateDescriptor = MTLRenderPipelineDescriptor()
     
+    let vertexDescriptor = MTLVertexDescriptor()
+    
     var renderPassDescriptor    = MTLRenderPassDescriptor()
     
     var pipelineIsDirty = true
@@ -36,13 +37,12 @@ class MetalContext: GpuGraphicsContext
     var vertexShader: MetalShader?
     var fragmentShader: MetalShader?
     
-    init(view: NSView) {
-        layer.device            = device
-        layer.pixelFormat       = .BGRA8Unorm
-        layer.framebufferOnly   = true
-        layer.frame             = view.frame
-        view.layer              = layer
+    var metalView: MTKView?
+    
+    init(view: MTKView) {
         
+        metalView = view
+        metalView!.device       = device!
         library                 = device?.newDefaultLibrary()
         commandQueue            = device?.newCommandQueue()
         
@@ -53,10 +53,44 @@ class MetalContext: GpuGraphicsContext
         pipelineStateDescriptor.fragmentFunction    = fragmentShader?.shader
         
         pipelineStateDescriptor.colorAttachments[0].pixelFormat = .BGRA8Unorm
+        
+        // Positions.
+        vertexDescriptor.attributes[0].format = .Float3;
+        vertexDescriptor.attributes[0].offset = 0;
+        vertexDescriptor.attributes[0].bufferIndex = 0;
+        
+        // Normals.
+        vertexDescriptor.attributes[1].format = .Float3;
+        vertexDescriptor.attributes[1].offset = 12;
+        vertexDescriptor.attributes[1].bufferIndex = 0;
+        
+        // Texture coordinates.
+        vertexDescriptor.attributes[2].format = .Float2;
+        vertexDescriptor.attributes[2].offset = 24;
+        vertexDescriptor.attributes[2].bufferIndex = 0;
+        
+        // Single interleaved buffer.
+        vertexDescriptor.layouts[0].stride = 32;
+        vertexDescriptor.layouts[0].stepRate = 1;
+        vertexDescriptor.layouts[0].stepFunction = .PerVertex;
+        
+        pipelineStateDescriptor.vertexDescriptor = vertexDescriptor
     }
     
     func createBuffer<T>(data: [T], layout: VertexLayout) -> MetalBuffer<T> {
-        return MetalBuffer(device: device!, data: data, layout: layout)
+        return MetalBuffer(device: device!, data: data, aLayout: layout)
+    }
+    
+    func createBuffer(meshBuffer: MDLMeshBufferData) -> MetalBuffer<Float>{
+        let temp = device?.newBufferWithBytes(meshBuffer.data.bytes, length: meshBuffer.length, options:.CPUCacheModeDefaultCache)
+        
+        return MetalBuffer(aBuffer: temp!)
+    }
+    
+    func createIndexBuffer(meshBuffer: MDLMeshBufferData) -> MetalBuffer<UInt32>{
+        let temp = device?.newBufferWithBytes(meshBuffer.data.bytes, length: meshBuffer.length, options:.CPUCacheModeDefaultCache)
+        
+        return MetalBuffer(aBuffer: temp!)
     }
     
     func useShader(name: String) -> MetalShader {
@@ -65,15 +99,17 @@ class MetalContext: GpuGraphicsContext
     }
     
     func prepareToRender() {
-        let drawable = layer.nextDrawable()
-        renderPassDescriptor.colorAttachments[0].texture    = drawable?.texture
+        renderPassDescriptor.colorAttachments[0].texture    = metalView?.currentDrawable?.texture
         renderPassDescriptor.colorAttachments[0].loadAction = .Clear
-        renderPassDescriptor.colorAttachments[0].clearColor = MTLClearColorMake(0.0, 0.0, 0.0, 0.0)
+        renderPassDescriptor.colorAttachments[0].clearColor = MTLClearColorMake(0.0, 0.3, 0.0, 1.0)
         
+        let err = AutoreleasingUnsafeMutablePointer<MTLAutoreleasedRenderPipelineReflection?>()
         do {
-            pipelineState = try device!.newRenderPipelineStateWithDescriptor(pipelineStateDescriptor)
+            pipelineState = try device!.newRenderPipelineStateWithDescriptor(pipelineStateDescriptor , options: MTLPipelineOption.None, reflection: err)
         } catch {
             print("Failed to initialize new pipeline state")
+            print(err)
+            return
         }
         
         commandBuffer           = commandQueue?.commandBuffer()
@@ -81,10 +117,15 @@ class MetalContext: GpuGraphicsContext
         renderCommandEncoder?.setRenderPipelineState(pipelineState!)
         
         commandEncoder.commandEncoder = renderCommandEncoder!
+        commandEncoder.commandEncoder?.setCullMode(.Back)
+        commandEncoder.commandEncoder?.setFrontFacingWinding(.CounterClockwise)
     }
     
     func render() {
         
+        commandEncoder.commandEncoder?.endEncoding()
+        commandBuffer?.presentDrawable(metalView!.currentDrawable!)
+        commandBuffer?.commit()
     }
 }
 
@@ -92,6 +133,7 @@ struct VertexAttribute
 {
     var name = ""
     var size = 0
+    var offset = 0
 }
 
 class VertexLayout
@@ -117,10 +159,22 @@ class MetalBuffer<VertexType>
     var buffer: MTLBuffer?
     var origData: [VertexType]?
     var layout: VertexLayout?
+    var vertexCount: UInt64 = 0
     
-    init(device: MTLDevice, data: [VertexType], layout: VertexLayout) {
-        origData = data
-        buffer = device.newBufferWithBytes(data, length: sizeof(VertexType) * data.count, options: .CPUCacheModeDefaultCache)
+    var size = 0
+    
+    init(device: MTLDevice, data: [VertexType], aLayout: VertexLayout) {
+        
+        layout      = aLayout
+        origData    = data
+        buffer      = device.newBufferWithBytes(data, length: sizeof(VertexType) * data.count, options: .CPUCacheModeDefaultCache)
+        
+        size = data.count * sizeof(VertexType)
+    }
+    
+    init(aBuffer: MTLBuffer) {
+        buffer = aBuffer
+        size = (buffer?.length)!
     }
 }
 
@@ -138,9 +192,16 @@ class CommandEncoder
     var commandEncoder: MTLRenderCommandEncoder?
     
     func renderBuffer<T>(buffer: MetalBuffer<T>) -> Void {
+        
         commandEncoder!.setVertexBuffer(buffer.buffer, offset: 0, atIndex: 0)
-        let size = buffer.origData!.count / (buffer.layout?.byteSize())!
+        let size = buffer.size / sizeof(T) / 9
         commandEncoder!.drawPrimitives(.Triangle, vertexStart: 0, vertexCount: size)
+    }
+    
+    func renderIndexBuffer<T>(vertexBuffer: MetalBuffer<T>, indexBuffer: MetalBuffer<UInt32>) {
+        
+        commandEncoder!.setVertexBuffer(vertexBuffer.buffer, offset: 0, atIndex: 0)
+        commandEncoder!.drawIndexedPrimitives(.Triangle, indexCount: indexBuffer.size / sizeof(UInt32), indexType: .UInt32, indexBuffer: indexBuffer.buffer!, indexBufferOffset: 0)
     }
 }
 

@@ -26,7 +26,7 @@ class Scene
         objects.append(object)
     }
     
-    func update() {
+    func update(ctx: MetalContext) {
         
         let newTime     = NSDate.timeIntervalSinceReferenceDate()
         var frameTime   = newTime - currentTime
@@ -43,6 +43,7 @@ class Scene
             for object in objects {
                 integrationFunction(&object.state, t, dt)
                 object.update()
+                object.meshRenderer?.render(ctx.commandEncoder)
             }
             
             t += dt;

@@ -9,13 +9,37 @@
 #include <metal_stdlib>
 using namespace metal;
 
-vertex float4 basic_vertex(const device packed_float3* vertexArray[[ buffer(0) ]],
-                           unsigned int vertexId [[ vertex_id ]])
+struct Vertex {
+    packed_float3 position[[attribute(0)]];
+    packed_float3 normal[[attribute(1)]];
+    packed_float2 tex[[attribute(2)]];
+};
+
+struct VertexInOut {
+    float4 position [[position]];
+    float2 tex;
+    float4 color;
+};
+
+struct Uniforms {
+    float4x4 translation;
+    float4x4 scale;
+    float4x4 rotation;
+};
+
+vertex VertexInOut basic_vertex(const device Vertex* vertexArray[[ buffer(0) ]],
+                                const device Uniforms* u [[ buffer(1) ]],
+                                unsigned int vertexId [[ vertex_id ]])
 {
-    return float4(vertexArray[vertexId], 1.0);
+    VertexInOut v;
+    v.position  = u->rotation * float4(vertexArray[vertexId].position, 1.0);
+    v.color     = float4(vertexArray[vertexId].normal, 1.0);
+    v.tex       = vertexArray[vertexId].tex;
+    
+    return v;
 }
 
-fragment half4 basic_fragment()
+fragment half4 basic_fragment(VertexInOut v [[stage_in]])
 {
-    return half4(1.0);
+    return half4(v.color);
 }

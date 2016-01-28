@@ -6,7 +6,7 @@
 //  Copyright © 2016 Danny van Swieten. All rights reserved.
 //
 
-import Foundation
+import Metal
 
 class GameObject
 {
@@ -27,11 +27,18 @@ class GameObject
         meshRenderer = MeshRenderer(aTransform: transform)
     }
     
-    func size() -> Float {
-        return transform.scaling[0] * transform.scaling[1] * transform.scaling[3]
-    }
-    
     func update() {
-        print("x:\(state.position[0]) y: \(state.position[1]) z: \(state.position[2])")
+        let rotate = state.rotation()
+        let X = Vector4(x: rotate.m00, y: rotate.m01, z: rotate.m02, w: rotate.m03)
+        let Y = Vector4(x: rotate.m10, y: rotate.m11, z: rotate.m12, w: rotate.m13)
+        let Z = Vector4(x: rotate.m20, y: rotate.m21, z: rotate.m22, w: rotate.m23)
+        let W = Vector4(x: rotate.m30, y: rotate.m31, z: rotate.m32, w: rotate.m33)
+        
+        transform.rotation.X    = X
+        transform.rotation.Y    = Y
+        transform.rotation.Z    = Z
+        transform.rotation.W    = W
+        
+        meshRenderer?.transform = transform
     }
 }

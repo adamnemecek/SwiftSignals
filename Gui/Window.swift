@@ -8,10 +8,18 @@
 
 import AppKit
 
+
+enum GraphicsBackEnd {
+    case Metal
+    case OpenGl
+    case CoreGraphics
+}
+
 class Window
 {
     var window: NSWindow?
     var mainContentView = MainContentView()
+    var metal: MetalViewController?
     
     init(title: String, xPos: CGFloat, yPos: CGFloat, width: CGFloat, height: CGFloat) {
         let rect = CGRectMake(xPos, yPos, width, height)
@@ -19,8 +27,8 @@ class Window
         
         window!.title = title
         
-        mainContentView.graphicsContext = OsxGraphicsContext(ctx: (window?.graphicsContext?.CGContext)!)
-        window?.contentView = mainContentView
+        metal = MetalViewController()
+        window!.contentView? = metal!.view
     }
     
     func addMainContentView(content: Widget) {

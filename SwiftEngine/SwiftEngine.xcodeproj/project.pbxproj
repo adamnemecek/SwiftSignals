@@ -1,0 +1,664 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		FA110AEC1C563BD600D8EF5D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA110AEB1C563BD600D8EF5D /* AppDelegate.swift */; };
+		FA110AEE1C563BD600D8EF5D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FA110AED1C563BD600D8EF5D /* Assets.xcassets */; };
+		FA110AF11C563BD700D8EF5D /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA110AEF1C563BD700D8EF5D /* MainMenu.xib */; };
+		FA110AFC1C563BD700D8EF5D /* SwiftEngineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA110AFB1C563BD700D8EF5D /* SwiftEngineTests.swift */; };
+		FA110B071C563BD700D8EF5D /* SwiftEngineUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA110B061C563BD700D8EF5D /* SwiftEngineUITests.swift */; };
+		FA110B1B1C5653D200D8EF5D /* MetalKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA110B1A1C5653D200D8EF5D /* MetalKit.framework */; };
+		FA110B241C56599000D8EF5D /* defaultShader.metal in Sources */ = {isa = PBXBuildFile; fileRef = FA110B1F1C56599000D8EF5D /* defaultShader.metal */; };
+		FA110B251C56599000D8EF5D /* GpuGraphicsContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA110B201C56599000D8EF5D /* GpuGraphicsContext.swift */; };
+		FA110B261C56599000D8EF5D /* MeshRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA110B211C56599000D8EF5D /* MeshRenderer.swift */; };
+		FA110B271C56599000D8EF5D /* MetalContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA110B221C56599000D8EF5D /* MetalContext.swift */; };
+		FA110B281C56599000D8EF5D /* MetalRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA110B231C56599000D8EF5D /* MetalRenderer.swift */; };
+		FA110B4B1C5659AA00D8EF5D /* GameObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA110B2A1C5659AA00D8EF5D /* GameObject.swift */; };
+		FA110B4C1C5659AA00D8EF5D /* PhysicsState.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA110B2C1C5659AA00D8EF5D /* PhysicsState.swift */; };
+		FA110B4D1C5659AA00D8EF5D /* Scene.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA110B2D1C5659AA00D8EF5D /* Scene.swift */; };
+		FA110B4E1C5659AA00D8EF5D /* Transform.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA110B2E1C5659AA00D8EF5D /* Transform.swift */; };
+		FA110B561C5659AA00D8EF5D /* Artithmetic.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA110B381C5659AA00D8EF5D /* Artithmetic.swift */; };
+		FA110B571C5659AA00D8EF5D /* Audio.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA110B391C5659AA00D8EF5D /* Audio.swift */; };
+		FA110B581C5659AA00D8EF5D /* AudioBuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA110B3A1C5659AA00D8EF5D /* AudioBuffer.swift */; };
+		FA110B591C5659AA00D8EF5D /* Envelope.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA110B3B1C5659AA00D8EF5D /* Envelope.swift */; };
+		FA110B5A1C5659AA00D8EF5D /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA110B3C1C5659AA00D8EF5D /* Filter.swift */; };
+		FA110B5B1C5659AA00D8EF5D /* Host.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA110B3D1C5659AA00D8EF5D /* Host.swift */; };
+		FA110B5C1C5659AA00D8EF5D /* Instrument.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA110B3E1C5659AA00D8EF5D /* Instrument.swift */; };
+		FA110B5D1C5659AA00D8EF5D /* Integrator.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA110B3F1C5659AA00D8EF5D /* Integrator.swift */; };
+		FA110B5E1C5659AA00D8EF5D /* Midi.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA110B401C5659AA00D8EF5D /* Midi.swift */; };
+		FA110B5F1C5659AA00D8EF5D /* Phasor.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA110B411C5659AA00D8EF5D /* Phasor.swift */; };
+		FA110B601C5659AA00D8EF5D /* Signal.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA110B421C5659AA00D8EF5D /* Signal.swift */; };
+		FA110B611C5659AA00D8EF5D /* Sine.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA110B431C5659AA00D8EF5D /* Sine.swift */; };
+		FA110B621C5659AA00D8EF5D /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA110B441C5659AA00D8EF5D /* Utility.swift */; };
+		FA110B631C5659AA00D8EF5D /* Value.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA110B451C5659AA00D8EF5D /* Value.swift */; };
+		FA110B641C5659AA00D8EF5D /* WaveTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA110B461C5659AA00D8EF5D /* WaveTable.swift */; };
+		FA110B691C565AEC00D8EF5D /* MetalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA110B681C565AEC00D8EF5D /* MetalViewController.swift */; };
+		FA110B701C56650400D8EF5D /* ObjectInspectorController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA110B6E1C56650400D8EF5D /* ObjectInspectorController.swift */; };
+		FA110B751C56782500D8EF5D /* ObjectInspector.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA110B741C56782500D8EF5D /* ObjectInspector.swift */; };
+		FA110B771C567E3E00D8EF5D /* ResourceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA110B761C567E3E00D8EF5D /* ResourceManager.swift */; };
+		FA4E13401C5A46130034B72E /* Vector.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA4E133F1C5A46130034B72E /* Vector.swift */; };
+		FA4E13421C5A47AA0034B72E /* VectorMath.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA4E13411C5A47AA0034B72E /* VectorMath.swift */; };
+		FA4E13441C5A48D50034B72E /* Matrix.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA4E13431C5A48D50034B72E /* Matrix.swift */; };
+		FA4E13461C5A4F0F0034B72E /* Quaternion.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA4E13451C5A4F0F0034B72E /* Quaternion.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		FA110AF81C563BD700D8EF5D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FA110AE01C563BD600D8EF5D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FA110AE71C563BD600D8EF5D;
+			remoteInfo = SwiftEngine;
+		};
+		FA110B031C563BD700D8EF5D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FA110AE01C563BD600D8EF5D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FA110AE71C563BD600D8EF5D;
+			remoteInfo = SwiftEngine;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		FA110AE81C563BD600D8EF5D /* SwiftEngine.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftEngine.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		FA110AEB1C563BD600D8EF5D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		FA110AED1C563BD600D8EF5D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		FA110AF01C563BD700D8EF5D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		FA110AF21C563BD700D8EF5D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FA110AF71C563BD700D8EF5D /* SwiftEngineTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftEngineTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		FA110AFB1C563BD700D8EF5D /* SwiftEngineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftEngineTests.swift; sourceTree = "<group>"; };
+		FA110AFD1C563BD700D8EF5D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FA110B021C563BD700D8EF5D /* SwiftEngineUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftEngineUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		FA110B061C563BD700D8EF5D /* SwiftEngineUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftEngineUITests.swift; sourceTree = "<group>"; };
+		FA110B081C563BD700D8EF5D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FA110B1A1C5653D200D8EF5D /* MetalKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MetalKit.framework; path = System/Library/Frameworks/MetalKit.framework; sourceTree = SDKROOT; };
+		FA110B1F1C56599000D8EF5D /* defaultShader.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = defaultShader.metal; sourceTree = "<group>"; };
+		FA110B201C56599000D8EF5D /* GpuGraphicsContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GpuGraphicsContext.swift; sourceTree = "<group>"; };
+		FA110B211C56599000D8EF5D /* MeshRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeshRenderer.swift; sourceTree = "<group>"; };
+		FA110B221C56599000D8EF5D /* MetalContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetalContext.swift; sourceTree = "<group>"; };
+		FA110B231C56599000D8EF5D /* MetalRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetalRenderer.swift; sourceTree = "<group>"; };
+		FA110B2A1C5659AA00D8EF5D /* GameObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameObject.swift; sourceTree = "<group>"; };
+		FA110B2C1C5659AA00D8EF5D /* PhysicsState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhysicsState.swift; sourceTree = "<group>"; };
+		FA110B2D1C5659AA00D8EF5D /* Scene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Scene.swift; sourceTree = "<group>"; };
+		FA110B2E1C5659AA00D8EF5D /* Transform.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Transform.swift; sourceTree = "<group>"; };
+		FA110B381C5659AA00D8EF5D /* Artithmetic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Artithmetic.swift; sourceTree = "<group>"; };
+		FA110B391C5659AA00D8EF5D /* Audio.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Audio.swift; sourceTree = "<group>"; };
+		FA110B3A1C5659AA00D8EF5D /* AudioBuffer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioBuffer.swift; sourceTree = "<group>"; };
+		FA110B3B1C5659AA00D8EF5D /* Envelope.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Envelope.swift; sourceTree = "<group>"; };
+		FA110B3C1C5659AA00D8EF5D /* Filter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Filter.swift; sourceTree = "<group>"; };
+		FA110B3D1C5659AA00D8EF5D /* Host.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Host.swift; sourceTree = "<group>"; };
+		FA110B3E1C5659AA00D8EF5D /* Instrument.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Instrument.swift; sourceTree = "<group>"; };
+		FA110B3F1C5659AA00D8EF5D /* Integrator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Integrator.swift; sourceTree = "<group>"; };
+		FA110B401C5659AA00D8EF5D /* Midi.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Midi.swift; sourceTree = "<group>"; };
+		FA110B411C5659AA00D8EF5D /* Phasor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Phasor.swift; sourceTree = "<group>"; };
+		FA110B421C5659AA00D8EF5D /* Signal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Signal.swift; sourceTree = "<group>"; };
+		FA110B431C5659AA00D8EF5D /* Sine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sine.swift; sourceTree = "<group>"; };
+		FA110B441C5659AA00D8EF5D /* Utility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
+		FA110B451C5659AA00D8EF5D /* Value.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Value.swift; sourceTree = "<group>"; };
+		FA110B461C5659AA00D8EF5D /* WaveTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WaveTable.swift; sourceTree = "<group>"; };
+		FA110B681C565AEC00D8EF5D /* MetalViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetalViewController.swift; sourceTree = "<group>"; };
+		FA110B6E1C56650400D8EF5D /* ObjectInspectorController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObjectInspectorController.swift; sourceTree = "<group>"; };
+		FA110B741C56782500D8EF5D /* ObjectInspector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObjectInspector.swift; sourceTree = "<group>"; };
+		FA110B761C567E3E00D8EF5D /* ResourceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResourceManager.swift; sourceTree = "<group>"; };
+		FA4E133F1C5A46130034B72E /* Vector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Vector.swift; sourceTree = "<group>"; };
+		FA4E13411C5A47AA0034B72E /* VectorMath.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VectorMath.swift; sourceTree = "<group>"; };
+		FA4E13431C5A48D50034B72E /* Matrix.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Matrix.swift; sourceTree = "<group>"; };
+		FA4E13451C5A4F0F0034B72E /* Quaternion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Quaternion.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		FA110AE51C563BD600D8EF5D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FA110B1B1C5653D200D8EF5D /* MetalKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FA110AF41C563BD700D8EF5D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FA110AFF1C563BD700D8EF5D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		FA110ADF1C563BD600D8EF5D = {
+			isa = PBXGroup;
+			children = (
+				FA110B291C5659AA00D8EF5D /* GameEngine */,
+				FA110B371C5659AA00D8EF5D /* SwiftAudio */,
+				FA110B1E1C56599000D8EF5D /* Metal */,
+				FA110B1A1C5653D200D8EF5D /* MetalKit.framework */,
+				FA110AEA1C563BD600D8EF5D /* SwiftEngine */,
+				FA110AFA1C563BD700D8EF5D /* SwiftEngineTests */,
+				FA110B051C563BD700D8EF5D /* SwiftEngineUITests */,
+				FA110AE91C563BD600D8EF5D /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		FA110AE91C563BD600D8EF5D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				FA110AE81C563BD600D8EF5D /* SwiftEngine.app */,
+				FA110AF71C563BD700D8EF5D /* SwiftEngineTests.xctest */,
+				FA110B021C563BD700D8EF5D /* SwiftEngineUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		FA110AEA1C563BD600D8EF5D /* SwiftEngine */ = {
+			isa = PBXGroup;
+			children = (
+				FA110AEB1C563BD600D8EF5D /* AppDelegate.swift */,
+				FA110B681C565AEC00D8EF5D /* MetalViewController.swift */,
+				FA110B6E1C56650400D8EF5D /* ObjectInspectorController.swift */,
+				FA110B741C56782500D8EF5D /* ObjectInspector.swift */,
+				FA110AED1C563BD600D8EF5D /* Assets.xcassets */,
+				FA110AEF1C563BD700D8EF5D /* MainMenu.xib */,
+				FA110AF21C563BD700D8EF5D /* Info.plist */,
+				FA110B761C567E3E00D8EF5D /* ResourceManager.swift */,
+			);
+			path = SwiftEngine;
+			sourceTree = "<group>";
+		};
+		FA110AFA1C563BD700D8EF5D /* SwiftEngineTests */ = {
+			isa = PBXGroup;
+			children = (
+				FA110AFB1C563BD700D8EF5D /* SwiftEngineTests.swift */,
+				FA110AFD1C563BD700D8EF5D /* Info.plist */,
+			);
+			path = SwiftEngineTests;
+			sourceTree = "<group>";
+		};
+		FA110B051C563BD700D8EF5D /* SwiftEngineUITests */ = {
+			isa = PBXGroup;
+			children = (
+				FA110B061C563BD700D8EF5D /* SwiftEngineUITests.swift */,
+				FA110B081C563BD700D8EF5D /* Info.plist */,
+			);
+			path = SwiftEngineUITests;
+			sourceTree = "<group>";
+		};
+		FA110B1E1C56599000D8EF5D /* Metal */ = {
+			isa = PBXGroup;
+			children = (
+				FA110B1F1C56599000D8EF5D /* defaultShader.metal */,
+				FA110B201C56599000D8EF5D /* GpuGraphicsContext.swift */,
+				FA110B211C56599000D8EF5D /* MeshRenderer.swift */,
+				FA110B221C56599000D8EF5D /* MetalContext.swift */,
+				FA110B231C56599000D8EF5D /* MetalRenderer.swift */,
+			);
+			name = Metal;
+			path = ../Metal;
+			sourceTree = "<group>";
+		};
+		FA110B291C5659AA00D8EF5D /* GameEngine */ = {
+			isa = PBXGroup;
+			children = (
+				FA110B2A1C5659AA00D8EF5D /* GameObject.swift */,
+				FA110B2B1C5659AA00D8EF5D /* Physics */,
+				FA110B2E1C5659AA00D8EF5D /* Transform.swift */,
+				FA4E133F1C5A46130034B72E /* Vector.swift */,
+				FA4E13411C5A47AA0034B72E /* VectorMath.swift */,
+				FA4E13431C5A48D50034B72E /* Matrix.swift */,
+				FA4E13451C5A4F0F0034B72E /* Quaternion.swift */,
+			);
+			name = GameEngine;
+			path = ../GameEngine;
+			sourceTree = "<group>";
+		};
+		FA110B2B1C5659AA00D8EF5D /* Physics */ = {
+			isa = PBXGroup;
+			children = (
+				FA110B2C1C5659AA00D8EF5D /* PhysicsState.swift */,
+				FA110B2D1C5659AA00D8EF5D /* Scene.swift */,
+			);
+			path = Physics;
+			sourceTree = "<group>";
+		};
+		FA110B371C5659AA00D8EF5D /* SwiftAudio */ = {
+			isa = PBXGroup;
+			children = (
+				FA110B381C5659AA00D8EF5D /* Artithmetic.swift */,
+				FA110B391C5659AA00D8EF5D /* Audio.swift */,
+				FA110B3A1C5659AA00D8EF5D /* AudioBuffer.swift */,
+				FA110B3B1C5659AA00D8EF5D /* Envelope.swift */,
+				FA110B3C1C5659AA00D8EF5D /* Filter.swift */,
+				FA110B3D1C5659AA00D8EF5D /* Host.swift */,
+				FA110B3E1C5659AA00D8EF5D /* Instrument.swift */,
+				FA110B3F1C5659AA00D8EF5D /* Integrator.swift */,
+				FA110B401C5659AA00D8EF5D /* Midi.swift */,
+				FA110B411C5659AA00D8EF5D /* Phasor.swift */,
+				FA110B421C5659AA00D8EF5D /* Signal.swift */,
+				FA110B431C5659AA00D8EF5D /* Sine.swift */,
+				FA110B441C5659AA00D8EF5D /* Utility.swift */,
+				FA110B451C5659AA00D8EF5D /* Value.swift */,
+				FA110B461C5659AA00D8EF5D /* WaveTable.swift */,
+			);
+			name = SwiftAudio;
+			path = ../SwiftAudio;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		FA110AE71C563BD600D8EF5D /* SwiftEngine */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FA110B0B1C563BD700D8EF5D /* Build configuration list for PBXNativeTarget "SwiftEngine" */;
+			buildPhases = (
+				FA110AE41C563BD600D8EF5D /* Sources */,
+				FA110AE51C563BD600D8EF5D /* Frameworks */,
+				FA110AE61C563BD600D8EF5D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SwiftEngine;
+			productName = SwiftEngine;
+			productReference = FA110AE81C563BD600D8EF5D /* SwiftEngine.app */;
+			productType = "com.apple.product-type.application";
+		};
+		FA110AF61C563BD700D8EF5D /* SwiftEngineTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FA110B0E1C563BD700D8EF5D /* Build configuration list for PBXNativeTarget "SwiftEngineTests" */;
+			buildPhases = (
+				FA110AF31C563BD700D8EF5D /* Sources */,
+				FA110AF41C563BD700D8EF5D /* Frameworks */,
+				FA110AF51C563BD700D8EF5D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				FA110AF91C563BD700D8EF5D /* PBXTargetDependency */,
+			);
+			name = SwiftEngineTests;
+			productName = SwiftEngineTests;
+			productReference = FA110AF71C563BD700D8EF5D /* SwiftEngineTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		FA110B011C563BD700D8EF5D /* SwiftEngineUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FA110B111C563BD700D8EF5D /* Build configuration list for PBXNativeTarget "SwiftEngineUITests" */;
+			buildPhases = (
+				FA110AFE1C563BD700D8EF5D /* Sources */,
+				FA110AFF1C563BD700D8EF5D /* Frameworks */,
+				FA110B001C563BD700D8EF5D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				FA110B041C563BD700D8EF5D /* PBXTargetDependency */,
+			);
+			name = SwiftEngineUITests;
+			productName = SwiftEngineUITests;
+			productReference = FA110B021C563BD700D8EF5D /* SwiftEngineUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		FA110AE01C563BD600D8EF5D /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0720;
+				LastUpgradeCheck = 0720;
+				ORGANIZATIONNAME = "Danny van Swieten";
+				TargetAttributes = {
+					FA110AE71C563BD600D8EF5D = {
+						CreatedOnToolsVersion = 7.2;
+					};
+					FA110AF61C563BD700D8EF5D = {
+						CreatedOnToolsVersion = 7.2;
+						TestTargetID = FA110AE71C563BD600D8EF5D;
+					};
+					FA110B011C563BD700D8EF5D = {
+						CreatedOnToolsVersion = 7.2;
+						TestTargetID = FA110AE71C563BD600D8EF5D;
+					};
+				};
+			};
+			buildConfigurationList = FA110AE31C563BD600D8EF5D /* Build configuration list for PBXProject "SwiftEngine" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = FA110ADF1C563BD600D8EF5D;
+			productRefGroup = FA110AE91C563BD600D8EF5D /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				FA110AE71C563BD600D8EF5D /* SwiftEngine */,
+				FA110AF61C563BD700D8EF5D /* SwiftEngineTests */,
+				FA110B011C563BD700D8EF5D /* SwiftEngineUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		FA110AE61C563BD600D8EF5D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FA110AEE1C563BD600D8EF5D /* Assets.xcassets in Resources */,
+				FA110AF11C563BD700D8EF5D /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FA110AF51C563BD700D8EF5D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FA110B001C563BD700D8EF5D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		FA110AE41C563BD600D8EF5D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FA4E13461C5A4F0F0034B72E /* Quaternion.swift in Sources */,
+				FA110B4E1C5659AA00D8EF5D /* Transform.swift in Sources */,
+				FA110B5E1C5659AA00D8EF5D /* Midi.swift in Sources */,
+				FA110B641C5659AA00D8EF5D /* WaveTable.swift in Sources */,
+				FA110B611C5659AA00D8EF5D /* Sine.swift in Sources */,
+				FA110B631C5659AA00D8EF5D /* Value.swift in Sources */,
+				FA110B5A1C5659AA00D8EF5D /* Filter.swift in Sources */,
+				FA110B601C5659AA00D8EF5D /* Signal.swift in Sources */,
+				FA110B5B1C5659AA00D8EF5D /* Host.swift in Sources */,
+				FA110B691C565AEC00D8EF5D /* MetalViewController.swift in Sources */,
+				FA110B261C56599000D8EF5D /* MeshRenderer.swift in Sources */,
+				FA110B571C5659AA00D8EF5D /* Audio.swift in Sources */,
+				FA110B4D1C5659AA00D8EF5D /* Scene.swift in Sources */,
+				FA110B771C567E3E00D8EF5D /* ResourceManager.swift in Sources */,
+				FA110B5C1C5659AA00D8EF5D /* Instrument.swift in Sources */,
+				FA110B281C56599000D8EF5D /* MetalRenderer.swift in Sources */,
+				FA110B251C56599000D8EF5D /* GpuGraphicsContext.swift in Sources */,
+				FA4E13421C5A47AA0034B72E /* VectorMath.swift in Sources */,
+				FA110B4B1C5659AA00D8EF5D /* GameObject.swift in Sources */,
+				FA110B581C5659AA00D8EF5D /* AudioBuffer.swift in Sources */,
+				FA110B5D1C5659AA00D8EF5D /* Integrator.swift in Sources */,
+				FA110AEC1C563BD600D8EF5D /* AppDelegate.swift in Sources */,
+				FA110B5F1C5659AA00D8EF5D /* Phasor.swift in Sources */,
+				FA110B241C56599000D8EF5D /* defaultShader.metal in Sources */,
+				FA4E13401C5A46130034B72E /* Vector.swift in Sources */,
+				FA110B591C5659AA00D8EF5D /* Envelope.swift in Sources */,
+				FA110B701C56650400D8EF5D /* ObjectInspectorController.swift in Sources */,
+				FA110B621C5659AA00D8EF5D /* Utility.swift in Sources */,
+				FA110B271C56599000D8EF5D /* MetalContext.swift in Sources */,
+				FA4E13441C5A48D50034B72E /* Matrix.swift in Sources */,
+				FA110B561C5659AA00D8EF5D /* Artithmetic.swift in Sources */,
+				FA110B751C56782500D8EF5D /* ObjectInspector.swift in Sources */,
+				FA110B4C1C5659AA00D8EF5D /* PhysicsState.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FA110AF31C563BD700D8EF5D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FA110AFC1C563BD700D8EF5D /* SwiftEngineTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FA110AFE1C563BD700D8EF5D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FA110B071C563BD700D8EF5D /* SwiftEngineUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		FA110AF91C563BD700D8EF5D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FA110AE71C563BD600D8EF5D /* SwiftEngine */;
+			targetProxy = FA110AF81C563BD700D8EF5D /* PBXContainerItemProxy */;
+		};
+		FA110B041C563BD700D8EF5D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FA110AE71C563BD600D8EF5D /* SwiftEngine */;
+			targetProxy = FA110B031C563BD700D8EF5D /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		FA110AEF1C563BD700D8EF5D /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FA110AF01C563BD700D8EF5D /* Base */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		FA110B091C563BD700D8EF5D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		FA110B0A1C563BD700D8EF5D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		FA110B0C1C563BD700D8EF5D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = SwiftEngine/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = DSPerados.SwiftEngine;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		FA110B0D1C563BD700D8EF5D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = SwiftEngine/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = DSPerados.SwiftEngine;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		FA110B0F1C563BD700D8EF5D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = SwiftEngineTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = DSPerados.SwiftEngineTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SwiftEngine.app/Contents/MacOS/SwiftEngine";
+			};
+			name = Debug;
+		};
+		FA110B101C563BD700D8EF5D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = SwiftEngineTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = DSPerados.SwiftEngineTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SwiftEngine.app/Contents/MacOS/SwiftEngine";
+			};
+			name = Release;
+		};
+		FA110B121C563BD700D8EF5D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = SwiftEngineUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = DSPerados.SwiftEngineUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = SwiftEngine;
+				USES_XCTRUNNER = YES;
+			};
+			name = Debug;
+		};
+		FA110B131C563BD700D8EF5D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = SwiftEngineUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = DSPerados.SwiftEngineUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = SwiftEngine;
+				USES_XCTRUNNER = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		FA110AE31C563BD600D8EF5D /* Build configuration list for PBXProject "SwiftEngine" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FA110B091C563BD700D8EF5D /* Debug */,
+				FA110B0A1C563BD700D8EF5D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FA110B0B1C563BD700D8EF5D /* Build configuration list for PBXNativeTarget "SwiftEngine" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FA110B0C1C563BD700D8EF5D /* Debug */,
+				FA110B0D1C563BD700D8EF5D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FA110B0E1C563BD700D8EF5D /* Build configuration list for PBXNativeTarget "SwiftEngineTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FA110B0F1C563BD700D8EF5D /* Debug */,
+				FA110B101C563BD700D8EF5D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FA110B111C563BD700D8EF5D /* Build configuration list for PBXNativeTarget "SwiftEngineUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FA110B121C563BD700D8EF5D /* Debug */,
+				FA110B131C563BD700D8EF5D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = FA110AE01C563BD600D8EF5D /* Project object */;
+}
