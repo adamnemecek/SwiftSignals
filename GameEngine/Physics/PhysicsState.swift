@@ -5,7 +5,8 @@
 //  Created by Danny van Swieten on 1/19/16.
 //  Copyright © 2016 Danny van Swieten. All rights reserved.
 //
-import GLKit
+
+import Darwin
 
 /// This struct keeps track of an objects state in the real world
 struct PhysicsState
@@ -49,12 +50,6 @@ struct PhysicsState
     /// Force applied to  this body.
     var force           = Vector3()
     
-    /// Body-to-world matrix
-    var bodyToWorld     = GLKMatrix4()
-    
-    /// World-to-body matrix
-    var worldToBody     = GLKMatrix4()
-    
     init() {
         inverseMass             = 1.0 / mass
         inertiaTensor           = mass * size * size * 1.0/6.0
@@ -66,19 +61,19 @@ struct PhysicsState
         velocity        = momentum * Float32(inverseMass)
         angularVelocity = angularMomentum * Float32(inverseInertiaTensor)
         orientation.normalize()
-        spin            = Float32(0.5) * Quaternion(a: 0, b: angularVelocity.x, c: angularVelocity.y, d: angularVelocity.z) * orientation
+        spin            = (Quaternion(w: 0, x: angularVelocity.x, y: angularVelocity.y, z: angularVelocity.z) * Float32(0.5)) * orientation
     }
     
-    mutating func applyForce(forceVector: GLKVector3) -> Void {
+    mutating func applyForce(forceVector: Vector3) -> Void {
         force = forceVector
     }
     
-    mutating func addForce(forceVector: GLKVector3) -> Void {
-        force = force + forceVector
+    mutating func addForce(forceVector: Vector3) -> Void {
+        force += forceVector
     }
     
-    func rotation() -> GLKMatrix4 {
-        return GLKMatrix4MakeWithQuaternion(orientation)
+    func rotation() -> Matrix4x4 {
+        return orientation.toMatrix()
     }
 }
 
@@ -97,7 +92,7 @@ func evaluate(var state: PhysicsState, t: Double, dt: Double, derivative: Deriva
     /// Update velocity with derivative (acceleration)
     state.momentum = state.momentum + derivative.force * Float(dt)
     /// Update orientation with derivative (angular velocity)
-    state.orientation = state.orientation + Float(dt) * derivative.spin
+    state.orientation = state.orientation + derivative.spin * Float(dt)
     /// Update the angular momentum
     state.angularMomentum = state.angularMomentum + derivative.torque * Float(dt)
     /// Update secondary values.
@@ -126,12 +121,12 @@ func evaluate(state: PhysicsState, t: Double) -> Derivative {
     return output
 }
 
-func forces(state: PhysicsState, time: Double, inout force: GLKVector3, inout torque: GLKVector3) {
+func forces(state: PhysicsState, time: Double, inout force: Vector3, inout torque: Vector3) {
     
     force   = Vector3(x: 0, y: -10, z: 0) * Float(state.mass)
     
     torque  = Vector3(  x: Float(10 * sin(time * 0.1 + 0.5)),
-                        y: Float(11 * (time * 0.1 + 0.4)),
+                        y: Float(11 * sin(time * 0.1 + 0.4)),
                         z: Float(12 * sin(time * 0.1 + 0.9)))
 }
 
@@ -148,66 +143,35 @@ func integrateWithRK4(inout state: PhysicsState, t: Double, dt: Double) -> Void 
     d = evaluate(state, t: t, dt: dt, derivative: c)
     
     /// Multiplication factor from taylor series.
-    let rkFactor: Float = 1.0 / 6.0
+    let rkFactor: Float = 1.0 / 6.0 * Float(dt)
     
     /// Delta position from waited sum of derivatives
-    let velocity = rkFactor * (a.velocity + 2.0 * (b.velocity + c.velocity) + d.velocity)
+    
+    var sum = a.velocity + ((b.velocity + c.velocity) * Float(2.0)) + d.velocity
+    
     /// Delta velocity from waited sum of derivatives
-    let force = rkFactor * (a.force + 2.0 * (b.force + c.force) + d.force)
+    let velocity = sum * rkFactor
+    
+    /// Delta force from waited sum of derivatives
+    sum = a.force + ((b.force + c.force) * Float(2.0)) + d.force
+    let force = sum * rkFactor
+    
     /// Delta position from waited sum of derivatives
-    let spin = rkFactor * (a.spin + 2.0 * (b.spin + c.spin) + d.spin)
+    let qsum = a.spin + ((b.spin + c.spin) * Float(2.0)) + d.spin
+    let spin = qsum * rkFactor
+
     /// Delta velocity from waited sum of derivatives
-    let torque = rkFactor * (a.torque + 2.0 * (b.torque + c.torque) + d.torque)
+    sum = a.torque + ((b.torque + c.torque) * Float(2.0))
+    sum = sum + d.torque
+    let torque = sum * rkFactor
     
     /// Update state position and velocity with waited sums corrected by timestep
-    state.position = state.position + velocity * Float(dt)
-    state.momentum = state.momentum + force * Float(dt)
-    state.orientation = state.orientation + Float(dt) * spin
-    state.angularMomentum = state.angularMomentum + Float(dt) * torque
+    state.position = state.position + velocity
+    state.momentum = state.momentum + force
+    state.orientation = state.orientation + spin
+    state.angularMomentum = state.angularMomentum + torque
     
     state.update()
-}
-
-func +(lhs: GLKVector3, rhs: GLKVector3) -> GLKVector3 {
-    return GLKVector3Add(lhs, rhs)
-}
-
-func +(lhs: GLKVector3, rhs: Float) -> GLKVector3 {
-    return GLKVector3AddScalar(lhs, rhs)
-}
-
-func +(lhs: GLKQuaternion, rhs: GLKQuaternion) -> GLKQuaternion {
-    return GLKQuaternionAdd(lhs, rhs)
-}
-
-func -(lhs: GLKVector3, rhs: GLKVector3) -> GLKVector3 {
-    return GLKVector3Subtract(lhs, rhs)
-}
-
-func -(lhs: GLKVector3, rhs: Float) -> GLKVector3 {
-    return GLKVector3SubtractScalar(lhs, rhs)
-}
-
-func *(lhs: GLKVector3, rhs: GLKVector3) -> GLKVector3 {
-    return GLKVector3Multiply(lhs, rhs)
-}
-
-func *(lhs: Float, rhs: GLKVector3) -> GLKVector3 {
-    return GLKVector3MultiplyScalar(rhs, lhs)
-}
-
-func *(lhs: Float, rhs: GLKQuaternion) -> GLKQuaternion {
-    return GLKQuaternionMake(rhs.w * lhs, rhs.x * lhs, rhs.y * lhs, rhs.z * lhs)
-}
-
-func *(lhs: GLKQuaternion, rhs: GLKQuaternion) -> GLKQuaternion {
-    return GLKQuaternionMultiply(lhs, rhs)
-}
-
-func *(lhs: GLKVector3, rhs: Float) -> GLKVector3 {
-    return GLKVector3MultiplyScalar(lhs, rhs)
-}
-
-func /(lhs: GLKVector3, rhs: Float) -> GLKVector3 {
-    return GLKVector3MultiplyScalar(lhs, 1.0 / rhs)
+    
+    print(state.angularVelocity)
 }

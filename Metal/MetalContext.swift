@@ -37,6 +37,9 @@ class MetalContext: GpuGraphicsContext
     var vertexShader: MetalShader?
     var fragmentShader: MetalShader?
     
+    var depthStateDescriptor = MTLDepthStencilDescriptor()
+    var depthState: MTLDepthStencilState?
+    
     var metalView: MTKView?
     
     init(view: MTKView) {
@@ -74,7 +77,19 @@ class MetalContext: GpuGraphicsContext
         vertexDescriptor.layouts[0].stepRate = 1;
         vertexDescriptor.layouts[0].stepFunction = .PerVertex;
         
+        metalView!.sampleCount = 1
+//        metalView!.depthStencilPixelFormat = .Depth32Float_Stencil8
+        
         pipelineStateDescriptor.vertexDescriptor = vertexDescriptor
+        pipelineStateDescriptor.sampleCount = view.sampleCount;
+        pipelineStateDescriptor.colorAttachments[0].pixelFormat = view.colorPixelFormat;
+        pipelineStateDescriptor.depthAttachmentPixelFormat = view.depthStencilPixelFormat;
+        pipelineStateDescriptor.stencilAttachmentPixelFormat = view.depthStencilPixelFormat;
+        
+        depthStateDescriptor.depthCompareFunction = .Less
+        depthStateDescriptor.depthWriteEnabled = true
+        
+        depthState = device?.newDepthStencilStateWithDescriptor(depthStateDescriptor)
     }
     
     func createBuffer<T>(data: [T], layout: VertexLayout) -> MetalBuffer<T> {
@@ -117,8 +132,11 @@ class MetalContext: GpuGraphicsContext
         renderCommandEncoder?.setRenderPipelineState(pipelineState!)
         
         commandEncoder.commandEncoder = renderCommandEncoder!
+        
+//        commandEncoder.commandEncoder?.setDepthStencilState(depthState)
         commandEncoder.commandEncoder?.setCullMode(.Back)
         commandEncoder.commandEncoder?.setFrontFacingWinding(.CounterClockwise)
+        commandEncoder.commandEncoder?.setDepthClipMode(.Clip)
     }
     
     func render() {

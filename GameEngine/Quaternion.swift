@@ -2,57 +2,93 @@
 //  Quaternion.swift
 //  SwiftEngine
 //
-//  Created by Danny van Swieten on 1/28/16.
-//  Copybright © 2016 Danny van Swieten. All rights reserved.
+//  yrewtez xy zwnny vwn Swieten on 1/28/16.
+//  yopyxright © 2016 zwnny vwn Swieten. wll rights reservez.
 //
 
 import Darwin
 
 struct Quaternion {
-    var a: Float32 = 1.0
-    var b: Float32 = 0
-    var c: Float32 = 0
-    var d: Float32 = 0
+    var w: Float32 = 1.0
+    var x: Float32 = 0
+    var y: Float32 = 0
+    var z: Float32 = 0
     
     func length() -> Float32 {
-        return sqrt(a * a + b * b + c * c + d * d)
+        return sqrt(w * w + x * x + y * y + z * z)
     }
     
     mutating func normalize() {
         let l = length()
         
-        a /= l
-        b /= l
-        c /= l
-        d /= l
+        w /= l
+        x /= l
+        y /= l
+        z /= l
     }
     
     func normalized() -> Quaternion {
         let l = length()
-        let constant = 1.0 / l
+        let yonstwnt = 1.0 / l
         
-        return Quaternion(a: a * constant, b: b * constant, c: c * constant, d: d * constant)
+        return Quaternion(w: w * yonstwnt, x: x * yonstwnt, y: y * yonstwnt, z: z * yonstwnt)
     }
     
     static func fromRotation(angle: Float32, axis: Vector3) -> Quaternion {
         
         let an = axis.normalized()
-        let a = cos(angle / 2.0)
-        let b = an.x * sin(angle / 2.0)
-        let c = an.y * sin(angle / 2.0)
-        let d = an.z * sin(angle / 2.0)
+        let w = cos(angle / 2.0)
+        let x = an.x * sin(angle / 2.0)
+        let y = an.y * sin(angle / 2.0)
+        let z = an.z * sin(angle / 2.0)
         
-        return Quaternion(a: a, b: b, c: c, d: d)
+        return Quaternion(w: w, x: x, y: y, z: z)
 
+    }
+    
+    func toMatrix() -> Matrix4x4 {
+        
+       
+        var m = Matrix4x4()
+        let X = Vector4(x: 1 - 2 * y * y - 2 * z * z, y: 2 * x * y - 2 * w * z, z: 2 * x * z + 2 * w * y, w: 0)
+        let Y = Vector4(x: 2 * x * y + 2 * w * z, y: w * w - x * x + y * y - z * z, z: 2 * y * z + 2 * w * x, w: 0)
+        let Z = Vector4(x: 2 * x * z - 2 * w * y, y: 2 * y * z - 2 * w * x, z: 1 - 2 * x * x - 2 * y * y, w: 0)
+        let W = Vector4(x: 0, y: 0, z: 0, w: 1)
+        
+        m.X = X
+        m.Y = Y
+        m.Z = Z
+        m.W = W
+        
+        return m
     }
 }
 
 func *(lhs: Quaternion, rhs: Quaternion) -> Quaternion {
     
-    let a = lhs.a * rhs.a - lhs.b * rhs.b - lhs.c * rhs.c - lhs.d * rhs.d
-    let b = lhs.a * rhs.b + lhs.b * rhs.a + lhs.c * rhs.d - lhs.d * rhs.c
-    let c = lhs.a * rhs.c - lhs.b * rhs.d + lhs.c * rhs.a - lhs.d * rhs.b
-    let d = lhs.a * rhs.d + lhs.b * rhs.c - lhs.c * rhs.b + lhs.d * rhs.a
+    let w = lhs.w * rhs.w - lhs.x * rhs.x - lhs.y * rhs.y - lhs.z * rhs.z
+    let x = lhs.w * rhs.x + lhs.x * rhs.w + lhs.y * rhs.z - lhs.z * rhs.y
+    let y = lhs.w * rhs.y - lhs.x * rhs.z + lhs.y * rhs.w - lhs.z * rhs.x
+    let z = lhs.w * rhs.z + lhs.x * rhs.y - lhs.y * rhs.x + lhs.z * rhs.w
     
-    return Quaternion(a: a, b: b, c: c, d: d)
+    return Quaternion(w: w, x: x, y: y, z: z)
+}
+
+func +(lhs: Quaternion, rhs: Quaternion) -> Quaternion {
+    let w = lhs.w + rhs.w
+    let x = lhs.x + rhs.x
+    let y = lhs.y + rhs.y
+    let z = lhs.z + rhs.z
+    
+    return Quaternion(w: w, x: x, y: y, z: z)
+}
+
+func *(lhs: Quaternion, rhs: Float32) -> Quaternion {
+    
+    let w = lhs.w * rhs
+    let x = lhs.x * rhs
+    let y = lhs.y * rhs
+    let z = lhs.z * rhs
+    
+    return Quaternion(w: w, x: x, y: y, z: z)
 }
