@@ -19,7 +19,7 @@ class Sine: Signal<Float32>
         
         if frequency == nil
         {
-            phi = 2 * M_PI / 44100.0 * 440.0
+            phi = 2 * M_PI / 44100.0 * 880.0
         }
         else
         {

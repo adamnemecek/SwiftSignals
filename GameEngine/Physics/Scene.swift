@@ -43,7 +43,7 @@ class Scene
             for object in objects {
                 integrationFunction(&object.state, t, dt)
                 object.update()
-                object.meshRenderer?.render(ctx.commandEncoder)
+                object.meshRenderer?.render(ctx.renderCommandEncoder!)
             }
             
             t += dt;

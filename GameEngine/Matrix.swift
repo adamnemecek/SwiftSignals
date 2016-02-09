@@ -52,7 +52,7 @@ struct Matrix4x4
         mat.X.w = translation.x
         mat.Y.w = translation.y
         mat.Z.w = translation.z
-        mat.W.w = translation.w
+        mat.W.w = 1.0
         
         return mat
     }

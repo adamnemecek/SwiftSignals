@@ -172,6 +172,4 @@ func integrateWithRK4(inout state: PhysicsState, t: Double, dt: Double) -> Void 
     state.angularMomentum = state.angularMomentum + torque
     
     state.update()
-    
-    print(state.angularVelocity)
 }

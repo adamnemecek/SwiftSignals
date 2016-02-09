@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FA10CC0F1C5E4F6700CA0D98 /* Neuron.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA10CC0E1C5E4F6700CA0D98 /* Neuron.swift */; };
 		FA110AEC1C563BD600D8EF5D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA110AEB1C563BD600D8EF5D /* AppDelegate.swift */; };
 		FA110AEE1C563BD600D8EF5D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FA110AED1C563BD600D8EF5D /* Assets.xcassets */; };
 		FA110AF11C563BD700D8EF5D /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA110AEF1C563BD700D8EF5D /* MainMenu.xib */; };
@@ -17,7 +18,6 @@
 		FA110B251C56599000D8EF5D /* GpuGraphicsContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA110B201C56599000D8EF5D /* GpuGraphicsContext.swift */; };
 		FA110B261C56599000D8EF5D /* MeshRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA110B211C56599000D8EF5D /* MeshRenderer.swift */; };
 		FA110B271C56599000D8EF5D /* MetalContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA110B221C56599000D8EF5D /* MetalContext.swift */; };
-		FA110B281C56599000D8EF5D /* MetalRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA110B231C56599000D8EF5D /* MetalRenderer.swift */; };
 		FA110B561C5659AA00D8EF5D /* Artithmetic.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA110B381C5659AA00D8EF5D /* Artithmetic.swift */; };
 		FA110B571C5659AA00D8EF5D /* Audio.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA110B391C5659AA00D8EF5D /* Audio.swift */; };
 		FA110B581C5659AA00D8EF5D /* AudioBuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA110B3A1C5659AA00D8EF5D /* AudioBuffer.swift */; };
@@ -37,6 +37,8 @@
 		FA110B701C56650400D8EF5D /* ObjectInspectorController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA110B6E1C56650400D8EF5D /* ObjectInspectorController.swift */; };
 		FA110B751C56782500D8EF5D /* ObjectInspector.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA110B741C56782500D8EF5D /* ObjectInspector.swift */; };
 		FA110B771C567E3E00D8EF5D /* ResourceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA110B761C567E3E00D8EF5D /* ResourceManager.swift */; };
+		FA1458C51C6507390018BC72 /* Scheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1458C41C6507390018BC72 /* Scheduler.swift */; };
+		FA959C9F1C68CF6A00279B2C /* MeshLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA959C9E1C68CF6A00279B2C /* MeshLoader.swift */; };
 		FABC642F1C5A5FB900BEC384 /* GameObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABC64261C5A5FB900BEC384 /* GameObject.swift */; };
 		FABC64301C5A5FB900BEC384 /* Matrix.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABC64271C5A5FB900BEC384 /* Matrix.swift */; };
 		FABC64311C5A5FB900BEC384 /* PhysicsState.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABC64291C5A5FB900BEC384 /* PhysicsState.swift */; };
@@ -65,6 +67,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		FA10CC0E1C5E4F6700CA0D98 /* Neuron.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Neuron.swift; sourceTree = "<group>"; };
 		FA110AE81C563BD600D8EF5D /* SwiftEngine.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftEngine.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA110AEB1C563BD600D8EF5D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FA110AED1C563BD600D8EF5D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -81,7 +84,6 @@
 		FA110B201C56599000D8EF5D /* GpuGraphicsContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GpuGraphicsContext.swift; sourceTree = "<group>"; };
 		FA110B211C56599000D8EF5D /* MeshRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeshRenderer.swift; sourceTree = "<group>"; };
 		FA110B221C56599000D8EF5D /* MetalContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetalContext.swift; sourceTree = "<group>"; };
-		FA110B231C56599000D8EF5D /* MetalRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetalRenderer.swift; sourceTree = "<group>"; };
 		FA110B381C5659AA00D8EF5D /* Artithmetic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Artithmetic.swift; sourceTree = "<group>"; };
 		FA110B391C5659AA00D8EF5D /* Audio.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Audio.swift; sourceTree = "<group>"; };
 		FA110B3A1C5659AA00D8EF5D /* AudioBuffer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioBuffer.swift; sourceTree = "<group>"; };
@@ -101,6 +103,8 @@
 		FA110B6E1C56650400D8EF5D /* ObjectInspectorController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObjectInspectorController.swift; sourceTree = "<group>"; };
 		FA110B741C56782500D8EF5D /* ObjectInspector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObjectInspector.swift; sourceTree = "<group>"; };
 		FA110B761C567E3E00D8EF5D /* ResourceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResourceManager.swift; sourceTree = "<group>"; };
+		FA1458C41C6507390018BC72 /* Scheduler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Scheduler.swift; sourceTree = "<group>"; };
+		FA959C9E1C68CF6A00279B2C /* MeshLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeshLoader.swift; sourceTree = "<group>"; };
 		FABC64261C5A5FB900BEC384 /* GameObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameObject.swift; sourceTree = "<group>"; };
 		FABC64271C5A5FB900BEC384 /* Matrix.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Matrix.swift; sourceTree = "<group>"; };
 		FABC64291C5A5FB900BEC384 /* PhysicsState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhysicsState.swift; sourceTree = "<group>"; };
@@ -137,9 +141,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		FA10CC0B1C5E4E4700CA0D98 /* AI */ = {
+			isa = PBXGroup;
+			children = (
+				FA10CC0E1C5E4F6700CA0D98 /* Neuron.swift */,
+			);
+			name = AI;
+			sourceTree = "<group>";
+		};
 		FA110ADF1C563BD600D8EF5D = {
 			isa = PBXGroup;
 			children = (
+				FA10CC0B1C5E4E4700CA0D98 /* AI */,
 				FABC64251C5A5FB900BEC384 /* GameEngine */,
 				FA110B371C5659AA00D8EF5D /* SwiftAudio */,
 				FA110B1E1C56599000D8EF5D /* Metal */,
@@ -201,7 +214,7 @@
 				FA110B201C56599000D8EF5D /* GpuGraphicsContext.swift */,
 				FA110B211C56599000D8EF5D /* MeshRenderer.swift */,
 				FA110B221C56599000D8EF5D /* MetalContext.swift */,
-				FA110B231C56599000D8EF5D /* MetalRenderer.swift */,
+				FA959C9E1C68CF6A00279B2C /* MeshLoader.swift */,
 			);
 			name = Metal;
 			path = ../Metal;
@@ -225,6 +238,7 @@
 				FA110B441C5659AA00D8EF5D /* Utility.swift */,
 				FA110B451C5659AA00D8EF5D /* Value.swift */,
 				FA110B461C5659AA00D8EF5D /* WaveTable.swift */,
+				FA1458C41C6507390018BC72 /* Scheduler.swift */,
 			);
 			name = SwiftAudio;
 			path = ../SwiftAudio;
@@ -393,12 +407,12 @@
 				FA110B601C5659AA00D8EF5D /* Signal.swift in Sources */,
 				FA110B5B1C5659AA00D8EF5D /* Host.swift in Sources */,
 				FA110B691C565AEC00D8EF5D /* MetalViewController.swift in Sources */,
+				FA1458C51C6507390018BC72 /* Scheduler.swift in Sources */,
 				FABC64311C5A5FB900BEC384 /* PhysicsState.swift in Sources */,
 				FA110B261C56599000D8EF5D /* MeshRenderer.swift in Sources */,
 				FA110B571C5659AA00D8EF5D /* Audio.swift in Sources */,
 				FA110B771C567E3E00D8EF5D /* ResourceManager.swift in Sources */,
 				FA110B5C1C5659AA00D8EF5D /* Instrument.swift in Sources */,
-				FA110B281C56599000D8EF5D /* MetalRenderer.swift in Sources */,
 				FABC64331C5A5FB900BEC384 /* Quaternion.swift in Sources */,
 				FA110B251C56599000D8EF5D /* GpuGraphicsContext.swift in Sources */,
 				FA110B581C5659AA00D8EF5D /* AudioBuffer.swift in Sources */,
@@ -412,7 +426,9 @@
 				FABC64361C5A5FB900BEC384 /* VectorMath.swift in Sources */,
 				FA110B591C5659AA00D8EF5D /* Envelope.swift in Sources */,
 				FABC64351C5A5FB900BEC384 /* Vector.swift in Sources */,
+				FA10CC0F1C5E4F6700CA0D98 /* Neuron.swift in Sources */,
 				FA110B701C56650400D8EF5D /* ObjectInspectorController.swift in Sources */,
+				FA959C9F1C68CF6A00279B2C /* MeshLoader.swift in Sources */,
 				FA110B621C5659AA00D8EF5D /* Utility.swift in Sources */,
 				FA110B271C56599000D8EF5D /* MetalContext.swift in Sources */,
 				FA110B561C5659AA00D8EF5D /* Artithmetic.swift in Sources */,

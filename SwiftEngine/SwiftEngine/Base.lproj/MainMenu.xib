@@ -687,9 +687,6 @@
                 <rect key="frame" x="0.0" y="0.0" width="1200" height="800"/>
                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 <subviews>
-                    <customView translatesAutoresizingMaskIntoConstraints="NO" id="mNI-UW-aXo" customClass="MTKView">
-                        <rect key="frame" x="0.0" y="0.0" width="950" height="800"/>
-                    </customView>
                     <stackView distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="miH-o1-t6U" customClass="ObjectInspector" customModule="SwiftEngine" customModuleProvider="target">
                         <rect key="frame" x="949" y="694" width="251" height="106"/>
                         <subviews>
@@ -754,6 +751,9 @@
                             <real value="3.4028234663852886e+38"/>
                         </customSpacing>
                     </stackView>
+                    <customView translatesAutoresizingMaskIntoConstraints="NO" id="mNI-UW-aXo" customClass="MTKView">
+                        <rect key="frame" x="0.0" y="0.0" width="950" height="800"/>
+                    </customView>
                 </subviews>
                 <constraints>
                     <constraint firstItem="miH-o1-t6U" firstAttribute="top" secondItem="mNI-UW-aXo" secondAttribute="top" id="4Gr-hA-7yB"/>

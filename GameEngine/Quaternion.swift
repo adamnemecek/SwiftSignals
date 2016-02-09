@@ -51,7 +51,7 @@ struct Quaternion {
        
         var m = Matrix4x4()
         let X = Vector4(x: 1 - 2 * y * y - 2 * z * z, y: 2 * x * y - 2 * w * z, z: 2 * x * z + 2 * w * y, w: 0)
-        let Y = Vector4(x: 2 * x * y + 2 * w * z, y: w * w - x * x + y * y - z * z, z: 2 * y * z + 2 * w * x, w: 0)
+        let Y = Vector4(x: 2 * x * y + 2 * w * z, y: 1 - 2 * x * x - 2 * z * z, z: 2 * y * z + 2 * w * x, w: 0)
         let Z = Vector4(x: 2 * x * z - 2 * w * y, y: 2 * y * z - 2 * w * x, z: 1 - 2 * x * x - 2 * y * y, w: 0)
         let W = Vector4(x: 0, y: 0, z: 0, w: 1)
         
