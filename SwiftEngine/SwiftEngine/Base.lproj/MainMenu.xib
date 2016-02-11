@@ -3,7 +3,6 @@
     <dependencies>
         <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="9531"/>
-        <capability name="stacking Non-gravity area distributions on NSStackView" minToolsVersion="7.0" minSystemVersion="10.11"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
@@ -20,12 +19,7 @@
         </customObject>
         <viewController id="1yB-re-CRe" customClass="MetalViewController" customModule="SwiftEngine" customModuleProvider="target">
             <connections>
-                <outlet property="view" destination="mNI-UW-aXo" id="lss-Da-yVc"/>
-            </connections>
-        </viewController>
-        <viewController id="uvS-uq-8Gb" customClass="ObjectInspectorController" customModule="SwiftEngine" customModuleProvider="target">
-            <connections>
-                <outlet property="view" destination="miH-o1-t6U" id="1E6-f8-Z8g"/>
+                <outlet property="view" destination="EiT-Mj-1SZ" id="pkl-7G-FCK"/>
             </connections>
         </viewController>
         <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
@@ -683,89 +677,11 @@
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="0.0" y="517" width="1200" height="800"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1440" height="877"/>
-            <view key="contentView" wantsLayer="YES" id="EiT-Mj-1SZ">
+            <view key="contentView" wantsLayer="YES" id="EiT-Mj-1SZ" customClass="MTKView">
                 <rect key="frame" x="0.0" y="0.0" width="1200" height="800"/>
                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                <subviews>
-                    <stackView distribution="fill" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="miH-o1-t6U" customClass="ObjectInspector" customModule="SwiftEngine" customModuleProvider="target">
-                        <rect key="frame" x="949" y="694" width="251" height="106"/>
-                        <subviews>
-                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="Wxd-ek-N2T">
-                                <rect key="frame" x="0.0" y="0.0" width="251" height="106"/>
-                                <subviews>
-                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HRx-Lq-JFp">
-                                        <rect key="frame" x="56" y="64" width="139" height="22"/>
-                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="center" title="Transform" id="vNR-nl-DD6">
-                                            <font key="font" metaFont="system"/>
-                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                        </textFieldCell>
-                                    </textField>
-                                    <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="g7t-18-EAB">
-                                        <rect key="frame" x="56" y="37" width="41" height="22"/>
-                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="nPe-Zg-f7O">
-                                            <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="decimal" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" maximumFractionDigits="3" id="7Ua-VG-pPr"/>
-                                            <font key="font" metaFont="system"/>
-                                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                        </textFieldCell>
-                                    </textField>
-                                    <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="84k-me-ShL">
-                                        <rect key="frame" x="105" y="37" width="41" height="22"/>
-                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="jri-TW-Fu6">
-                                            <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="decimal" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" maximumFractionDigits="3" id="gQ8-In-U9K"/>
-                                            <font key="font" metaFont="system"/>
-                                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                        </textFieldCell>
-                                    </textField>
-                                    <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Kcp-Y9-MoR">
-                                        <rect key="frame" x="154" y="37" width="41" height="22"/>
-                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="hZT-VA-u6t">
-                                            <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="decimal" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" maximumFractionDigits="3" id="pjW-BK-mln"/>
-                                            <font key="font" metaFont="system"/>
-                                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                        </textFieldCell>
-                                    </textField>
-                                </subviews>
-                                <shadow key="shadow">
-                                    <color key="color" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                </shadow>
-                            </customView>
-                        </subviews>
-                        <constraints>
-                            <constraint firstAttribute="trailing" secondItem="Wxd-ek-N2T" secondAttribute="trailing" id="DCR-Ke-2ta"/>
-                            <constraint firstItem="Wxd-ek-N2T" firstAttribute="top" secondItem="miH-o1-t6U" secondAttribute="top" id="G12-Xh-mHY"/>
-                            <constraint firstAttribute="trailing" secondItem="Wxd-ek-N2T" secondAttribute="trailing" id="IUM-EX-gff"/>
-                            <constraint firstItem="Wxd-ek-N2T" firstAttribute="centerY" secondItem="miH-o1-t6U" secondAttribute="centerY" id="JA2-Ls-iIP"/>
-                            <constraint firstItem="Wxd-ek-N2T" firstAttribute="top" secondItem="miH-o1-t6U" secondAttribute="top" id="bu8-F0-bNg"/>
-                            <constraint firstItem="Wxd-ek-N2T" firstAttribute="centerX" secondItem="miH-o1-t6U" secondAttribute="centerX" id="qUI-FO-vs0"/>
-                            <constraint firstItem="Wxd-ek-N2T" firstAttribute="top" secondItem="miH-o1-t6U" secondAttribute="top" id="sJA-kb-Rwh"/>
-                            <constraint firstAttribute="trailing" secondItem="Wxd-ek-N2T" secondAttribute="trailing" id="stn-wM-N3o"/>
-                        </constraints>
-                        <visibilityPriorities>
-                            <integer value="1000"/>
-                        </visibilityPriorities>
-                        <customSpacing>
-                            <real value="3.4028234663852886e+38"/>
-                        </customSpacing>
-                    </stackView>
-                    <customView translatesAutoresizingMaskIntoConstraints="NO" id="mNI-UW-aXo" customClass="MTKView">
-                        <rect key="frame" x="0.0" y="0.0" width="950" height="800"/>
-                    </customView>
-                </subviews>
-                <constraints>
-                    <constraint firstItem="miH-o1-t6U" firstAttribute="top" secondItem="mNI-UW-aXo" secondAttribute="top" id="4Gr-hA-7yB"/>
-                    <constraint firstAttribute="trailing" secondItem="miH-o1-t6U" secondAttribute="trailing" id="9wf-Ij-hju"/>
-                    <constraint firstAttribute="bottom" secondItem="miH-o1-t6U" secondAttribute="bottom" constant="694" id="TTg-Ln-5F2"/>
-                    <constraint firstItem="miH-o1-t6U" firstAttribute="leading" secondItem="EiT-Mj-1SZ" secondAttribute="leading" constant="949" id="ejJ-10-hGc"/>
-                    <constraint firstItem="mNI-UW-aXo" firstAttribute="leading" secondItem="EiT-Mj-1SZ" secondAttribute="leading" id="hDT-5a-BR9"/>
-                    <constraint firstAttribute="trailing" secondItem="mNI-UW-aXo" secondAttribute="trailing" constant="250" id="jT3-rk-dmV"/>
-                    <constraint firstItem="miH-o1-t6U" firstAttribute="top" secondItem="EiT-Mj-1SZ" secondAttribute="top" id="m0c-NH-n9y"/>
-                    <constraint firstAttribute="bottom" secondItem="mNI-UW-aXo" secondAttribute="bottom" id="u8E-PX-Ndp"/>
-                </constraints>
             </view>
+            <point key="canvasLocation" x="436" y="-4"/>
         </window>
     </objects>
 </document>

@@ -7,12 +7,14 @@
 //
 
 import Darwin
+import simd
 
 struct Quaternion {
-    var w: Float32 = 1.0
-    var x: Float32 = 0
-    var y: Float32 = 0
-    var z: Float32 = 0
+    var w, x, y, z: Float
+    
+    static func identity() -> Quaternion {
+        return Quaternion(w: 0.0, x: 1.0, y: 1.0, z: 1.0)
+    }
     
     func length() -> Float32 {
         return sqrt(w * w + x * x + y * y + z * z)
@@ -46,21 +48,25 @@ struct Quaternion {
 
     }
     
-    func toMatrix() -> Matrix4x4 {
+    func toMatrix() -> float4x4 {
         
-       
-        var m = Matrix4x4()
-        let X = Vector4(x: 1 - 2 * y * y - 2 * z * z, y: 2 * x * y - 2 * w * z, z: 2 * x * z + 2 * w * y, w: 0)
-        let Y = Vector4(x: 2 * x * y + 2 * w * z, y: 1 - 2 * x * x - 2 * z * z, z: 2 * y * z + 2 * w * x, w: 0)
-        let Z = Vector4(x: 2 * x * z - 2 * w * y, y: 2 * y * z - 2 * w * x, z: 1 - 2 * x * x - 2 * y * y, w: 0)
-        let W = Vector4(x: 0, y: 0, z: 0, w: 1)
+        let p = normalized()
         
-        m.X = X
-        m.Y = Y
-        m.Z = Z
-        m.W = W
+        let X1 = float4(x: p.w, y: p.z, z: -p.y, w: p.x)
+        let Y1 = float4(x: -p.z, y: p.w, z: p.x, w: p.y)
+        let Z1 = float4(x: p.y, y: -p.x, z: p.w, w: p.z)
+        let W1 = float4(x: -p.x, y: -p.y, z: -p.z, w: p.w)
         
-        return m
+        let m1 = float4x4([float4](arrayLiteral: X1, Y1, Z1, W1))
+        
+        let X2 = float4(x: p.w, y: p.z, z: -p.y, w: -p.x)
+        let Y2 = float4(x: -p.z, y: p.w, z: p.x, w: -p.y)
+        let Z2 = float4(x: p.y, y: -p.x, z: p.w, w: -p.z)
+        let W2 = float4(x: p.x, y: p.y, z: p.z, w: p.w)
+        
+        let m2 = float4x4([float4](arrayLiteral: X2, Y2, Z2, W2))
+        
+        return m1 * m2
     }
 }
 

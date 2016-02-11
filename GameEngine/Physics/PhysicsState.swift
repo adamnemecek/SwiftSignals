@@ -7,30 +7,31 @@
 //
 
 import Darwin
+import simd
 
 /// This struct keeps track of an objects state in the real world
 struct PhysicsState
 {
     /// Current Position
-    var position            = Vector3()
+    var position            = float3()
     
     /// Current momentum
-    var momentum            = Vector3()
+    var momentum            = float3()
     
     /// Current angular momentum
-    var angularMomentum     = Vector3()
+    var angularMomentum     = float3()
     
     /// Current velocity
-    var velocity            = Vector3()
+    var velocity            = float3()
     
     /// Current angular velocity
-    var angularVelocity     = Vector3()
+    var angularVelocity     = float3()
     
     /// Current spin
-    var spin                = Quaternion()
+    var spin                = Quaternion.identity()
     
     /// The current orientation
-    var orientation         = Quaternion()
+    var orientation         = Quaternion.identity()
     
     /// Mass, which is assumed to be static
     var mass                = 100.0
@@ -48,13 +49,13 @@ struct PhysicsState
     var inverseInertiaTensor = 0.0
     
     /// Force applied to  this body.
-    var force           = Vector3()
+    var force           = float3()
     
     init() {
         inverseMass             = 1.0 / mass
         inertiaTensor           = mass * size * size * 1.0/6.0
         inverseInertiaTensor    = 1.0 / inertiaTensor
-        orientation             = Quaternion()
+        orientation             = Quaternion.identity()
     }
     
     mutating func update() -> Void {
@@ -64,25 +65,25 @@ struct PhysicsState
         spin            = (Quaternion(w: 0, x: angularVelocity.x, y: angularVelocity.y, z: angularVelocity.z) * Float32(0.5)) * orientation
     }
     
-    mutating func applyForce(forceVector: Vector3) -> Void {
+    mutating func applyForce(forceVector: float3) -> Void {
         force = forceVector
     }
     
-    mutating func addForce(forceVector: Vector3) -> Void {
+    mutating func addForce(forceVector: float3) -> Void {
         force += forceVector
     }
     
-    func rotation() -> Matrix4x4 {
+    mutating func rotation() -> float4x4 {
         return orientation.toMatrix()
     }
 }
 
 struct Derivative
 {
-    var velocity    = Vector3()
-    var force       = Vector3()
-    var spin        = Quaternion()
-    var torque      = Vector3()
+    var velocity    = float3()
+    var force       = float3()
+    var spin        = Quaternion.identity()
+    var torque      = float3()
 }
 
 func evaluate(var state: PhysicsState, t: Double, dt: Double, derivative: Derivative) -> Derivative {
@@ -121,13 +122,13 @@ func evaluate(state: PhysicsState, t: Double) -> Derivative {
     return output
 }
 
-func forces(state: PhysicsState, time: Double, inout force: Vector3, inout torque: Vector3) {
+func forces(state: PhysicsState, time: Double, inout force: float3, inout torque: float3) {
     
-    force   = Vector3(x: 0, y: -10, z: 0) * Float(state.mass)
+    force   = float3(x: 0, y: -10, z: 0) * Float(state.mass)
     
-    torque  = Vector3(  x: Float(10 * sin(time * 0.1 + 0.5)),
-                        y: Float(11 * sin(time * 0.1 + 0.4)),
-                        z: Float(12 * sin(time * 0.1 + 0.9)))
+    torque  = float3(x: Float(10 * sin(time * 0.1 + 0.5)),
+                    y: Float(11 * sin(time * 0.1 + 0.4)),
+                    z: Float(12 * sin(time * 0.1 + 0.9)))
 }
 
 func integrateWithRK4(inout state: PhysicsState, t: Double, dt: Double) -> Void {

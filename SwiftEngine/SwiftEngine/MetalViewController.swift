@@ -18,7 +18,6 @@ class MetalViewController: NSViewController, MTKViewDelegate {
         metalView = self.view as! MTKView
         metalView!.delegate = self
         ctx = MetalContext(view: metalView)
-
     }
     
     func drawInMTKView(view: MTKView) {
@@ -28,7 +27,8 @@ class MetalViewController: NSViewController, MTKViewDelegate {
     }
     
     func mtkView(view: MTKView, drawableSizeWillChange size: CGSize) {
-        
+        let aspect = Float(fabs(self.view.bounds.size.width / self.view.bounds.size.height))
+        ctx.projection.projection = Matrix4x4.matrix_from_perspective_fov_aspectLH(65.0 * Float((M_PI / 180.0)), aspect: aspect, nearZ: 0.1, farZ: 100)
     }
     
     override func viewDidLoad() {
@@ -39,5 +39,15 @@ class MetalViewController: NSViewController, MTKViewDelegate {
         scene.objects[0].createMeshRenderer()
         scene.objects[0].meshRenderer?.initializeResources(ctx)
         scene.integrationFunction = integrateWithRK4
+    }
+    
+    override func keyDown(theEvent: NSEvent) {
+        let controller = Controller.sharedInstance
+        controller.keyPressed.addObject(theEvent.characters!)
+    }
+    
+    override func keyUp(theEvent: NSEvent) {
+        let controller = Controller.sharedInstance
+        controller.keyPressed.removeObject(theEvent.characters!)
     }
 }

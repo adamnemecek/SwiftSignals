@@ -12,7 +12,7 @@ class GameObject
 {
     var title   = "Untitled"
     
-    var scene: Scene?
+    var scene: Scene! = nil
     var transform       = Transform()
     var meshRenderer: MeshRenderer?
     
@@ -24,10 +24,10 @@ class GameObject
     }
     
     func createMeshRenderer() {
-        meshRenderer = MeshRenderer(aTransform: transform)
+        meshRenderer = MeshRenderer()
     }
     
     func update() {
-         meshRenderer?.transform?.rotation = state.rotation()
+         
     }
 }

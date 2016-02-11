@@ -12,12 +12,12 @@ extension MTKMesh {
     func renderWithEncoder(encoder: MTLRenderCommandEncoder) {
         var bufferIndex = 0
         for buffer in vertexBuffers{
-            encoder.setVertexBuffer(buffer.buffer, offset: buffer.offset, atIndex: 0)
+            encoder.setVertexBuffer(buffer.buffer, offset: buffer.offset, atIndex: bufferIndex)
             bufferIndex++
         }
         
         for submesh in submeshes {
-            encoder.drawIndexedPrimitives(.Triangle, indexCount: submesh.indexCount, indexType: submesh.indexType, indexBuffer: submesh.indexBuffer.buffer, indexBufferOffset: submesh.indexBuffer.offset)
+            encoder.drawIndexedPrimitives(submesh.primitiveType, indexCount: submesh.indexCount, indexType: .UInt32, indexBuffer: submesh.indexBuffer.buffer, indexBufferOffset: submesh.indexBuffer.offset)
         }
     }
 }
@@ -32,6 +32,12 @@ class Mesh {
         let allocator = MTKMeshBufferAllocator(device: context.device!)
 
         let mdlVertexDescriptor = MTKModelIOVertexDescriptorFromMetal(context.vertexDescriptor);
+        var name = mdlVertexDescriptor.attributes[0] as! MDLVertexAttribute
+        name.name = MDLVertexAttributePosition
+        name = mdlVertexDescriptor.attributes[1] as! MDLVertexAttribute
+        name.name = MDLVertexAttributeNormal
+        name = mdlVertexDescriptor.attributes[2] as! MDLVertexAttribute
+        name.name = MDLVertexAttributeTextureCoordinate
         let asset = MDLAsset(URL: assetURL, vertexDescriptor: mdlVertexDescriptor, bufferAllocator: allocator)
         
         do {

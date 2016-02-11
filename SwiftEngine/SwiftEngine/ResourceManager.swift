@@ -13,11 +13,11 @@ class ResourceManager {
     
     static let sharedInstance = ResourceManager()
     
-    var assets: [(name: String, asset: MDLAsset)]?
+    var assets: [(path: String, asset: Mesh)]?
     
-    func getAsset(name: String) -> (String, MDLAsset)? {
+    func getAsset(path: String) -> (String, Mesh)? {
         for asset in assets! {
-            if asset.name == name {
+            if asset.path == path {
                 return asset
             }
         }
@@ -25,11 +25,9 @@ class ResourceManager {
         return nil
     }
     
-    func loadAsset(name: String, path: String) -> Bool {
-        let url = NSURL(fileURLWithPath: path)
-        let asset = MDLAsset(URL: url)
-        
-        assets?.append((name, asset))
+    func loadAsset(path: String, context: MetalContext) -> Bool {
+        let asset = Mesh(filePath: path, context: context)
+        assets?.append((path, asset))
         return true
     }
     
@@ -37,4 +35,3 @@ class ResourceManager {
         
     }
 }
-

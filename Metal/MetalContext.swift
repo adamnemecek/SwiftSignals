@@ -6,8 +6,13 @@
 //  Copyright © 2016 Danny van Swieten. All rights reserved.
 //
 
-import Cocoa
 import MetalKit
+
+struct Projection {
+    var model       = float4x4()
+    var view        = float4x4()
+    var projection  = float4x4()
+}
 
 class MetalContext: GpuGraphicsContext
 {
@@ -39,9 +44,19 @@ class MetalContext: GpuGraphicsContext
     
     var metalView: MTKView?
     
+    var projection = Projection()
+    var uniformBuffer: MTLBuffer?
+    
     init(view: MTKView) {
         
         metalView = view
+        metalView?.depthStencilPixelFormat = .Depth32Float_Stencil8
+        metalView?.sampleCount = 4
+        
+        let size = metalView!.drawableSize;
+        let aspect = Float32(size.width / size.height)
+        projection.projection = Matrix4x4.matrix_from_perspective_fov_aspectLH(65.0 * Float((M_PI / 180.0)), aspect: aspect, nearZ: 0.01, farZ: 100)
+        
         metalView!.device       = device!
         library                 = device?.newDefaultLibrary()
         commandQueue            = device?.newCommandQueue()
@@ -49,17 +64,19 @@ class MetalContext: GpuGraphicsContext
         vertexShader    = library?.newFunctionWithName("basic_vertex")
         fragmentShader  = library?.newFunctionWithName("basic_fragment")
         
+        uniformBuffer = device?.newBufferWithLength(sizeof(Projection), options: .CPUCacheModeDefaultCache)
+        
         pipelineStateDescriptor.vertexFunction      = vertexShader
         pipelineStateDescriptor.fragmentFunction    = fragmentShader
         
         pipelineStateDescriptor.colorAttachments[0].pixelFormat = .BGRA8Unorm
         
-        pipelineStateDescriptor.sampleCount = view.sampleCount;
-        pipelineStateDescriptor.colorAttachments[0].pixelFormat = view.colorPixelFormat;
-        pipelineStateDescriptor.depthAttachmentPixelFormat      = view.depthStencilPixelFormat;
-        pipelineStateDescriptor.stencilAttachmentPixelFormat    = view.depthStencilPixelFormat;
+        pipelineStateDescriptor.sampleCount = metalView!.sampleCount;
+        pipelineStateDescriptor.colorAttachments[0].pixelFormat = metalView!.colorPixelFormat;
+        pipelineStateDescriptor.depthAttachmentPixelFormat      = metalView!.depthStencilPixelFormat;
+        pipelineStateDescriptor.stencilAttachmentPixelFormat    = metalView!.depthStencilPixelFormat;
         
-        depthStateDescriptor.depthCompareFunction = .Less;
+        depthStateDescriptor.depthCompareFunction = .Less
         depthStateDescriptor.depthWriteEnabled = true;
         depthState = device?.newDepthStencilStateWithDescriptor(depthStateDescriptor)
         
@@ -77,7 +94,7 @@ class MetalContext: GpuGraphicsContext
         vertexDescriptor.attributes[2].format = .Float2;
         vertexDescriptor.attributes[2].offset = 24;
         vertexDescriptor.attributes[2].bufferIndex = 0;
-//
+
         // Single interleaved buffer.
         vertexDescriptor.layouts[0].stride = 32;
         vertexDescriptor.layouts[0].stepRate = 1;
@@ -86,16 +103,27 @@ class MetalContext: GpuGraphicsContext
         pipelineStateDescriptor.vertexDescriptor = vertexDescriptor;
     }
     
+    func setViewMatrix(m: float4x4) {
+        projection.view = m
+    }
+    
+    func setModelMatrix(m: float4x4) {
+        projection.model = m
+    }
+    
+    func pushMatrix() {
+        
+        memcpy((uniformBuffer?.contents())!, &projection, sizeof(Projection))
+        renderCommandEncoder?.setVertexBuffer(uniformBuffer, offset: 0, atIndex: 1)
+    }
+    
     func prepareToRender() {
         
-        renderPassDescriptor = MTLRenderPassDescriptor()
-        renderPassDescriptor.colorAttachments[0].texture    = metalView?.currentDrawable?.texture
-        renderPassDescriptor.colorAttachments[0].loadAction = .Clear
-        renderPassDescriptor.colorAttachments[0].clearColor = MTLClearColorMake(0.0, 0.3, 0.0, 1.0)
+        renderPassDescriptor = (metalView?.currentRenderPassDescriptor)!
         
         let err = AutoreleasingUnsafeMutablePointer<MTLAutoreleasedRenderPipelineReflection?>()
         do {
-            pipelineState = try device!.newRenderPipelineStateWithDescriptor(pipelineStateDescriptor , options: MTLPipelineOption.None, reflection: err)
+            pipelineState = try device!.newRenderPipelineStateWithDescriptor(pipelineStateDescriptor)
         } catch {
             print("Failed to initialize new pipeline state")
             print(err)
@@ -104,16 +132,15 @@ class MetalContext: GpuGraphicsContext
         
         commandBuffer           = commandQueue?.commandBuffer()
         renderCommandEncoder    = commandBuffer?.renderCommandEncoderWithDescriptor(renderPassDescriptor)
-        
         let vp = MTLViewport(originX: 0, originY: 0, width: Double((metalView?.drawableSize.width)!), height: Double((metalView?.drawableSize.height)!), znear: 0, zfar: 1)
         
+        depthStateDescriptor.depthCompareFunction   = .Less
+        depthStateDescriptor.depthWriteEnabled      = true
+        depthState = device?.newDepthStencilStateWithDescriptor(depthStateDescriptor)
         renderCommandEncoder?.setViewport(vp)
-        
+        renderCommandEncoder?.setDepthStencilState(depthState)
         renderCommandEncoder?.setRenderPipelineState(pipelineState!)
-        renderCommandEncoder?.setDepthStencilState(depthState!)
-        
-        renderCommandEncoder?.setCullMode(.Back)
-        renderCommandEncoder?.setFrontFacingWinding(.CounterClockwise)
+
     }
     
     func render() {

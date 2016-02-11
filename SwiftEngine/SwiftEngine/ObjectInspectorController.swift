@@ -15,7 +15,5 @@ class ObjectInspectorController: NSViewController, NSStackViewDelegate {
         // Do view setup here.
         let theView = self.view as! NSStackView
         theView.delegate = self
-        
-//        ResourceManager.sharedInstance.loadAsset("New1", path: "/Users/dannyvanswieten/Documents/Model/teapot.obj")
     }
 }
