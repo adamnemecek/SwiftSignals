@@ -116,7 +116,6 @@ class AudioStream: NSObject
     let renderFunction  = callback
     var string = ""
     var cb: AURenderCallbackStruct?
-    var cbPtr           = UnsafeMutablePointer<AURenderCallbackStruct>.alloc(1)
     var streamDescription: AudioStreamBasicDescription?
     var sampleRate: Float64?
     
@@ -140,9 +139,9 @@ class AudioStream: NSObject
         AUGraphAddNode(graph.memory, cdPtr, &outputNode)
         
         cb = AURenderCallbackStruct(inputProc: callback, inputProcRefCon: toVoid(self))
-        cbPtr.initialize(cb!)
-        AUGraphSetNodeInputCallback(graph.memory, outputNode, 0, cbPtr)
-        AUGraphSetNodeInputCallback(graph.memory, outputNode, 1, cbPtr)
+
+        AUGraphSetNodeInputCallback(graph.memory, outputNode, 0, &cb!)
+        AUGraphSetNodeInputCallback(graph.memory, outputNode, 1, &cb!)
         AUGraphOpen(graph.memory)
         AUGraphNodeInfo(graph.memory, outputNode, cdPtr, &outputUnit)
         
@@ -175,7 +174,6 @@ class AudioStream: NSObject
     {
         AUGraphUninitialize(graph.memory);
         cdPtr.destroy()
-        cbPtr.destroy()
         graph.destroy()
         return 0
     }

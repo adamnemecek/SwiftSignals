@@ -22,21 +22,17 @@ class Signal<T: Arithmetic>: SignalBase
     var sample = T()
     var time: Int?
     
-    init()
-    {
+    init() {
         sample = T()
     }
     
     typealias Value = T
-    func generateSample(timestamp: Int) -> Void
-    {
+    func generateSample(timestamp: Int) -> Void {
         
     }
     
-    subscript(timestamp: Int) -> T
-    {
-        if(timestamp > time)
-        {
+    subscript(timestamp: Int) -> T {
+        if(timestamp > time) {
             time = timestamp
             generateSample(timestamp)
         }
@@ -45,7 +41,6 @@ class Signal<T: Arithmetic>: SignalBase
     }
 }
 
-func <<<T>(inout lhs: Signal<T>, rhs: T)
-{
+func <<<T>(inout lhs: Signal<T>, rhs: T) {
     lhs = DC<T>(value: rhs)
 }
