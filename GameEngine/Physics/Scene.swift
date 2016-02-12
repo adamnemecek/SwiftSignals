@@ -23,7 +23,7 @@ class Scene
     
     var integrationFunction: (RigidBody, Double, Double) -> Void = {_,_,_ in}
     
-    var viewMatrix = Matrix4x4.matrix_translation(0, y: 0, z: 0)
+    var viewMatrix = Matrix4x4.matrix_translation(0, y: 0, z: 2)
     
     var title = ""
     
@@ -33,7 +33,7 @@ class Scene
     
     /// Creates an empty object and adds it to the scene.
     final func createObject() {
-        let object = GameObject(aScene: self, aTitle: "Object " + String(objects.count + 1))
+        let object = GameObject(aTitle: "Object " + String(objects.count + 1))
         objects.append(object)
     }
     

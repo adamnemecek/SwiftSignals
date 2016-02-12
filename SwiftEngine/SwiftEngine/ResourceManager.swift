@@ -13,11 +13,10 @@ class ResourceManager {
     
     private var models: [(path: String, asset: Mesh)]?
     private var textures: [(path: String, asset: MTLTexture)]?
-    private var context: MetalContext?
+    private var context = GameEngine.instance.graphicsContext
     private var textureLoader: MTKTextureLoader?
     
-    init(aContext: MetalContext) {
-        context = aContext
+    init() {
         textureLoader = MTKTextureLoader(device: context!.device!)
     }
     

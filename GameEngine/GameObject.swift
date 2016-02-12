@@ -13,8 +13,6 @@ import Metal
 class GameObject
 {
     var title   = "Untitled"
-    
-    var scene: Scene! = nil
     var transform       = Transform()
     var meshRenderer: MeshRenderer?
     var behaviour: BehaviourProtocol?
@@ -22,9 +20,8 @@ class GameObject
     var body = RigidBody(withMass: 100)
     
     ///init function takes the scene it is rendered in. A gameobject always belongs to a scene.
-    init(aScene: Scene, aTitle: String) {
+    init(aTitle: String = "") {
         title = aTitle
-        scene = aScene
         
         behaviour = Behaviour(object: self)
         behaviour?.setup()
@@ -32,7 +29,7 @@ class GameObject
     
     /// Create a meshrenderer
     func createMeshRenderer() {
-        meshRenderer = MeshRenderer()
+        meshRenderer = MeshRenderer(aContext: GameEngine.instance.graphicsContext!)
     }
     
     /// This is called by the scene it belongs to.

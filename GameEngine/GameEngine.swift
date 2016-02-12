@@ -25,7 +25,7 @@ class GameEngine {
     
     func setupGraphics(view: MTKView) -> Void {
         graphicsContext = MetalContext(view: view)
-        resourceManager = ResourceManager(aContext: graphicsContext!)
+        resourceManager = ResourceManager()
     }
     
     func newScene(title: String = "new scene") {
@@ -33,6 +33,10 @@ class GameEngine {
     }
     
     func newObject(title: String = "new object") {
-        currentScene?.objects.append(GameObject(aScene: currentScene!, aTitle: title))
+        currentScene?.objects.append(GameObject())
+    }
+    
+    func createRenderPass(aTitle: String) -> Void {
+        
     }
 }

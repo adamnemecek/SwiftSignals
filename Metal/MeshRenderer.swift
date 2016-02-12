@@ -13,10 +13,11 @@ class MeshRenderer
 {
     var initialized     = false
     
+    var context: MetalContext?
     var mesh: Mesh?
     
-    func initializeResources(context: MetalContext) {
-        mesh = Mesh(filePath: "/Users/dannyvanswieten/Documents/Model/teapot.obj", vertexDescriptor: nil, context: context)
+    init(aContext: MetalContext) {
+        context = aContext
     }
     
     func render(encoder: MTLRenderCommandEncoder) {

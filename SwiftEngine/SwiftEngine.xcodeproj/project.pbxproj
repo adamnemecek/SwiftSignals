@@ -43,6 +43,7 @@
 		FA3D47631C6DE0E300C8EBCB /* GameEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3D47621C6DE0E300C8EBCB /* GameEngine.swift */; };
 		FA3D47651C6DE27200C8EBCB /* PhysicsEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3D47641C6DE27200C8EBCB /* PhysicsEngine.swift */; };
 		FA3D47671C6E0F6F00C8EBCB /* Runge-Kutta.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3D47661C6E0F6F00C8EBCB /* Runge-Kutta.swift */; };
+		FA3D47691C6E220E00C8EBCB /* Material.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3D47681C6E220E00C8EBCB /* Material.swift */; };
 		FA959C9F1C68CF6A00279B2C /* Mesh.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA959C9E1C68CF6A00279B2C /* Mesh.swift */; };
 		FABC642F1C5A5FB900BEC384 /* GameObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABC64261C5A5FB900BEC384 /* GameObject.swift */; };
 		FABC64301C5A5FB900BEC384 /* Matrix.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABC64271C5A5FB900BEC384 /* Matrix.swift */; };
@@ -114,6 +115,7 @@
 		FA3D47621C6DE0E300C8EBCB /* GameEngine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameEngine.swift; sourceTree = "<group>"; };
 		FA3D47641C6DE27200C8EBCB /* PhysicsEngine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhysicsEngine.swift; sourceTree = "<group>"; };
 		FA3D47661C6E0F6F00C8EBCB /* Runge-Kutta.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Runge-Kutta.swift"; sourceTree = "<group>"; };
+		FA3D47681C6E220E00C8EBCB /* Material.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Material.swift; sourceTree = "<group>"; };
 		FA959C9E1C68CF6A00279B2C /* Mesh.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Mesh.swift; sourceTree = "<group>"; };
 		FABC64261C5A5FB900BEC384 /* GameObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameObject.swift; sourceTree = "<group>"; };
 		FABC64271C5A5FB900BEC384 /* Matrix.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Matrix.swift; sourceTree = "<group>"; };
@@ -164,7 +166,7 @@
 			children = (
 				FA10CC0B1C5E4E4700CA0D98 /* AI */,
 				FABC64251C5A5FB900BEC384 /* GameEngine */,
-				FA110B371C5659AA00D8EF5D /* SwiftAudio */,
+				FA110B371C5659AA00D8EF5D /* Audio */,
 				FA110B1E1C56599000D8EF5D /* Metal */,
 				FA110B1A1C5653D200D8EF5D /* MetalKit.framework */,
 				FA110AEA1C563BD600D8EF5D /* SwiftEngine */,
@@ -225,33 +227,42 @@
 				FA110B211C56599000D8EF5D /* MeshRenderer.swift */,
 				FA110B221C56599000D8EF5D /* MetalContext.swift */,
 				FA959C9E1C68CF6A00279B2C /* Mesh.swift */,
+				FA3D47681C6E220E00C8EBCB /* Material.swift */,
 			);
 			name = Metal;
 			path = ../Metal;
 			sourceTree = "<group>";
 		};
-		FA110B371C5659AA00D8EF5D /* SwiftAudio */ = {
+		FA110B371C5659AA00D8EF5D /* Audio */ = {
 			isa = PBXGroup;
 			children = (
 				FA110B381C5659AA00D8EF5D /* Artithmetic.swift */,
 				FA110B391C5659AA00D8EF5D /* Audio.swift */,
 				FA110B3A1C5659AA00D8EF5D /* AudioBuffer.swift */,
-				FA110B3B1C5659AA00D8EF5D /* Envelope.swift */,
-				FA110B3C1C5659AA00D8EF5D /* Filter.swift */,
+				FA3D476A1C6E29B900C8EBCB /* Signal */,
 				FA110B3D1C5659AA00D8EF5D /* Host.swift */,
-				FA110B3E1C5659AA00D8EF5D /* Instrument.swift */,
-				FA110B3F1C5659AA00D8EF5D /* Integrator.swift */,
 				FA110B401C5659AA00D8EF5D /* Midi.swift */,
-				FA110B411C5659AA00D8EF5D /* Phasor.swift */,
-				FA110B421C5659AA00D8EF5D /* Signal.swift */,
-				FA110B431C5659AA00D8EF5D /* Sine.swift */,
 				FA110B441C5659AA00D8EF5D /* Utility.swift */,
-				FA110B451C5659AA00D8EF5D /* Value.swift */,
 				FA110B461C5659AA00D8EF5D /* WaveTable.swift */,
 				FA1458C41C6507390018BC72 /* Scheduler.swift */,
 			);
-			name = SwiftAudio;
+			name = Audio;
 			path = ../SwiftAudio;
+			sourceTree = "<group>";
+		};
+		FA3D476A1C6E29B900C8EBCB /* Signal */ = {
+			isa = PBXGroup;
+			children = (
+				FA110B3F1C5659AA00D8EF5D /* Integrator.swift */,
+				FA110B3E1C5659AA00D8EF5D /* Instrument.swift */,
+				FA110B3B1C5659AA00D8EF5D /* Envelope.swift */,
+				FA110B3C1C5659AA00D8EF5D /* Filter.swift */,
+				FA110B411C5659AA00D8EF5D /* Phasor.swift */,
+				FA110B421C5659AA00D8EF5D /* Signal.swift */,
+				FA110B431C5659AA00D8EF5D /* Sine.swift */,
+				FA110B451C5659AA00D8EF5D /* Value.swift */,
+			);
+			name = Signal;
 			sourceTree = "<group>";
 		};
 		FABC64251C5A5FB900BEC384 /* GameEngine */ = {
@@ -418,6 +429,7 @@
 				FA110B611C5659AA00D8EF5D /* Sine.swift in Sources */,
 				FA110B631C5659AA00D8EF5D /* Value.swift in Sources */,
 				FABC642F1C5A5FB900BEC384 /* GameObject.swift in Sources */,
+				FA3D47691C6E220E00C8EBCB /* Material.swift in Sources */,
 				FA110B5A1C5659AA00D8EF5D /* Filter.swift in Sources */,
 				FA110B601C5659AA00D8EF5D /* Signal.swift in Sources */,
 				FA110B5B1C5659AA00D8EF5D /* Host.swift in Sources */,

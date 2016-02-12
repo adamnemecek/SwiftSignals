@@ -48,14 +48,19 @@ class RenderPass {
     var vertexShader: MTLFunction?
     var fragmentShader: MTLFunction?
     var vertexDescriptor: MTLVertexDescriptor?
-    var meshes: [Mesh]?
     var commandEncoder: MTLRenderCommandEncoder?
     var commandBuffer: MTLCommandBuffer?
-    var device: MTLDevice?
+    var commandQueue: MTLCommandQueue?
     
-    init(aTitle: String, aDevice: MTLDevice) {
+    var meshes: [Mesh]?
+    
+    init(aTitle: String, aVertexDescriptor: MTLVertexDescriptor) {
         title = aTitle
-        device = aDevice
+    }
+    
+    class func defaultRenderPass(aContext: MetalContext) -> RenderPass {
+        let pass = RenderPass(aTitle: "default", aVertexDescriptor: defaultVertexDescriptor())
+        return pass
     }
     
     func render() -> Void {
@@ -139,17 +144,17 @@ class MetalContext: GpuGraphicsContext
         depthState = device?.newDepthStencilStateWithDescriptor(depthStateDescriptor)
     }
     
-    func createRenderPass(aTitle: String, vertexShader: String,fragmentShader: String, aVertexDescriptor: MTLVertexDescriptor) -> RenderPass {
-        let vertex      = library?.newFunctionWithName(vertexShader)
-        let fragment    = library?.newFunctionWithName(fragmentShader)
-        let pass        = RenderPass(aTitle: aTitle, aDevice: device!)
-        
-        pass.vertexShader       = vertex
-        pass.fragmentShader     = fragment
-        pass.vertexDescriptor   = aVertexDescriptor
-        
-        return pass
-    }
+//    func createRenderPass(aTitle: String, vertexShader: String,fragmentShader: String, aVertexDescriptor: MTLVertexDescriptor) -> RenderPass {
+//        let vertex      = library?.newFunctionWithName(vertexShader)
+//        let fragment    = library?.newFunctionWithName(fragmentShader)
+//        let pass        = RenderPass(aTitle: aTitle)
+//        
+//        pass.vertexShader       = vertex
+//        pass.fragmentShader     = fragment
+//        pass.vertexDescriptor   = aVertexDescriptor
+//        
+//        return pass
+//    }
     
     func setRenderPass(pass: RenderPass) {
         
