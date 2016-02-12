@@ -8,6 +8,7 @@
 
 import Foundation
 
+/// The controller class is a singleton that is used to keep track of key and mouse events.
 class Controller {
     
     static let sharedInstance = Controller()

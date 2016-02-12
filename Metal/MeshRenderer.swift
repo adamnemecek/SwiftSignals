@@ -16,7 +16,7 @@ class MeshRenderer
     var mesh: Mesh?
     
     func initializeResources(context: MetalContext) {
-        mesh = Mesh(filePath: "/Users/dannyvanswieten/Documents/Model/realship.obj", context: context)
+        mesh = Mesh(filePath: "/Users/dannyvanswieten/Documents/Model/teapot.obj", vertexDescriptor: nil, context: context)
     }
     
     func render(encoder: MTLRenderCommandEncoder) {

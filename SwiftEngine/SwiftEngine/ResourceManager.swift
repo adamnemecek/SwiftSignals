@@ -7,31 +7,54 @@
 //
 
 import ModelIO
+import MetalKit
 
 class ResourceManager {
     
+    private var models: [(path: String, asset: Mesh)]?
+    private var textures: [(path: String, asset: MTLTexture)]?
+    private var context: MetalContext?
+    private var textureLoader: MTKTextureLoader?
     
-    static let sharedInstance = ResourceManager()
+    init(aContext: MetalContext) {
+        context = aContext
+        textureLoader = MTKTextureLoader(device: context!.device!)
+    }
     
-    var assets: [(path: String, asset: Mesh)]?
+    private func loadTexture(path: String) {
+        let url = NSURL(fileURLWithPath: path)
+        textureLoader?.newTextureWithContentsOfURL(url, options: nil, completionHandler: {_, _ in })
+    }
     
-    func getAsset(path: String) -> (String, Mesh)? {
-        for asset in assets! {
-            if asset.path == path {
-                return asset
+    func getTexture(path: String) -> MTLTexture? {
+        for texture in textures! {
+            if texture.path == path {
+                return texture.asset
             }
         }
         
-        return nil
+        loadTexture(path)
+        return getTexture(path)
     }
     
-    func loadAsset(path: String, context: MetalContext) -> Bool {
-        let asset = Mesh(filePath: path, context: context)
-        assets?.append((path, asset))
-        return true
-    }
-    
-    private init() {
+    func getModel(path: String) -> Mesh? {
+        for model in models! {
+            if model.path == path {
+                return model.asset
+            }
+        }
         
+        let succes = loadModel(path)
+        if succes {
+            return getModel(path)
+        } else {
+            return nil
+        }
+    }
+    
+    private func loadModel(path: String) -> Bool {
+        let asset = Mesh(filePath: path, vertexDescriptor: nil, context: context!)
+        models?.append((path, asset))
+        return true
     }
 }

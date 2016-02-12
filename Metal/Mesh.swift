@@ -26,12 +26,16 @@ class Mesh {
     
     var meshes = [MTKMesh]()
     
-    init(filePath: String, context: MetalContext){
+    init(filePath: String, var vertexDescriptor: MTLVertexDescriptor?, context: MetalContext){
         
         let assetURL = NSURL(fileURLWithPath: filePath)
         let allocator = MTKMeshBufferAllocator(device: context.device!)
 
-        let mdlVertexDescriptor = MTKModelIOVertexDescriptorFromMetal(context.vertexDescriptor);
+        if vertexDescriptor == nil {
+            vertexDescriptor = defaultVertexDescriptor()
+        }
+        
+        let mdlVertexDescriptor = MTKModelIOVertexDescriptorFromMetal(vertexDescriptor!);
         var name = mdlVertexDescriptor.attributes[0] as! MDLVertexAttribute
         name.name = MDLVertexAttributePosition
         name = mdlVertexDescriptor.attributes[1] as! MDLVertexAttribute

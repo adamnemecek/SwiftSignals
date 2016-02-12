@@ -37,7 +37,7 @@ typedef struct {
     simd::float4x4 projection;
 } Uniform;
 
-vertex VertexOut basic_vertex(VertexIn in[[stage_in]],
+vertex VertexOut default_vertex(VertexIn in[[stage_in]],
                               constant Uniform& uniforms [[buffer(1)]])
 {
     VertexOut v;
@@ -50,7 +50,7 @@ vertex VertexOut basic_vertex(VertexIn in[[stage_in]],
     return v;
 }
 
-fragment half4 basic_fragment(VertexOut v [[stage_in]])
+fragment half4 default_fragment(VertexOut v [[stage_in]])
 {
     return half4(v.color);
 }

@@ -9,6 +9,7 @@
 import Darwin
 import simd
 
+/// This is a quaternion. Can be used to represent rotation and can be converted to a rotation matrix
 struct Quaternion {
     var w, x, y, z: Float
     
@@ -16,10 +17,12 @@ struct Quaternion {
         return Quaternion(w: 0.0, x: 1.0, y: 1.0, z: 1.0)
     }
     
+    /// return the length of the vector
     func length() -> Float32 {
         return sqrt(w * w + x * x + y * y + z * z)
     }
     
+    /// Normalizes Self
     mutating func normalize() {
         let l = length()
         
@@ -29,6 +32,7 @@ struct Quaternion {
         z /= l
     }
     
+    /// returns a new normalized quaternion based on self
     func normalized() -> Quaternion {
         let l = length()
         let yonstwnt = 1.0 / l
@@ -36,6 +40,7 @@ struct Quaternion {
         return Quaternion(w: w * yonstwnt, x: x * yonstwnt, y: y * yonstwnt, z: z * yonstwnt)
     }
     
+    /// Creates a quaternion from an angle and an axis of rotation
     static func fromRotation(angle: Float32, axis: Vector3) -> Quaternion {
         
         let an = axis.normalized()
@@ -48,6 +53,7 @@ struct Quaternion {
 
     }
     
+    /// Turns self into rotation matrix
     func toMatrix() -> float4x4 {
         
         let p = normalized()
@@ -70,6 +76,7 @@ struct Quaternion {
     }
 }
 
+/// Quaternion Multiplication
 func *(lhs: Quaternion, rhs: Quaternion) -> Quaternion {
     
     let w = lhs.w * rhs.w - lhs.x * rhs.x - lhs.y * rhs.y - lhs.z * rhs.z
@@ -80,6 +87,7 @@ func *(lhs: Quaternion, rhs: Quaternion) -> Quaternion {
     return Quaternion(w: w, x: x, y: y, z: z)
 }
 
+/// Adds two quaternions
 func +(lhs: Quaternion, rhs: Quaternion) -> Quaternion {
     let w = lhs.w + rhs.w
     let x = lhs.x + rhs.x
@@ -89,12 +97,24 @@ func +(lhs: Quaternion, rhs: Quaternion) -> Quaternion {
     return Quaternion(w: w, x: x, y: y, z: z)
 }
 
-func *(lhs: Quaternion, rhs: Float32) -> Quaternion {
+/// Multiply Quaterion by scalar value
+func *(quaternion: Quaternion, scalar: Float32) -> Quaternion {
     
-    let w = lhs.w * rhs
-    let x = lhs.x * rhs
-    let y = lhs.y * rhs
-    let z = lhs.z * rhs
+    let w = quaternion.w * scalar
+    let x = quaternion.x * scalar
+    let y = quaternion.y * scalar
+    let z = quaternion.z * scalar
+    
+    return Quaternion(w: w, x: x, y: y, z: z)
+}
+
+/// Multiply scalar by quaternion
+func *(scalar: Float32, quaternion: Quaternion) -> Quaternion {
+    
+    let w = quaternion.w * scalar
+    let x = quaternion.x * scalar
+    let y = quaternion.y * scalar
+    let z = quaternion.z * scalar
     
     return Quaternion(w: w, x: x, y: y, z: z)
 }

@@ -14,6 +14,61 @@ struct Projection {
     var projection  = float4x4()
 }
 
+func defaultVertexDescriptor() -> MTLVertexDescriptor {
+    
+    let vertexDescriptor = MTLVertexDescriptor()
+    
+    // Positions.
+    vertexDescriptor.attributes[0].format = .Float3;
+    vertexDescriptor.attributes[0].offset = 0;
+    vertexDescriptor.attributes[0].bufferIndex = 0;
+    
+    // Normals.
+    vertexDescriptor.attributes[1].format = .Float3;
+    vertexDescriptor.attributes[1].offset = 12;
+    vertexDescriptor.attributes[1].bufferIndex = 0;
+    
+    // Texture coordinates.
+    vertexDescriptor.attributes[2].format = .Float2;
+    vertexDescriptor.attributes[2].offset = 24;
+    vertexDescriptor.attributes[2].bufferIndex = 0;
+    
+    // Single interleaved buffer.
+    vertexDescriptor.layouts[0].stride = 32;
+    vertexDescriptor.layouts[0].stepRate = 1;
+    vertexDescriptor.layouts[0].stepFunction = .PerVertex;
+    
+    return vertexDescriptor
+}
+
+class RenderPass {
+    
+    var title = ""
+    var descriptor: MTLRenderPassDescriptor?
+    var vertexShader: MTLFunction?
+    var fragmentShader: MTLFunction?
+    var vertexDescriptor: MTLVertexDescriptor?
+    var meshes: [Mesh]?
+    var commandEncoder: MTLRenderCommandEncoder?
+    var commandBuffer: MTLCommandBuffer?
+    var device: MTLDevice?
+    
+    init(aTitle: String, aDevice: MTLDevice) {
+        title = aTitle
+        device = aDevice
+    }
+    
+    func render() -> Void {
+        for mesh in meshes! {
+            mesh.renderWithEncoder(commandEncoder!)
+        }
+    }
+    
+    func prepareToRender(aDescriptor: MTLRenderPassDescriptor) -> Void {
+        self.descriptor = aDescriptor
+    }
+}
+
 class MetalContext: GpuGraphicsContext
 {
     /// This is the device that is used for rendering. Initialized to system default device
@@ -27,7 +82,7 @@ class MetalContext: GpuGraphicsContext
     
     var pipelineStateDescriptor = MTLRenderPipelineDescriptor()
     
-    let vertexDescriptor = MTLVertexDescriptor()
+    var vertexDescriptor = MTLVertexDescriptor()
     
     var renderPassDescriptor    = MTLRenderPassDescriptor()
     
@@ -47,6 +102,8 @@ class MetalContext: GpuGraphicsContext
     var projection = Projection()
     var uniformBuffer: MTLBuffer?
     
+    var renderPass: RenderPass?
+    
     init(view: MTKView) {
         
         metalView = view
@@ -61,8 +118,8 @@ class MetalContext: GpuGraphicsContext
         library                 = device?.newDefaultLibrary()
         commandQueue            = device?.newCommandQueue()
         
-        vertexShader    = library?.newFunctionWithName("basic_vertex")
-        fragmentShader  = library?.newFunctionWithName("basic_fragment")
+        vertexShader    = library?.newFunctionWithName("default_vertex")
+        fragmentShader  = library?.newFunctionWithName("default_fragment")
         
         uniformBuffer = device?.newBufferWithLength(sizeof(Projection), options: .CPUCacheModeDefaultCache)
         
@@ -77,30 +134,25 @@ class MetalContext: GpuGraphicsContext
         pipelineStateDescriptor.stencilAttachmentPixelFormat    = metalView!.depthStencilPixelFormat;
         
         depthStateDescriptor.depthCompareFunction = .Less
+        
         depthStateDescriptor.depthWriteEnabled = true;
         depthState = device?.newDepthStencilStateWithDescriptor(depthStateDescriptor)
+    }
+    
+    func createRenderPass(aTitle: String, vertexShader: String,fragmentShader: String, aVertexDescriptor: MTLVertexDescriptor) -> RenderPass {
+        let vertex      = library?.newFunctionWithName(vertexShader)
+        let fragment    = library?.newFunctionWithName(fragmentShader)
+        let pass        = RenderPass(aTitle: aTitle, aDevice: device!)
         
-        // Positions.
-        vertexDescriptor.attributes[0].format = .Float3;
-        vertexDescriptor.attributes[0].offset = 0;
-        vertexDescriptor.attributes[0].bufferIndex = 0;
-
-        // Normals.
-        vertexDescriptor.attributes[1].format = .Float3;
-        vertexDescriptor.attributes[1].offset = 12;
-        vertexDescriptor.attributes[1].bufferIndex = 0;
+        pass.vertexShader       = vertex
+        pass.fragmentShader     = fragment
+        pass.vertexDescriptor   = aVertexDescriptor
         
-        // Texture coordinates.
-        vertexDescriptor.attributes[2].format = .Float2;
-        vertexDescriptor.attributes[2].offset = 24;
-        vertexDescriptor.attributes[2].bufferIndex = 0;
-
-        // Single interleaved buffer.
-        vertexDescriptor.layouts[0].stride = 32;
-        vertexDescriptor.layouts[0].stepRate = 1;
-        vertexDescriptor.layouts[0].stepFunction = .PerVertex;
+        return pass
+    }
+    
+    func setRenderPass(pass: RenderPass) {
         
-        pipelineStateDescriptor.vertexDescriptor = vertexDescriptor;
     }
     
     func setViewMatrix(m: float4x4) {
@@ -121,6 +173,9 @@ class MetalContext: GpuGraphicsContext
         
         renderPassDescriptor = (metalView?.currentRenderPassDescriptor)!
         
+        vertexDescriptor = defaultVertexDescriptor()
+        pipelineStateDescriptor.vertexDescriptor = vertexDescriptor;
+        
         let err = AutoreleasingUnsafeMutablePointer<MTLAutoreleasedRenderPipelineReflection?>()
         do {
             pipelineState = try device!.newRenderPipelineStateWithDescriptor(pipelineStateDescriptor)
@@ -140,7 +195,6 @@ class MetalContext: GpuGraphicsContext
         renderCommandEncoder?.setViewport(vp)
         renderCommandEncoder?.setDepthStencilState(depthState)
         renderCommandEncoder?.setRenderPipelineState(pipelineState!)
-
     }
     
     func render() {

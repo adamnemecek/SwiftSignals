@@ -31,7 +31,19 @@ class Behaviour: BehaviourProtocol {
     
     func update() {
         if(Controller.sharedInstance.isKeyPressed("a")) {
-            object?.state.position += float3(x: 0.0, y: 1.0, z: 0.0)
+            object?.body.position += float3(x: -0.1, y: 0.0, z: 0.0)
+        }
+        
+        if(Controller.sharedInstance.isKeyPressed("d")) {
+            object?.body.position += float3(x: 0.1, y: 0.0, z: 0.0)
+        }
+        
+        if(Controller.sharedInstance.isKeyPressed("w")) {
+            object?.body.position += float3(x: 0.0, y: 0.0, z: 0.1)
+        }
+        
+        if(Controller.sharedInstance.isKeyPressed("s")) {
+            object?.body.position += float3(x: 0.0, y: 0.0, z: -0.1)
         }
     }
 }

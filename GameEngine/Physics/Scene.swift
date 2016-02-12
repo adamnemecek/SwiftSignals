@@ -9,6 +9,7 @@
 import Foundation
 import simd
 
+/// Scene class. This updates the physics states and calls te render functions of the game objects. It also contains the view matrix and a custom implementable integration closure. It defaults to Runge-Kutta fourth order integration. See typesignature
 class Scene
 {
     var t   = 0.0
@@ -20,16 +21,24 @@ class Scene
     var objects = [GameObject]()
     var gravity = Vector3(x: 0.0, y: -9.8, z: 0.0)
     
-    var integrationFunction: (inout PhysicsState, Double, Double) -> Void = {_,_,_ in}
+    var integrationFunction: (RigidBody, Double, Double) -> Void = {_,_,_ in}
     
     var viewMatrix = Matrix4x4.matrix_translation(0, y: 0, z: 0)
     
-    func createObject() {
+    var title = ""
+    
+    init(aTitle: String = ""){
+        title = aTitle
+    }
+    
+    /// Creates an empty object and adds it to the scene.
+    final func createObject() {
         let object = GameObject(aScene: self, aTitle: "Object " + String(objects.count + 1))
         objects.append(object)
     }
-        
-    func update(ctx: MetalContext) {
+    
+    /// updates the scene and all object's physics states
+    final func update(ctx: MetalContext) {
         
         let newTime     = NSDate.timeIntervalSinceReferenceDate()
         var frameTime   = newTime - currentTime
@@ -42,13 +51,12 @@ class Scene
         accumulator += frameTime
         
         while accumulator >= dt {
+            ctx.setViewMatrix(viewMatrix)
             for object in objects {
-                ctx.setViewMatrix(viewMatrix)
-                integrationFunction(&object.state, t, dt)
+                integrationFunction(object.body, t, dt)
                 object.update()
-                let translation = Matrix4x4.matrix_translation(0, y: 0.0, z: 2.0)
-                
-                ctx.setModelMatrix(translation * object.transform.scaling.matrix * object.state.rotation())
+                let translation = Matrix4x4.matrix_translation(object.body.position)
+                ctx.setModelMatrix(translation * object.transform.scaling.matrix * object.body.rotation())
                 ctx.pushMatrix()
                 object.meshRenderer?.render(ctx.renderCommandEncoder!)
             }

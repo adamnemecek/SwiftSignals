@@ -1,83 +1,14 @@
 //
-//  PhysicsState.swift
-//  SwiftAudio
+//  Runge-Kutta.swift
+//  SwiftEngine
 //
-//  Created by Danny van Swieten on 1/19/16.
+//  Created by Danny van Swieten on 2/12/16.
 //  Copyright © 2016 Danny van Swieten. All rights reserved.
 //
 
-import Darwin
 import simd
 
-/// This struct keeps track of an objects state in the real world
-struct PhysicsState
-{
-    /// Current Position
-    var position            = float3()
-    
-    /// Current momentum
-    var momentum            = float3()
-    
-    /// Current angular momentum
-    var angularMomentum     = float3()
-    
-    /// Current velocity
-    var velocity            = float3()
-    
-    /// Current angular velocity
-    var angularVelocity     = float3()
-    
-    /// Current spin
-    var spin                = Quaternion.identity()
-    
-    /// The current orientation
-    var orientation         = Quaternion.identity()
-    
-    /// Mass, which is assumed to be static
-    var mass                = 100.0
-    
-    /// Inverse mass. Avoids division
-    var inverseMass         = 0.0
-    
-    /// Size of the object (we're assuming cubes here)
-    var size                = 1.0
-    
-    /// Inertiatensor. Normally this would be a vector, but assuming cubes it can be a scalar.
-    var inertiaTensor       = 0.0
-    
-    /// Inverse inertiatensor.
-    var inverseInertiaTensor = 0.0
-    
-    /// Force applied to  this body.
-    var force           = float3()
-    
-    init() {
-        inverseMass             = 1.0 / mass
-        inertiaTensor           = mass * size * size * 1.0/6.0
-        inverseInertiaTensor    = 1.0 / inertiaTensor
-        orientation             = Quaternion.identity()
-    }
-    
-    mutating func update() -> Void {
-        velocity        = momentum * Float32(inverseMass)
-        angularVelocity = angularMomentum * Float32(inverseInertiaTensor)
-        orientation.normalize()
-        spin            = (Quaternion(w: 0, x: angularVelocity.x, y: angularVelocity.y, z: angularVelocity.z) * Float32(0.5)) * orientation
-    }
-    
-    mutating func applyForce(forceVector: float3) -> Void {
-        force = forceVector
-    }
-    
-    mutating func addForce(forceVector: float3) -> Void {
-        force += forceVector
-    }
-    
-    mutating func rotation() -> float4x4 {
-        return orientation.toMatrix()
-    }
-}
-
+/// These function and Derivative struct belong the the Runge-Kutta fourth order integration algorithm.
 struct Derivative
 {
     var velocity    = float3()
@@ -86,7 +17,8 @@ struct Derivative
     var torque      = float3()
 }
 
-func evaluate(var state: PhysicsState, t: Double, dt: Double, derivative: Derivative) -> Derivative {
+/// Evaluate next derivative
+func evaluate(state: RigidBody, t: Double, dt: Double, derivative: Derivative) -> Derivative {
     
     /// Update position with derivative (velocity)
     state.position = state.position + derivative.velocity * Float(dt)
@@ -109,7 +41,8 @@ func evaluate(var state: PhysicsState, t: Double, dt: Double, derivative: Deriva
     return output
 }
 
-func evaluate(state: PhysicsState, t: Double) -> Derivative {
+/// Evaluate first derivative.
+func evaluate(state: RigidBody, t: Double) -> Derivative {
     /// Create a new Derivative
     var output = Derivative()
     /// Update position derivative (velocity)
@@ -122,16 +55,17 @@ func evaluate(state: PhysicsState, t: Double) -> Derivative {
     return output
 }
 
-func forces(state: PhysicsState, time: Double, inout force: float3, inout torque: float3) {
+func forces(state: RigidBody, time: Double, inout force: float3, inout torque: float3) {
     
-    force   = float3(x: 0, y: -10, z: 0) * Float(state.mass)
+    //    force   = float3(x: 0, y: -10, z: 0) * Float(state.mass)
     
-    torque  = float3(x: Float(10 * sin(time * 0.1 + 0.5)),
-                    y: Float(11 * sin(time * 0.1 + 0.4)),
-                    z: Float(12 * sin(time * 0.1 + 0.9)))
+    //    torque  = float3(x: Float(10 * sin(time * 0.1 + 0.5)),
+    //                    y: Float(11 * sin(time * 0.1 + 0.4)),
+    //                    z: Float(12 * sin(time * 0.1 + 0.9)))
 }
 
-func integrateWithRK4(inout state: PhysicsState, t: Double, dt: Double) -> Void {
+/// Integrate using Runge-Kutta fourth order.
+func integrateWithRK4(state: RigidBody, t: Double, dt: Double) -> Void {
     var a, b, c, d: Derivative
     
     /// Calculate derivative based on current state.
@@ -160,7 +94,7 @@ func integrateWithRK4(inout state: PhysicsState, t: Double, dt: Double) -> Void 
     /// Delta position from waited sum of derivatives
     let qsum = a.spin + ((b.spin + c.spin) * Float(2.0)) + d.spin
     let spin = qsum * rkFactor
-
+    
     /// Delta velocity from waited sum of derivatives
     sum = a.torque + ((b.torque + c.torque) * Float(2.0))
     sum = sum + d.torque

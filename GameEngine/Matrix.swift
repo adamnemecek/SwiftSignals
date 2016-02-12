@@ -38,4 +38,11 @@ struct Matrix4x4 {
         m.columns.3 = float4(x, y, z, 1.0)
         return float4x4(m)
     }
+    
+    static func matrix_translation(row: float3) ->float4x4 {
+        
+        var m = matrix_identity_float4x4
+        m.columns.3 = float4(row.x, row.y, row.z, 1.0)
+        return float4x4(m)
+    }
 }
