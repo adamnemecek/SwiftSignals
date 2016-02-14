@@ -6,29 +6,31 @@
 //  Copyright © 2016 Danny van Swieten. All rights reserved.
 //
 
-import Foundation
+import MetalKit
 import simd
 
-/// Scene class. This updates the physics states and calls te render functions of the game objects. It also contains the view matrix and a custom implementable integration closure. It defaults to Runge-Kutta fourth order integration. See typesignature
+/// Scene class. This renders al object's meshrenderer.
 class Scene
 {
-    var t   = 0.0
-    var dt  = 0.01
-    
-    var currentTime = 0.0
-    var accumulator = 0.0
-    
     var objects = [GameObject]()
-    var gravity = Vector3(x: 0.0, y: -9.8, z: 0.0)
-    
-    var integrationFunction: (RigidBody, Double, Double) -> Void = {_,_,_ in}
-    
     var viewMatrix = Matrix4x4.matrix_translation(0, y: 0, z: 2)
+    var perspectiveMatrix: float4x4?
+    
+    var uniformBuffer: MTLBuffer?
+    var uniforms: UnsafeMutablePointer<float4x4>?
     
     var title = ""
     
     init(aTitle: String = ""){
         title = aTitle
+        let size = GameEngine.instance.graphicsContext?.metalView?.drawableSize
+        let aspect = (size?.width)! / (size?.height)!
+        perspectiveMatrix = Matrix4x4.matrix_from_perspective_fov_aspectLH(65.0 * Float((M_PI / 180.0)), aspect: Float(aspect), nearZ: 0.01, farZ: 100)
+        
+        uniformBuffer = GameEngine.instance.graphicsContext?.device?.newBufferWithLength(sizeof(Projection), options: .CPUCacheModeDefaultCache)
+        uniforms = UnsafeMutablePointer<float4x4>((uniformBuffer?.contents())!)
+        uniforms![1] = viewMatrix
+        uniforms![2] = perspectiveMatrix!
     }
     
     /// Creates an empty object and adds it to the scene.
@@ -37,32 +39,24 @@ class Scene
         objects.append(object)
     }
     
-    /// updates the scene and all object's physics states
-    final func update(ctx: MetalContext) {
+    final func addObject(object: GameObject) {
+        objects.append(object)
+    }
+    
+    /// Renders all object's meshes if they have them.
+    final func render() -> Void {
         
-        let newTime     = NSDate.timeIntervalSinceReferenceDate()
-        var frameTime   = newTime - currentTime
+        GameEngine.instance.graphicsContext?.prepareToRender()
         
-        if frameTime > 0.25 {
-            frameTime = 0.25
+        for object in objects {
+            object.behaviour?.update()
+            uniforms![0] = (object.body?.transform())!
+            memcpy(uniformBuffer!.contents(), uniforms!, sizeof(Projection))
+            object.meshRenderer?.render()
         }
         
-        currentTime = newTime
-        accumulator += frameTime
+        GameEngine.instance.graphicsContext?.commandBuffer?.presentDrawable((GameEngine.instance.graphicsContext?.metalView!.currentDrawable!)!)
         
-        while accumulator >= dt {
-            ctx.setViewMatrix(viewMatrix)
-            for object in objects {
-                integrationFunction(object.body, t, dt)
-                object.update()
-                let translation = Matrix4x4.matrix_translation(object.body.position)
-                ctx.setModelMatrix(translation * object.transform.scaling.matrix * object.body.rotation())
-                ctx.pushMatrix()
-                object.meshRenderer?.render(ctx.renderCommandEncoder!)
-            }
-            
-            t += dt;
-            accumulator -= dt;
-        }
+        GameEngine.instance.graphicsContext?.commandBuffer?.commit()
     }
 }

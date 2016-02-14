@@ -11,7 +11,7 @@ import MetalKit
 
 class ResourceManager {
     
-    private var models: [(path: String, asset: Mesh)]?
+    private var models = [(path: String, asset: Mesh)]()
     private var textures: [(path: String, asset: MTLTexture)]?
     private var context = GameEngine.instance.graphicsContext
     private var textureLoader: MTKTextureLoader?
@@ -37,7 +37,8 @@ class ResourceManager {
     }
     
     func getModel(path: String) -> Mesh? {
-        for model in models! {
+        
+        for model in models {
             if model.path == path {
                 return model.asset
             }
@@ -53,7 +54,7 @@ class ResourceManager {
     
     private func loadModel(path: String) -> Bool {
         let asset = Mesh(filePath: path, vertexDescriptor: nil, context: context!)
-        models?.append((path, asset))
+        models.append((path, asset))
         return true
     }
 }

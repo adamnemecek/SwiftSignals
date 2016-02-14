@@ -6,9 +6,11 @@
 //  Copyright © 2016 Danny van Swieten. All rights reserved.
 //
 
+import simd
+
 struct Transform
 {
-    var translation     = Matrix4x4()
-    var scaling         = Matrix4x4()
-    var rotation        = Matrix4x4()
+    var translation     = float4x4()
+    var scaling         = float4x4()
+    var rotation        = float4x4()
 }

@@ -17,7 +17,7 @@ class GameObject
     var meshRenderer: MeshRenderer?
     var behaviour: BehaviourProtocol?
     
-    var body = RigidBody(withMass: 100)
+    var body: RigidBody?
     
     ///init function takes the scene it is rendered in. A gameobject always belongs to a scene.
     init(aTitle: String = "") {
@@ -25,15 +25,12 @@ class GameObject
         
         behaviour = Behaviour(object: self)
         behaviour?.setup()
+        
+        createMeshRenderer()
     }
     
     /// Create a meshrenderer
     func createMeshRenderer() {
-        meshRenderer = MeshRenderer(aContext: GameEngine.instance.graphicsContext!)
-    }
-    
-    /// This is called by the scene it belongs to.
-    func update() {
-         behaviour?.update()
+        meshRenderer = MeshRenderer()
     }
 }

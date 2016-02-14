@@ -15,7 +15,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     func applicationDidFinishLaunching(aNotification: NSNotification) {
         // Insert code here to initialize your application
-        window.makeFirstResponder(window.contentView)
+        window.makeFirstResponder(GameEngine.instance.graphicsContext?.metalView)
     }
 
     func applicationWillTerminate(aNotification: NSNotification) {

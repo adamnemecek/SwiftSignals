@@ -53,10 +53,14 @@ class RigidBody
     
     init(withMass: Double) {
         mass = withMass
-        inverseMass             = 1.0 / withMass
-        inertiaTensor           = withMass * size * size * 1.0/6.0
+        inverseMass             = 1.0 / mass
+        inertiaTensor           = mass * size * size * 1.0/6.0
         inverseInertiaTensor    = 1.0 / inertiaTensor
         orientation             = Quaternion.identity()
+    }
+    
+    func transform() -> float4x4 {
+        return  Matrix4x4.matrix_translation(position)
     }
     
     /// This is called whenever momentum and/or angular momentum is changed.

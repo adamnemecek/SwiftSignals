@@ -16,16 +16,19 @@ class GameEngine {
     var resourceManager: ResourceManager?
     var scenes: [Scene]?
     var currentScene: Scene?
+    var controller = Controller()
     
     private init() {
-        scenes = [Scene]()
-        newScene()
-        currentScene = scenes?.last
+
     }
     
     func setupGraphics(view: MTKView) -> Void {
         graphicsContext = MetalContext(view: view)
         resourceManager = ResourceManager()
+        
+        scenes = [Scene]()
+        newScene()
+        currentScene = scenes?.last
     }
     
     func newScene(title: String = "new scene") {

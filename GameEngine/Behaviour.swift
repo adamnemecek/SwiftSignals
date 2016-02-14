@@ -30,20 +30,25 @@ class Behaviour: BehaviourProtocol {
     }
     
     func update() {
-        if(Controller.sharedInstance.isKeyPressed("a")) {
-            object?.body.position += float3(x: -0.1, y: 0.0, z: 0.0)
+        
+        guard object?.body != nil else {
+            return
         }
         
-        if(Controller.sharedInstance.isKeyPressed("d")) {
-            object?.body.position += float3(x: 0.1, y: 0.0, z: 0.0)
+        if(GameEngine.instance.controller.isKeyPressed("a")) {
+            object?.body!.position += float3(x: -0.1, y: 0.0, z: 0.0)
         }
         
-        if(Controller.sharedInstance.isKeyPressed("w")) {
-            object?.body.position += float3(x: 0.0, y: 0.0, z: 0.1)
+        if(GameEngine.instance.controller.isKeyPressed("d")) {
+            object?.body!.position += float3(x: 0.1, y: 0.0, z: 0.0)
         }
         
-        if(Controller.sharedInstance.isKeyPressed("s")) {
-            object?.body.position += float3(x: 0.0, y: 0.0, z: -0.1)
+        if(GameEngine.instance.controller.isKeyPressed("w")) {
+            object?.body!.position += float3(x: 0.0, y: 0.0, z: 0.1)
+        }
+        
+        if(GameEngine.instance.controller.isKeyPressed("s")) {
+            object?.body!.position += float3(x: 0.0, y: 0.0, z: -0.1)
         }
     }
 }
