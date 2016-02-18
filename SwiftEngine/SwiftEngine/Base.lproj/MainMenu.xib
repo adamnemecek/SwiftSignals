@@ -19,7 +19,7 @@
         </customObject>
         <viewController id="1yB-re-CRe" customClass="MetalViewController" customModule="SwiftEngine" customModuleProvider="target">
             <connections>
-                <outlet property="view" destination="N2Z-Wa-BjU" id="Hqx-XC-7Tf"/>
+                <outlet property="view" destination="EiT-Mj-1SZ" id="Pew-iJ-jpd"/>
             </connections>
         </viewController>
         <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
@@ -677,20 +677,9 @@
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="0.0" y="517" width="1200" height="800"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1440" height="877"/>
-            <view key="contentView" wantsLayer="YES" id="EiT-Mj-1SZ">
+            <view key="contentView" wantsLayer="YES" id="EiT-Mj-1SZ" customClass="MetalView" customModule="SwiftEngine" customModuleProvider="target">
                 <rect key="frame" x="0.0" y="0.0" width="1200" height="800"/>
                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                <subviews>
-                    <customView translatesAutoresizingMaskIntoConstraints="NO" id="N2Z-Wa-BjU" customClass="MTKView">
-                        <rect key="frame" x="0.0" y="249" width="885" height="551"/>
-                    </customView>
-                </subviews>
-                <constraints>
-                    <constraint firstItem="N2Z-Wa-BjU" firstAttribute="top" secondItem="EiT-Mj-1SZ" secondAttribute="top" id="SFK-ff-aMR"/>
-                    <constraint firstAttribute="trailing" secondItem="N2Z-Wa-BjU" secondAttribute="trailing" constant="315" id="s1L-nd-Zfb"/>
-                    <constraint firstItem="N2Z-Wa-BjU" firstAttribute="leading" secondItem="EiT-Mj-1SZ" secondAttribute="leading" id="uSQ-1p-sYD"/>
-                    <constraint firstAttribute="bottom" secondItem="N2Z-Wa-BjU" secondAttribute="bottom" constant="249" id="w2l-G4-fBA"/>
-                </constraints>
             </view>
             <point key="canvasLocation" x="415" y="344"/>
         </window>

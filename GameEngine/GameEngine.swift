@@ -11,6 +11,7 @@ import MetalKit
 class GameEngine {
     static var instance = GameEngine()
     
+    var device = MTLCreateSystemDefaultDevice()
     var physics = PhysicsEngine()
     var graphicsContext: MetalContext?
     var resourceManager: ResourceManager?
@@ -19,10 +20,10 @@ class GameEngine {
     var controller = Controller()
     
     private init() {
-
+        
     }
     
-    func setupGraphics(view: MTKView) -> Void {
+    func setupGraphics(view: MetalView) -> Void {
         graphicsContext = MetalContext(view: view)
         resourceManager = ResourceManager()
         

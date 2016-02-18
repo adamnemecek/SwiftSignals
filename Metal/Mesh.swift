@@ -22,9 +22,16 @@ extension MTKMesh {
     }
 }
 
-class Mesh {
+protocol Mesh {
+    var material: Material? {set get}
+    func renderWithEncoder(commandEncoder: MTLRenderCommandEncoder)
+}
+
+class Model: Mesh {
     
     var meshes = [MTKMesh]()
+    var material: Material?
+    var uniformBuffer: MTLBuffer?
     
     init(filePath: String, var vertexDescriptor: MTLVertexDescriptor?, context: MetalContext){
         
@@ -53,6 +60,7 @@ class Mesh {
     
     func renderWithEncoder(encoder: MTLRenderCommandEncoder){
         for mesh in meshes {
+            encoder.setFragmentTexture(material!.albedo, atIndex: 0)
             mesh.renderWithEncoder(encoder)
         }
     }

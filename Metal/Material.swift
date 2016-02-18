@@ -9,7 +9,6 @@
 import MetalKit
 
 class Material {
-    var baseColor: float3?
     var albedo: MTLTexture?
     var specular: MTLTexture?
 }

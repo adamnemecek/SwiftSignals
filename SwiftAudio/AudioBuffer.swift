@@ -10,12 +10,12 @@ import Foundation
 
 class AudioBuffer<T: Arithmetic>
 {
-    var numChannels: UInt32
-    var size: UInt32
+    var numChannels: Int
+    var size: Int
     
     var buffers: BufferPointer<T>?
     
-    init(numChannels: UInt32, size: UInt32)
+    init(numChannels: Int, size: Int)
     {
         self.numChannels    = numChannels
         self.size           = size
@@ -33,13 +33,17 @@ class BufferPointer<T: Arithmetic>
 {
     var data: [T]?
     let dataPtr: UnsafeMutablePointer<T>
-    var size: UInt32
+    var size: Int
     
-    init(size: UInt32)
+    init(size: Int)
     {
         self.size = size
         data = [T](count: Int(size), repeatedValue: T())
         dataPtr = UnsafeMutablePointer<T>(data!)
+    }
+    
+    deinit {
+        dataPtr.destroy()
     }
     
     func samples() -> UnsafeMutablePointer<T>

@@ -13,4 +13,8 @@ struct Transform
     var translation     = float4x4()
     var scaling         = float4x4()
     var rotation        = float4x4()
+    
+    func transform() -> float4x4 {
+        return translation * rotation * scaling
+    }
 }

@@ -12,7 +12,7 @@ import MetalKit
 class ResourceManager {
     
     private var models = [(path: String, asset: Mesh)]()
-    private var textures: [(path: String, asset: MTLTexture)]?
+    private var textures = [(path: String, asset: MTLTexture)]()
     private var context = GameEngine.instance.graphicsContext
     private var textureLoader: MTKTextureLoader?
     
@@ -20,20 +20,27 @@ class ResourceManager {
         textureLoader = MTKTextureLoader(device: context!.device!)
     }
     
-    private func loadTexture(path: String) {
+    private func loadTexture(path: String) -> Bool {
         let url = NSURL(fileURLWithPath: path)
-        textureLoader?.newTextureWithContentsOfURL(url, options: nil, completionHandler: {_, _ in })
+        do{
+            let t = try textureLoader?.newTextureWithContentsOfURL(url, options: nil)
+            textures.append((path, t!))
+            return true
+        } catch { return false }
     }
     
     func getTexture(path: String) -> MTLTexture? {
-        for texture in textures! {
+        for texture in textures {
             if texture.path == path {
                 return texture.asset
             }
         }
         
-        loadTexture(path)
-        return getTexture(path)
+        if loadTexture(path) {
+            return getTexture(path)
+        }
+        
+        return nil
     }
     
     func getModel(path: String) -> Mesh? {
@@ -53,7 +60,7 @@ class ResourceManager {
     }
     
     private func loadModel(path: String) -> Bool {
-        let asset = Mesh(filePath: path, vertexDescriptor: nil, context: context!)
+        let asset = Model(filePath: path, vertexDescriptor: nil, context: context!)
         models.append((path, asset))
         return true
     }

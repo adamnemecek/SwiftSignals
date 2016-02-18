@@ -59,9 +59,9 @@ func forces(state: RigidBody, time: Double, inout force: float3, inout torque: f
     
     //    force   = float3(x: 0, y: -10, z: 0) * Float(state.mass)
     
-        torque  = float3(x: Float(10 * sin(time * 0.1 + 0.5)),
-                        y: Float(11 * sin(time * 0.1 + 0.4)),
-                        z: Float(12 * sin(time * 0.1 + 0.9)))
+//        torque  = float3(x: Float(10 * sin(time * 0.1 + 0.5)),
+//                        y: Float(11 * sin(time * 0.1 + 0.4)),
+//                        z: Float(12 * sin(time * 0.1 + 0.9)))
 }
 
 /// Integrate using Runge-Kutta fourth order.

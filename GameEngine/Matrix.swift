@@ -45,4 +45,19 @@ struct Matrix4x4 {
         m.columns.3 = float4(row.x, row.y, row.z, 1.0)
         return float4x4(m)
     }
+    
+    static func lookAt(target: Vector3, position: Vector3, up: Vector3) -> float4x4 {
+        let direction = (position - target).normalized()
+        let right = Vector3.cross(up, b: direction).normalized()
+        let cameraUp = Vector3.cross(direction, b: right)
+        
+        let coll = (float4(right.x,     right.y,    right.z,    0),
+            float4(        cameraUp.x,  cameraUp.y, cameraUp.z,    0.0),
+            float4(direction.x,    direction.y,    direction.z,      0),
+            float4(0.0,    0.0,    0, 1.0))
+        
+        let m   = matrix_float4x4(columns: coll)
+        
+        return float4x4(m)
+    }
 }

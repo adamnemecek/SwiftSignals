@@ -12,6 +12,8 @@ struct Projection {
     var model       = float4x4()
     var view        = float4x4()
     var projection  = float4x4()
+    
+    var modelView   = float4x4()
 }
 
 func defaultVertexDescriptor() -> MTLVertexDescriptor {
@@ -39,38 +41,6 @@ func defaultVertexDescriptor() -> MTLVertexDescriptor {
     vertexDescriptor.layouts[0].stepFunction = .PerVertex;
     
     return vertexDescriptor
-}
-
-class RenderPass {
-    
-    var title = ""
-    var descriptor: MTLRenderPassDescriptor?
-    var vertexShader: MTLFunction?
-    var fragmentShader: MTLFunction?
-    var vertexDescriptor: MTLVertexDescriptor?
-    var commandEncoder: MTLRenderCommandEncoder?
-    
-    var meshes: [Mesh]?
-    
-    init(aTitle: String, aVertexDescriptor: MTLVertexDescriptor) {
-        
-        
-    }
-    
-    class func defaultRenderPass(aContext: MetalContext) -> RenderPass {
-        let pass = RenderPass(aTitle: "default", aVertexDescriptor: defaultVertexDescriptor())
-        return pass
-    }
-    
-    func render() -> Void {
-        for mesh in meshes! {
-            mesh.renderWithEncoder(commandEncoder!)
-        }
-    }
-    
-    func prepareToRender(aDescriptor: MTLRenderPassDescriptor) -> Void {
-        self.descriptor = aDescriptor
-    }
 }
 
 class MetalContext: GpuGraphicsContext
@@ -101,16 +71,14 @@ class MetalContext: GpuGraphicsContext
     var depthStateDescriptor = MTLDepthStencilDescriptor()
     var depthState: MTLDepthStencilState?
     
-    var metalView: MTKView?
+    var metalView: MetalView?
     
     var projection = Projection()
     var uniformBuffer: MTLBuffer?
     
-    var renderPass: RenderPass?
-    
     var clearColor = MTLClearColorMake(1.0, 1.0, 1.0, 1.0)
     
-    init(view: MTKView) {
+    init(view: MetalView) {
         
         metalView = view
         metalView!.device = device!
@@ -120,32 +88,14 @@ class MetalContext: GpuGraphicsContext
         library = device?.newDefaultLibrary()
     }
     
-    func setViewMatrix(m: float4x4) {
-        projection.view = m
-    }
-    
-    func setModelMatrix(m: float4x4) {
-        projection.model = m
-    }
-    
-    func pushMatrix() {
-        
-        memcpy((uniformBuffer?.contents())!, &projection, sizeof(Projection))
-        renderCommandEncoder?.setVertexBuffer(uniformBuffer, offset: 0, atIndex: 1)
-    }
-    
     func prepareToRender() {
         renderPassDescriptor = (metalView?.currentRenderPassDescriptor)!
         renderPassDescriptor.colorAttachments[0].clearColor = clearColor
         renderPassDescriptor.depthAttachment.storeAction = .Store
         renderPassDescriptor.depthAttachment.loadAction = .Clear
-        commandBuffer = commandQueue?.commandBuffer()
     }
     
     func render() {
-        
-        renderCommandEncoder?.endEncoding()
-        commandBuffer?.presentDrawable(metalView!.currentDrawable!)
-        commandBuffer?.commit()
+
     }
 }

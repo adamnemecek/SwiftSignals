@@ -42,8 +42,7 @@ struct Vector4
     }
 }
 
-struct Vector3
-{
+struct Vector3{
     var x: Float32 = 0
     var y: Float32 = 0
     var z: Float32 = 0
@@ -68,6 +67,14 @@ struct Vector3
         let dz = z * constant
         
         return Vector3(x: dx, y: dy, z: dz)
+    }
+    
+    static func cross(a: Vector3, b: Vector3) -> Vector3 {
+        let x = a.y * b.z - a.z * b.y
+        let y = a.z * b.x - a.x * b.z
+        let z = a.x * b.y - a.y * b.x
+        
+        return Vector3(x: x, y: y, z: z)
     }
 }
 

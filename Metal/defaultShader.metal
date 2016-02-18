@@ -16,7 +16,7 @@
 
 using namespace metal;
 
-constant float3 light = float3(0.0, 1.0, 0.5);
+constant float3 light = float3(0.5, 1.0, 0.0);
 
 typedef struct {
     simd::float3 position[[attribute(0)]];
@@ -35,22 +35,28 @@ typedef struct {
     simd::float4x4 model;
     simd::float4x4 view;
     simd::float4x4 projection;
+    
+//    simd::
+    
 } Uniform;
 
 vertex VertexOut default_vertex(VertexIn in[[stage_in]],
-                              constant Uniform& uniforms [[buffer(1)]])
+                                constant Uniform& uniforms [[buffer(1)]])
 {
     VertexOut v;
     v.position      = uniforms.projection * uniforms.view * uniforms.model * float4(in.position, 1.0);
-    v.normal        = uniforms.view * uniforms.model * float4(in.normal, 1.0);
-    float intensity = dot(normalize(v.normal.xyz), light);
-    v.color         = half4(1.0, 1.0, 1.0, 1.0) * fmax(0.0, intensity);
+    v.normal        = float4(normalize(in.normal), 1.0);
+    v.color         = half4(1.0, 1.0, 1.0, 1.0);
     v.tex           = in.tex;
     
     return v;
 }
 
-fragment half4 default_fragment(VertexOut v [[stage_in]])
+fragment half4 default_fragment(VertexOut v [[stage_in]],
+                                texture2d<half> albedo [[texture(0)]] )
 {
-    return half4(v.color);
+    float intensity = dot(v.normal.xyz, normalize(light));
+    constexpr sampler defaultSampler;
+    
+    return albedo.sample(defaultSampler, float2(v.tex)) * v.color * intensity;
 }

@@ -14,7 +14,7 @@ struct Quaternion {
     var w, x, y, z: Float
     
     static func identity() -> Quaternion {
-        return Quaternion(w: 0.0, x: 1.0, y: 1.0, z: 1.0)
+        return Quaternion(w: 1.0, x: 0.0, y: 0.0, z: 0.0)
     }
     
     /// return the length of the vector
@@ -23,13 +23,15 @@ struct Quaternion {
     }
     
     /// Normalizes Self
-    mutating func normalize() {
+    mutating func normalize() -> Quaternion {
         let l = length()
         
         w /= l
         x /= l
         y /= l
         z /= l
+        
+        return self
     }
     
     /// returns a new normalized quaternion based on self
@@ -50,7 +52,6 @@ struct Quaternion {
         let z = an.z * sin(angle / 2.0)
         
         return Quaternion(w: w, x: x, y: y, z: z)
-
     }
     
     /// Turns self into rotation matrix
@@ -97,6 +98,18 @@ func +(lhs: Quaternion, rhs: Quaternion) -> Quaternion {
     return Quaternion(w: w, x: x, y: y, z: z)
 }
 
+prefix func -(q: Quaternion) -> Quaternion {
+    
+    var newQ = q.normalized()
+    
+    newQ.w = q.w
+    newQ.x = -q.x
+    newQ.y = -q.y
+    newQ.z = -q.z
+    
+    return newQ
+}
+
 /// Multiply Quaterion by scalar value
 func *(quaternion: Quaternion, scalar: Float32) -> Quaternion {
     
@@ -117,4 +130,9 @@ func *(scalar: Float32, quaternion: Quaternion) -> Quaternion {
     let z = quaternion.z * scalar
     
     return Quaternion(w: w, x: x, y: y, z: z)
+}
+
+func *(quaternion: Quaternion, vector: Vector3) -> Quaternion {
+    let vQ = Quaternion(w: 0, x: vector.x, y: vector.y, z: vector.z)
+    return (quaternion * vQ * -quaternion).normalized()
 }

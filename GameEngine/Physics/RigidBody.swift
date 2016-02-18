@@ -28,10 +28,10 @@ class RigidBody
     var angularVelocity     = float3()
     
     /// Current spin
-    var spin                = Quaternion.identity()
+    var spin                = Quaternion.identity().normalized()
     
     /// The current orientation
-    var orientation         = Quaternion.identity()
+    var orientation         = Quaternion.identity().normalized()
     
     /// Mass, which is assumed to be static
     var mass                = 100.0
@@ -60,7 +60,7 @@ class RigidBody
     }
     
     func transform() -> float4x4 {
-        return  Matrix4x4.matrix_translation(position)
+        return  orientation.toMatrix() * Matrix4x4.matrix_translation(position)
     }
     
     /// This is called whenever momentum and/or angular momentum is changed.

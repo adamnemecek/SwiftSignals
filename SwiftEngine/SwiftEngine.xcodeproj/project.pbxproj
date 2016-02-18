@@ -36,6 +36,7 @@
 		FA110B691C565AEC00D8EF5D /* MetalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA110B681C565AEC00D8EF5D /* MetalViewController.swift */; };
 		FA110B771C567E3E00D8EF5D /* ResourceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA110B761C567E3E00D8EF5D /* ResourceManager.swift */; };
 		FA1458C51C6507390018BC72 /* Scheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1458C41C6507390018BC72 /* Scheduler.swift */; };
+		FA17CD771C732A8E00EFDEAE /* Texture.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA17CD761C732A8E00EFDEAE /* Texture.swift */; };
 		FA3D475F1C6BDF7000C8EBCB /* Controller.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3D475E1C6BDF7000C8EBCB /* Controller.swift */; };
 		FA3D47611C6CA88700C8EBCB /* Behaviour.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3D47601C6CA88700C8EBCB /* Behaviour.swift */; };
 		FA3D47631C6DE0E300C8EBCB /* GameEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3D47621C6DE0E300C8EBCB /* GameEngine.swift */; };
@@ -44,6 +45,12 @@
 		FA3D47691C6E220E00C8EBCB /* Material.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3D47681C6E220E00C8EBCB /* Material.swift */; };
 		FA3D47701C6E9DBD00C8EBCB /* TransformView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3D476F1C6E9DBD00C8EBCB /* TransformView.swift */; };
 		FA3D47721C6E9F1500C8EBCB /* ObjectStackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3D47711C6E9F1500C8EBCB /* ObjectStackViewController.swift */; };
+		FA4E967C1C71D2E300D04B3A /* Grid.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA4E967B1C71D2E300D04B3A /* Grid.swift */; };
+		FA4E96811C71F26800D04B3A /* MetalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA4E96801C71F26800D04B3A /* MetalView.swift */; };
+		FA6A19F61C74C29900767357 /* SystemSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6A19F51C74C29900767357 /* SystemSettings.swift */; };
+		FA6A19F81C74D9A900767357 /* RenderPass.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6A19F71C74D9A900767357 /* RenderPass.swift */; };
+		FA6A19FB1C75BA3300767357 /* Scale.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6A19FA1C75BA3300767357 /* Scale.swift */; };
+		FA6A19FD1C75BD1000767357 /* Chord.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6A19FC1C75BD1000767357 /* Chord.swift */; };
 		FA959C9F1C68CF6A00279B2C /* Mesh.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA959C9E1C68CF6A00279B2C /* Mesh.swift */; };
 		FABC642F1C5A5FB900BEC384 /* GameObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABC64261C5A5FB900BEC384 /* GameObject.swift */; };
 		FABC64301C5A5FB900BEC384 /* Matrix.swift in Sources */ = {isa = PBXBuildFile; fileRef = FABC64271C5A5FB900BEC384 /* Matrix.swift */; };
@@ -108,6 +115,7 @@
 		FA110B681C565AEC00D8EF5D /* MetalViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MetalViewController.swift; path = ../SwiftEngine/SwiftEngine/MetalViewController.swift; sourceTree = "<group>"; };
 		FA110B761C567E3E00D8EF5D /* ResourceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResourceManager.swift; sourceTree = "<group>"; };
 		FA1458C41C6507390018BC72 /* Scheduler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Scheduler.swift; sourceTree = "<group>"; };
+		FA17CD761C732A8E00EFDEAE /* Texture.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Texture.swift; path = ../GameEngine/Texture.swift; sourceTree = "<group>"; };
 		FA3D475E1C6BDF7000C8EBCB /* Controller.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Controller.swift; sourceTree = "<group>"; };
 		FA3D47601C6CA88700C8EBCB /* Behaviour.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Behaviour.swift; sourceTree = "<group>"; };
 		FA3D47621C6DE0E300C8EBCB /* GameEngine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameEngine.swift; sourceTree = "<group>"; };
@@ -116,6 +124,12 @@
 		FA3D47681C6E220E00C8EBCB /* Material.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Material.swift; sourceTree = "<group>"; };
 		FA3D476F1C6E9DBD00C8EBCB /* TransformView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransformView.swift; sourceTree = "<group>"; };
 		FA3D47711C6E9F1500C8EBCB /* ObjectStackViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObjectStackViewController.swift; sourceTree = "<group>"; };
+		FA4E967B1C71D2E300D04B3A /* Grid.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Grid.swift; sourceTree = "<group>"; };
+		FA4E96801C71F26800D04B3A /* MetalView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MetalView.swift; sourceTree = "<group>"; };
+		FA6A19F51C74C29900767357 /* SystemSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SystemSettings.swift; sourceTree = "<group>"; };
+		FA6A19F71C74D9A900767357 /* RenderPass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RenderPass.swift; sourceTree = "<group>"; };
+		FA6A19FA1C75BA3300767357 /* Scale.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Scale.swift; sourceTree = "<group>"; };
+		FA6A19FC1C75BD1000767357 /* Chord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Chord.swift; sourceTree = "<group>"; };
 		FA959C9E1C68CF6A00279B2C /* Mesh.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Mesh.swift; sourceTree = "<group>"; };
 		FABC64261C5A5FB900BEC384 /* GameObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameObject.swift; sourceTree = "<group>"; };
 		FABC64271C5A5FB900BEC384 /* Matrix.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Matrix.swift; sourceTree = "<group>"; };
@@ -164,6 +178,7 @@
 		FA110ADF1C563BD600D8EF5D = {
 			isa = PBXGroup;
 			children = (
+				FA6A19F91C75BA2200767357 /* Music */,
 				FA10CC0B1C5E4E4700CA0D98 /* AI */,
 				FABC64251C5A5FB900BEC384 /* GameEngine */,
 				FA110B371C5659AA00D8EF5D /* Audio */,
@@ -222,12 +237,15 @@
 			isa = PBXGroup;
 			children = (
 				FA110B1F1C56599000D8EF5D /* defaultShader.metal */,
+				FA17CD761C732A8E00EFDEAE /* Texture.swift */,
 				FA110B681C565AEC00D8EF5D /* MetalViewController.swift */,
 				FA110B201C56599000D8EF5D /* GpuGraphicsContext.swift */,
 				FA110B211C56599000D8EF5D /* MeshRenderer.swift */,
 				FA110B221C56599000D8EF5D /* MetalContext.swift */,
 				FA959C9E1C68CF6A00279B2C /* Mesh.swift */,
 				FA3D47681C6E220E00C8EBCB /* Material.swift */,
+				FA4E96801C71F26800D04B3A /* MetalView.swift */,
+				FA6A19F71C74D9A900767357 /* RenderPass.swift */,
 			);
 			name = Metal;
 			path = ../Metal;
@@ -265,10 +283,27 @@
 			name = Signal;
 			sourceTree = "<group>";
 		};
-		FABC64251C5A5FB900BEC384 /* GameEngine */ = {
+		FA4E967D1C71EA0600D04B3A /* Behaviours */ = {
 			isa = PBXGroup;
 			children = (
 				FA3D47601C6CA88700C8EBCB /* Behaviour.swift */,
+			);
+			name = Behaviours;
+			sourceTree = "<group>";
+		};
+		FA6A19F91C75BA2200767357 /* Music */ = {
+			isa = PBXGroup;
+			children = (
+				FA6A19FA1C75BA3300767357 /* Scale.swift */,
+				FA6A19FC1C75BD1000767357 /* Chord.swift */,
+			);
+			name = Music;
+			sourceTree = "<group>";
+		};
+		FABC64251C5A5FB900BEC384 /* GameEngine */ = {
+			isa = PBXGroup;
+			children = (
+				FA4E967D1C71EA0600D04B3A /* Behaviours */,
 				FA3D475E1C6BDF7000C8EBCB /* Controller.swift */,
 				FA3D47621C6DE0E300C8EBCB /* GameEngine.swift */,
 				FABC64261C5A5FB900BEC384 /* GameObject.swift */,
@@ -279,6 +314,8 @@
 				FABC642D1C5A5FB900BEC384 /* Vector.swift */,
 				FABC642E1C5A5FB900BEC384 /* VectorMath.swift */,
 				FABC642A1C5A5FB900BEC384 /* Scene.swift */,
+				FA4E967B1C71D2E300D04B3A /* Grid.swift */,
+				FA6A19F51C74C29900767357 /* SystemSettings.swift */,
 			);
 			name = GameEngine;
 			path = ../GameEngine;
@@ -429,11 +466,16 @@
 				FA110B611C5659AA00D8EF5D /* Sine.swift in Sources */,
 				FA110B631C5659AA00D8EF5D /* Value.swift in Sources */,
 				FABC642F1C5A5FB900BEC384 /* GameObject.swift in Sources */,
+				FA4E967C1C71D2E300D04B3A /* Grid.swift in Sources */,
+				FA6A19FD1C75BD1000767357 /* Chord.swift in Sources */,
 				FA3D47691C6E220E00C8EBCB /* Material.swift in Sources */,
 				FA110B5A1C5659AA00D8EF5D /* Filter.swift in Sources */,
 				FA110B601C5659AA00D8EF5D /* Signal.swift in Sources */,
+				FA17CD771C732A8E00EFDEAE /* Texture.swift in Sources */,
 				FA110B5B1C5659AA00D8EF5D /* Host.swift in Sources */,
 				FA110B691C565AEC00D8EF5D /* MetalViewController.swift in Sources */,
+				FA6A19FB1C75BA3300767357 /* Scale.swift in Sources */,
+				FA4E96811C71F26800D04B3A /* MetalView.swift in Sources */,
 				FA1458C51C6507390018BC72 /* Scheduler.swift in Sources */,
 				FA3D47651C6DE27200C8EBCB /* PhysicsEngine.swift in Sources */,
 				FABC64311C5A5FB900BEC384 /* RigidBody.swift in Sources */,
@@ -444,6 +486,7 @@
 				FA110B771C567E3E00D8EF5D /* ResourceManager.swift in Sources */,
 				FA110B5C1C5659AA00D8EF5D /* Instrument.swift in Sources */,
 				FABC64331C5A5FB900BEC384 /* Quaternion.swift in Sources */,
+				FA6A19F61C74C29900767357 /* SystemSettings.swift in Sources */,
 				FA110B251C56599000D8EF5D /* GpuGraphicsContext.swift in Sources */,
 				FA110B581C5659AA00D8EF5D /* AudioBuffer.swift in Sources */,
 				FA110B5D1C5659AA00D8EF5D /* Integrator.swift in Sources */,
@@ -460,6 +503,7 @@
 				FA3D47631C6DE0E300C8EBCB /* GameEngine.swift in Sources */,
 				FABC64351C5A5FB900BEC384 /* Vector.swift in Sources */,
 				FA10CC0F1C5E4F6700CA0D98 /* Neuron.swift in Sources */,
+				FA6A19F81C74D9A900767357 /* RenderPass.swift in Sources */,
 				FA959C9F1C68CF6A00279B2C /* Mesh.swift in Sources */,
 				FA3D47671C6E0F6F00C8EBCB /* Runge-Kutta.swift in Sources */,
 				FA110B621C5659AA00D8EF5D /* Utility.swift in Sources */,

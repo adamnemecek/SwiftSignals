@@ -24,7 +24,7 @@ func callback(data: UnsafeMutablePointer<Void>,
 {
     if samples == nil
     {
-        renderBuffer = AudioBuffer<Float32>(numChannels: UInt32(numChannels), size: numFrames)
+        renderBuffer = AudioBuffer<Float32>(numChannels: numChannels, size: Int(numFrames))
     }
     
     let audio: AudioStream = fromVoid(data)
