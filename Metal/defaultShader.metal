@@ -35,9 +35,6 @@ typedef struct {
     simd::float4x4 model;
     simd::float4x4 view;
     simd::float4x4 projection;
-    
-//    simd::
-    
 } Uniform;
 
 vertex VertexOut default_vertex(VertexIn in[[stage_in]],
@@ -46,17 +43,20 @@ vertex VertexOut default_vertex(VertexIn in[[stage_in]],
     VertexOut v;
     v.position      = uniforms.projection * uniforms.view * uniforms.model * float4(in.position, 1.0);
     v.normal        = float4(normalize(in.normal), 1.0);
-    v.color         = half4(1.0, 1.0, 1.0, 1.0);
+    float intensity = dot(v.normal.xyz, normalize(light));
+    v.color         = half4(1.0, 1.0, 1.0, 1.0) * intensity;
     v.tex           = in.tex;
     
     return v;
 }
 
 fragment half4 default_fragment(VertexOut v [[stage_in]],
-                                texture2d<half> albedo [[texture(0)]] )
+                                texture2d<half> albedoTexture [[texture(0)]])
 {
-    float intensity = dot(v.normal.xyz, normalize(light));
     constexpr sampler defaultSampler;
     
-    return albedo.sample(defaultSampler, float2(v.tex)) * v.color * intensity;
+    // Blend texture color with input color and output to framebuffer
+    half4 color =  albedoTexture.sample(defaultSampler, float2(v.tex)) * v.color;
+    
+    return color;
 }

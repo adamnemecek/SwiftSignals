@@ -15,9 +15,11 @@ class GameObject
 {
     var title           = "Untitled"
     var transform       = Transform()
-    var renderer:       Renderer?
-    var behaviour:      BehaviourProtocol?
+    
+    var behaviour:      Behaviour?
     var body:           RigidBody?
+    
+    var renderer:       MeshRenderer?
     
     init(aTitle: String = "") {
         title = aTitle

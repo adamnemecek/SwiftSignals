@@ -10,7 +10,7 @@ import MetalKit
 import simd
 
 /// Scene class. This renders al object's meshrenderer.
-class Scene
+class Scene: Renderable
 {
     var objects = [GameObject]()
     var view    = float4x4()
@@ -26,15 +26,23 @@ class Scene
     
     init(aTitle: String = ""){
         title = aTitle
-        let size = GameEngine.instance.graphicsContext?.metalView?.drawableSize
+        let size = GameEngine.instance.view?.drawableSize
         let aspect = (size?.width)! / (size?.height)!
-        perspectiveMatrix = Matrix4x4.matrix_from_perspective_fov_aspectLH(65.0 * Float((M_PI / 180.0)), aspect: Float(aspect), nearZ: 0.01, farZ: 1000)
-        
-        uniformBuffer = GameEngine.instance.graphicsContext?.device?.newBufferWithLength(sizeof(Projection), options: .CPUCacheModeDefaultCache)
+        perspectiveMatrix = Matrix4x4.matrix_from_perspective_fov_aspectLH(65.0 * Float((M_PI / 180.0)), aspect: Float(aspect), nearZ: 0.01, farZ: 100)
+
         uniforms = UnsafeMutablePointer<float4x4>((uniformBuffer?.contents())!)
         uniforms![1] = view
         uniforms![2] = perspectiveMatrix!
         uniforms![3] = float4x4()
+    }
+    
+    func renderWithEncoder(commandEncoder: MTLRenderCommandEncoder) {
+        for object in objects {
+            object.update()
+            
+            object.renderer?.prepareToRender()
+            object.renderer?.renderWithEncoder(commandEncoder)
+        }
     }
     
     /// Creates an empty object and adds it to the scene.
@@ -45,27 +53,5 @@ class Scene
     
     final func addObject(object: GameObject) {
         objects.append(object)
-    }
-    
-    /// Renders all object's meshes if they have them.
-    final func render() -> Void {
-        GameEngine.instance.graphicsContext?.prepareToRender()
-        camera.update()
-        uniforms![1] = view
-        for object in objects {
-            object.update()
-            
-            if object.body != nil{
-                uniforms![0] = (object.body?.transform())!
-            }
-            
-            memcpy(uniformBuffer!.contents(), uniforms!, sizeof(Projection))
-            object.renderer?.prepareToRender()
-            object.renderer?.render()
-        }
-        
-        GameEngine.instance.graphicsContext?.commandBuffer?.presentDrawable((GameEngine.instance.graphicsContext?.metalView!.currentDrawable!)!)
-        
-        GameEngine.instance.graphicsContext?.commandBuffer?.commit()
     }
 }

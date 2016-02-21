@@ -9,67 +9,6 @@
 import Foundation
 import AppKit
 
-struct RawImage {
-    
-    var width           = 0
-    var height          = 0
-    var bitsPerPixel    = 0
-    var bytesPerPixel   = 0
-    var hasAlpha        = false
-    var sizeInBytes     = 0
-    var bytesPerRow     = 0
-    
-    var data            = UnsafeMutablePointer<Void>()
-    
-    init(fromNSImage: NSImage){
-        
-        let imageData   = fromNSImage.TIFFRepresentation
-        let source      = CGImageSourceCreateWithData(imageData! as CFDataRef, nil)
-        let mask        = CGImageSourceCreateImageAtIndex(source!, 0, nil)
-        
-        if mask == nil {
-            return
-        }
-        
-        width = CGImageGetWidth(mask!);
-        height = CGImageGetHeight(mask!);
-        bitsPerPixel = CGImageGetBitsPerPixel(mask!);
-        bytesPerPixel   = bitsPerPixel / 8
-        hasAlpha = CGImageGetAlphaInfo(mask!) == .None ? false: true
-        sizeInBytes = width * height * bitsPerPixel / 8;
-        bytesPerRow = width * bitsPerPixel / 8;
-        
-        data = malloc(sizeInBytes);
-
-    }
-    
-    init(pathToFile: String) {
-        let image   = NSImage(contentsOfFile: pathToFile)
-        
-        if image == nil {
-            return
-        }
-        
-        let imageData   = image?.TIFFRepresentation
-        let source      = CGImageSourceCreateWithData(imageData! as CFDataRef, nil)
-        let mask        = CGImageSourceCreateImageAtIndex(source!, 0, nil)
-        
-        if mask == nil {
-            return
-        }
-        
-        width = CGImageGetWidth(mask!);
-        height = CGImageGetHeight(mask!);
-        bitsPerPixel = CGImageGetBitsPerPixel(mask!);
-        bytesPerPixel   = bitsPerPixel / 8
-        hasAlpha = CGImageGetAlphaInfo(mask!) == .None ? false: true
-        sizeInBytes = width * height * bitsPerPixel / 8;
-        bytesPerRow = width * bitsPerPixel / 8;
-        
-        data = malloc(sizeInBytes);
-    }
-}
-
 enum TextureType {
     case TwoDimensional
     case Cube
@@ -98,7 +37,7 @@ class Texture {
         switch(type) {
         case .Cube:
             desc = MTLTextureDescriptor.textureCubeDescriptorWithPixelFormat(.RGBA8Unorm, size: image.width, mipmapped: false)
-            texture = GameEngine.instance.graphicsContext?.device?.newTextureWithDescriptor(desc)
+            texture = GameEngine.instance.device?.newTextureWithDescriptor(desc)
             for slice in 0..<6 {
                 let region = MTLRegionMake2D(0, 0, image.width, image.width)
                 let sliceSize = image.width * image.width

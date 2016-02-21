@@ -9,6 +9,18 @@
 import MetalKit
 
 class Material {
-    var albedo: MTLTexture?
-    var specular: MTLTexture?
+    
+    var shader: Shader?
+    var vertexShader: MTLFunction?
+    var fragmentShader: MTLFunction?
+    var textures = [String: MTLTexture?]()
+    
+    init(aShader: Shader) {
+        shader = aShader
+        fragmentShader = GameEngine.instance.resourceManager?.getShader(shader!.fragmentFunction)
+        
+        for attribute in shader!.attributes {
+            textures[attribute.name] = nil
+        }
+    }
 }

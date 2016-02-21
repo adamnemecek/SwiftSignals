@@ -10,7 +10,7 @@ import AppKit
 import Foundation
 import simd
 
-protocol BehaviourProtocol {
+protocol Behaviour {
     
     var object: GameObject?{get}
     
@@ -18,7 +18,7 @@ protocol BehaviourProtocol {
     func update() -> Void
 }
 
-class FPSCameraBehaviour: BehaviourProtocol {
+class FPSCameraBehaviour: Behaviour {
     
     var object: GameObject?
     
@@ -116,13 +116,13 @@ class FPSCameraBehaviour: BehaviourProtocol {
         let controller = GameEngine.instance.controller
         
         if controller.isKeyPressed("w") {
-            moveForward(-0.1)
+            moveForward(-1)
         } else if controller.isKeyPressed("s") {
-            moveForward(0.1)
+            moveForward(1)
         } else if controller.isKeyPressed("d") {
-            moveSides(-0.1)
+            moveSides(-1)
         } else if controller.isKeyPressed("a") {
-            moveSides(0.1)
+            moveSides(1)
         }
     }
     

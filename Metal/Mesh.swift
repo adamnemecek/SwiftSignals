@@ -8,7 +8,12 @@
 
 import MetalKit
 
-extension MTKMesh {
+protocol Renderable {
+    func renderWithEncoder(commandEncoder: MTLRenderCommandEncoder)
+}
+
+extension MTKMesh: Renderable {
+    
     func renderWithEncoder(encoder: MTLRenderCommandEncoder) {
         var bufferIndex = 0
         for buffer in vertexBuffers{
@@ -22,46 +27,39 @@ extension MTKMesh {
     }
 }
 
-protocol Mesh {
-    var material: Material? {set get}
-    func renderWithEncoder(commandEncoder: MTLRenderCommandEncoder)
+class Mesh: Renderable {
+    
+    var vertexBuffer: MTLBuffer?
+    var vertexCount = 0
+    var byteSize    = 0
+    var subMeshes = [SubMesh]()
+    
+    func renderWithEncoder(commandEncoder: MTLRenderCommandEncoder) {
+        commandEncoder.setVertexBuffer(vertexBuffer!, offset: 0, atIndex: 0)
+        
+        for submesh in subMeshes {
+            submesh.renderWithEncoder(commandEncoder)
+        }
+    }
 }
 
-class Model: Mesh {
+class SubMesh: Renderable {
     
-    var meshes = [MTKMesh]()
-    var material: Material?
-    var uniformBuffer: MTLBuffer?
+    var parentMesh: Mesh?
+    var indexType: MTLIndexType?
+    var indexBuffer: MTLBuffer?
+    var indexCount  = 0
+    var indexOffset = 0
     
-    init(filePath: String, var vertexDescriptor: MTLVertexDescriptor?, context: MetalContext){
-        
-        let assetURL = NSURL(fileURLWithPath: filePath)
-        let allocator = MTKMeshBufferAllocator(device: context.device!)
-
-        if vertexDescriptor == nil {
-            vertexDescriptor = defaultVertexDescriptor()
-        }
-        
-        let mdlVertexDescriptor = MTKModelIOVertexDescriptorFromMetal(vertexDescriptor!);
-        var name = mdlVertexDescriptor.attributes[0] as! MDLVertexAttribute
-        name.name = MDLVertexAttributePosition
-        name = mdlVertexDescriptor.attributes[1] as! MDLVertexAttribute
-        name.name = MDLVertexAttributeNormal
-        name = mdlVertexDescriptor.attributes[2] as! MDLVertexAttribute
-        name.name = MDLVertexAttributeTextureCoordinate
-        let asset = MDLAsset(URL: assetURL, vertexDescriptor: mdlVertexDescriptor, bufferAllocator: allocator)
-        
-        do {
-            let array = AutoreleasingUnsafeMutablePointer<NSArray?>()
-            meshes = try MTKMesh.newMeshesFromAsset(asset, device: context.device!, sourceMeshes: array)
-                
-        } catch {print(error)}
+    init(anIndexBuffer: MTLBuffer, anIndexCount: Int, offset: Int ,type: MTLIndexType) {
+        indexBuffer = anIndexBuffer
+        indexCount  = anIndexCount
+        indexType   = type
+        indexOffset = offset
     }
     
-    func renderWithEncoder(encoder: MTLRenderCommandEncoder){
-        for mesh in meshes {
-            encoder.setFragmentTexture(material!.albedo, atIndex: 0)
-            mesh.renderWithEncoder(encoder)
-        }
+    func renderWithEncoder(commandEncoder: MTLRenderCommandEncoder) {
+        
+        commandEncoder.drawIndexedPrimitives(.Triangle, indexCount: indexCount, indexType: indexType!, indexBuffer: indexBuffer!, indexBufferOffset: indexOffset)
     }
 }

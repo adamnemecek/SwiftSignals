@@ -15,7 +15,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     func applicationDidFinishLaunching(aNotification: NSNotification) {
         // Insert code here to initialize your application
-        window.makeFirstResponder(GameEngine.instance.graphicsContext?.metalView)
+        window.makeFirstResponder(GameEngine.instance.view)
         window.acceptsMouseMovedEvents = true
     }
 

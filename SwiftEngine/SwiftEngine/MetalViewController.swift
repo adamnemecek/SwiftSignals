@@ -12,11 +12,11 @@ import AppKit
 class MetalViewController: NSViewController, MTKViewDelegate {
     
     func drawInMTKView(view: MTKView) {
-        GameEngine.instance.currentScene?.render()
+        GameEngine.instance.render()
     }
     
     func mtkView(view: MTKView, drawableSizeWillChange size: CGSize) {
-        print("resized")
+        
     }
     
     override func viewDidLoad() {
@@ -25,20 +25,6 @@ class MetalViewController: NSViewController, MTKViewDelegate {
         view.delegate = self
         
         GameEngine.instance.setupGraphics(view)
-        
-//        let camera = GameObject(aTitle: "Camera")
-//        camera.behaviour = CameraBehaviour(object: camera)
-//        GameEngine.instance.currentScene?.addObject(camera)
-        
-        let obj = GameObject(aTitle: "First Object")
-        
-        obj.renderer = MeshRenderer()
-        obj.renderer?.mesh = GameEngine.instance.resourceManager?.getModel("/Users/dannyvanswieten/Documents/Model/Nanosuit/Nanosuit.obj")
-        obj.renderer?.mesh?.material = Material()
-        obj.renderer?.mesh?.material?.albedo = GameEngine.instance.resourceManager?.getTexture("/Users/dannyvanswieten/Documents/Model/Materials/BlueStone.jpg")
-        obj.body = GameEngine.instance.physics.newBody(100)
-        GameEngine.instance.currentScene?.addObject(obj)
-        
         GameEngine.instance.physics.start()
     }
     
