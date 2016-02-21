@@ -20,32 +20,37 @@ class PhysicsEngine {
     var shouldRun = false
     
     private var gravityVector = float3(0.0, -9.81, 0.0)
+    
+    /// The integration function used for simulation. You can supply your own function. Defaults to Runge-Kutta fourth order algorithm.
     var integrationFunction: (RigidBody, Double, Double) -> Void = integrateWithRK4
     
     var bodies = [RigidBody]()
     
-    func setGravity(force: Float) -> Void {
+    /// Set the amount of gravity
+    final func setGravity(force: Float) -> Void {
         gravityVector.y = force
     }
     
-    func newBody(withMass: Double) -> RigidBody {
+    /// Request a new body with a mass. You can give this to a game object to make it render at the right position.
+    final func newBody(withMass: Double) -> RigidBody {
         let body = RigidBody(withMass: withMass)
         bodies.append(body)
         return body
     }
     
-    func start() -> Void {
+    /// Start the physics simulation.
+    final func start() -> Void {
         shouldRun = true
         NSThread.detachNewThreadSelector("run", toTarget: self, withObject: nil)
     }
     
-    @objc private func run() -> Void {
+    @objc private final func run() -> Void {
         while(shouldRun) {
             update()
         }
     }
     
-    func update() {
+    final func update() {
         
         let newTime     = NSDate.timeIntervalSinceReferenceDate()
         var frameTime   = newTime - currentTime

@@ -35,6 +35,7 @@ class Mesh: Renderable {
     var subMeshes = [SubMesh]()
     
     func renderWithEncoder(commandEncoder: MTLRenderCommandEncoder) {
+        
         commandEncoder.setVertexBuffer(vertexBuffer!, offset: 0, atIndex: 0)
         
         for submesh in subMeshes {
@@ -59,7 +60,6 @@ class SubMesh: Renderable {
     }
     
     func renderWithEncoder(commandEncoder: MTLRenderCommandEncoder) {
-        
         commandEncoder.drawIndexedPrimitives(.Triangle, indexCount: indexCount, indexType: indexType!, indexBuffer: indexBuffer!, indexBufferOffset: indexOffset)
     }
 }
